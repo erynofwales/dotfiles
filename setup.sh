@@ -19,6 +19,8 @@ ln -s $dfdir/toprc $HOME/.toprc
 
 ln -s $dfdir/gitconfig $HOME/.gitconfig
 
+ln -s $dfdir/irssi $HOME/.irssi
+
 [ `uname -s` = "Linux" ] && ln -s $dfdir/Xdefaults $HOME/.Xdefaults
 
 touch $HOME/.hushlogin
