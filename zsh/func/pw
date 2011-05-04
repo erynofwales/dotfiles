@@ -1,0 +1,12 @@
+#!/bin/zsh
+# vim:ft=zsh
+
+pw ()
+{
+    length='12'
+    if [[ $1 -ne "" ]]; then
+        length=$1
+    fi
+
+    tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | fold -w $length | head -n 1
+}

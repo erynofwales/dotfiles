@@ -1,0 +1,12 @@
+#!/bin/zsh
+# vim:ft=zsh
+
+wiki ()
+{
+    if [[ $1 == "" ]]; then
+        echo "Usage: wiki [term]"
+    else
+        dig +short txt $1.wp.dg.cx
+    fi
+}
+

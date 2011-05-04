@@ -1,0 +1,26 @@
+# .intrc
+# vim: ft=zsh
+# Generic interactive shell setup
+# Eryn Wells <eryn@3b518c.com>
+
+gls &>/dev/null
+if [[ $? -eq 0 ]]; then
+    lsbin='gls'
+else
+    lsbin='ls'
+fi
+
+alias ls="$lsbin --color=auto"
+alias la="$lsbin -A --color=auto"
+alias ll="$lsbin -l --color=auto"
+alias l.="$lsbin -d --color=auto .*"
+alias j='jobs'
+alias h='history'
+alias df='df -h'
+alias du='du -h'
+alias g='git'
+alias l='ledger'
+
+alias today='date +%Y-%m-%d'
+
+alias addkey="ssh-agent ~/.ssh/id_rsa"

@@ -1,0 +1,13 @@
+#!/bin/zsh
+# vim:ft=zsh
+
+# make a Maildir directory
+mkmdir ()
+{
+    if [[ $1 == "" ]]; then
+        echo "Usage: $0 mdir_name"
+    else
+        mkdir -p $1/{new,cur,tmp}
+    fi
+}
+
