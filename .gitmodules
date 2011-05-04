@@ -1,9 +1,9 @@
 [submodule "vim/bundle/surround"]
-	path = vim/bundle/surround
-	url = git://github.com/tpope/vim-surround.git
+        path = vim/bundle/surround
+            url = git://github.com/tpope/vim-surround.git
 [submodule "vim/bundle/speeddating"]
-	path = vim/bundle/speeddating
-	url = git://github.com/tpope/vim-speeddating.git
+        path = vim/bundle/speeddating
+        url = git://github.com/tpope/vim-speeddating.git
 [submodule "vim/bundle/blackboard"]
 	path = vim/bundle/blackboard
 	url = git://github.com/nelstrom/vim-blackboard.git
@@ -12,16 +12,13 @@
 	url = git://github.com/tpope/vim-fugitive.git
 [submodule "vim/bundle/snipmate"]
 	path = vim/bundle/snipmate
-	url = git://github.com/nelstrom/snipmate.vim.git
+	url = git://github.com/msanders/snipmate.vim.git
 [submodule "vim/bundle/unimpaired"]
 	path = vim/bundle/unimpaired
 	url = git://github.com/tpope/vim-unimpaired.git
 [submodule "vim/bundle/git"]
 	path = vim/bundle/git
 	url = git://github.com/tpope/vim-git.git
-[submodule "vim/bundle/gundo"]
-	path = vim/bundle/gundo
-	url = git://github.com/sjl/gundo.vim.git
 [submodule "vim/bundle/solarized"]
 	path = vim/bundle/solarized
 	url = git://github.com/altercation/vim-colors-solarized.git
