@@ -1,3 +1,0 @@
-git clone eryn@tako:git/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-./setup.sh
