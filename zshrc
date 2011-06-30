@@ -29,7 +29,7 @@ else
     #mytime="%T"
 fi
 
-PROMPT=" %h %(!.%B%F{red}.)%3~ %#%(!.%F{default}%b.) "
+PROMPT=" %(?.%h.%B%F{red}%h%F{default}%b) %* %(!.%B%F{red}.)%3~ %#%(!.%F{default}%b.) "
 RPROMPT="%m"
 
 precmd ()
@@ -68,8 +68,8 @@ setopt \
     HIST_IGNORE_DUPS \
     HIST_REDUCE_BLANKS
 
-HISTSIZE=10000
-SAVEHIST=200
+HISTSIZE=1000000
+SAVEHIST=1000000
 HISTFILE="$HOME/.zhistory"
 
 #[ -n "$DISPLAY" ] && alias -s pdf='evince'
