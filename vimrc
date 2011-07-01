@@ -75,7 +75,6 @@ set nojoinspaces
 set number
 set scrolloff=3
 set sidescrolloff=5
-set bg=light
 
 set pastetoggle=<F2>
 
@@ -110,22 +109,26 @@ endif
 " tell SnipMate who I am
 let g:snips_author = 'Eryn Wells <eryn@3b518c.com>'
 
-if has('autocmd')
-    autocmd BufWritePost .vimrc source $MYVIMRC
-endif
+"if has('autocmd')
+"    autocmd BufWritePost .vimrc source $MYVIMRC
+"endif
 
 if has('gui_running')
     if has('win32') || has('win64')
 	set guifont=Inconsolata:h18
     elseif has('mac')
-	set guifont=Inconsolata:h18
+	set guifont=Menlo:h14
     elseif has('linux')
 	set guifont=Inconsolata\ 14
     endif
     set cursorline
     set guioptions-=T	    " turn off toolbar
     set guioptions-=m	    " turn off toolbar
-    colorscheme blackboard
+
+    set bg=light
+    colorscheme solarized
+else
+    colorscheme default
 endif
 
 let mapleader=','
