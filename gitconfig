@@ -1,6 +1,6 @@
 [user]
     name = Eryn Wells
-    email = eryn@3b518c.com
+    email = eryn@erynwells.me
 [core]
     editor = vim
 [color]
@@ -8,8 +8,8 @@
 [merge]
     tool = vimdiff
 [alias]
-	st = status
-	co = checkout
-	ci = commit
-	br = branch
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    st = status
+    co = checkout
+    ci = commit
+    br = branch
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
