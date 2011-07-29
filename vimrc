@@ -131,5 +131,7 @@ else
     colorscheme default
 endif
 
+nmap <F3> :GundoToggle<CR>
+
 let mapleader=','
 nmap <leader>v :tabedit $MYVIMRC<CR>
