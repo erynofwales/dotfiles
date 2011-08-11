@@ -3,6 +3,7 @@
 # Eryn Wells <eryn@3b518c.com>
 
 # Environment settings
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/X11/bin
 PAGER="less"
 MANPAGER="less"
 EDITOR="vim"
@@ -23,7 +24,6 @@ case $arch in
     ;;
 
     Darwin)
-        PATH=/opt/local/bin:$PATH    # MacPorts
 	alias indent='gnuindent'
     ;;
 esac
@@ -33,6 +33,7 @@ esac
 export NETHACKOPTIONS="color"
 
 [ -e $HOME/.profile-local ] && source $HOME/.profile-local
+[ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
 [ -d $HOME/bin ] && PATH=$HOME/bin:$PATH
 
 # Start SSH agent for password-less logins
