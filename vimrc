@@ -1,82 +1,88 @@
 " ~/.vimrc
 " Eryn Wells <eryn@3b518c.com>
 
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-
 set nocompatible	"use enhanced vim features
+
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
 
 set autoread		"reread files changed outside of vim
 set noautowrite		"don't write files before commands like :next and :make
 
 set ffs=unix,dos,mac	"order of line ending formats to try
 
-" command line
-" always show current mode and cursor position
-set ruler
-set showmode
-set showcmd
+set hidden              " allow hidden buffers (rather than closing them)
 
-" line breaking and wrapping
-set wrap
-set linebreak
-set textwidth=80
+set number              " show line numbers
+set relativenumber	" line numbers are relative to current line rather
+			"   than absolute
+set ruler               " show ruler (line and col count)
+set showmode            " show mode
+set showcmd             " show last command
+set title               " change terminal title
+set visualbell          " don't beep
+set noerrorbells        " PLEASE don't beep
+set ttyfast		" fast terminals
 
-" formatting options
-set fo+=n	"format numbered lists properly
-set fo+=2	"format paragraphs with first line indent different from rest
+set nowrap              " don't wrap long lines
+set linebreak           " break at between words
+set textwidth=80        " wrap at 80 characters
+set colorcolumn=80	" highlight 85th column
+set showmatch           " show matching things: (), {}, [], etc
 
-" list view options
-set lcs+=tab:>-		"make tabs look like >--..--- in list mode
-set lcs+=eol:$		"make end of line print $ in list mode
+set fo+=n	        " format numbered lists properly
+set fo+=2	        " format paragraphs with first line indent different
+			"   from rest
 
-" searching
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
+set list
+set lcs+=tab:▸\ 	" show tabs
+set lcs+=eol:¬		" show end-of-lines
+set lcs+=trail:.        " show trailing spaces
+set lcs+=extends:#      " show long lines (that go offscreen)
+set lcs+=nbsp:.         " show non-breaking spaces
 
-" spelling
+set ignorecase          " ignore case in searches
+set smartcase           " case-sensitive search if pattern contains a capital
+set incsearch           " show search matches as you type
+set hlsearch            " highlight search matches
+set gdefault		" apply searches globally to a line by default
+nnoremap / /\v		" use PCREs for searches in normal mode
+vnoremap / /\v		" ditto for visual mode
+
+set spelllang=en        " set spelling language
 if has('win32') || has('win64')
     set spellfile=~/_vim/spelling.en.add
 else
     set spellfile=~/.vim/spelling.en.add
 endif
-set spelllang=en
-autocmd FileType text set spell
 
-" vim for windows uses _ instead of . to prefix config files
-if has('win32') || has('win64')
-    set directory=~/_vim/swap
-    set backupdir=~/_vim/backup
-else
-    set directory=~/.vim/swap
-    set backupdir=~/.vim/backup
-endif
-
-" backup and recovery
-set undolevels=500
-set updatecount=100
+set noswapfile          " disable swap file
+set nobackup            " disable backup files
+set undofile		" save undo history
+set undodir=~/.vim/undo	" save undo files here
+set history=1000        " remember 1000 commands in history
+set undolevels=1000     " keep lots of undo history
 set viminfo=%100,'100,/100,h,\"500,:100,n~/.viminfo
-set history=200
+                        " I have *NO* idea what this does...
 
-set showmatch
 
 set backspace=indent,eol,start
+                        " backspace over everything in insert mode
 
-" tabbing and indenting
-set tabstop=8
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-set smarttab
-set nojoinspaces
+set tabstop=8           " tabs are always 8 spaces
+set shiftwidth=4        " shift lines 4 spaces with >> and <<
+set softtabstop=4       " tab key inserts 4 spaces
+set shiftround          " round off indent to multiple of shiftwidth
+set smarttab            " insert tabs on start of line according to sw, not ts
+set nojoinspaces        " insert 1 space instead of 2 after punctuation on line
+                        "   join
+set autoindent          " always use autoindenting
+set copyindent          " copy previous indentation on autoindent
 
-set number
-set scrolloff=3
-set sidescrolloff=5
+set scrolloff=3         " scroll 3 lines ahead of point
+set sidescrolloff=5     " scroll 5 columns ahead of point
 
-set pastetoggle=<F2>
+set pastetoggle=<F2>    " toggle paste mode with F2
 
 " completion menu
 set wildmenu
@@ -90,13 +96,14 @@ endif
 set modeline
 set modelines=12
 
-if &t_Co > 2 || has('gui_running')
-    syntax enable
-endif
-
 if has('autocmd')
     filetype plugin indent on
-    autocmd FileType text setlocal textwidth=76
+    " spelling for text files
+    autocmd FileType text set spell
+    " spaces as tabs for python
+    autocmd filetype python setlocal expandtab
+    " don't show tabs in html and xml
+    autocmd filetype html,xml set listchars-=tab:>-
 
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
@@ -106,12 +113,20 @@ if has('autocmd')
 	\ endif
 endif
 
+" use a colorscheme if the terminal can support it (or we're in a GUI)
+if &t_Co >= 256 || has('gui_running')
+    set cursorline
+    set bg=light
+    colorscheme solarized
+endif
+
+" use syntax highlighting if the terminal can support it (or we're in a GUI)
+if &t_Co > 2 || has('gui_running')
+    syntax on           " turn on syntax highlighting
+endif
+
 " tell SnipMate who I am
 let g:snips_author = 'Eryn Wells <eryn@3b518c.com>'
-
-"if has('autocmd')
-"    autocmd BufWritePost .vimrc source $MYVIMRC
-"endif
 
 if has('gui_running')
     if has('win32') || has('win64')
@@ -121,17 +136,37 @@ if has('gui_running')
     elseif has('linux')
 	set guifont=Inconsolata\ 14
     endif
-    set cursorline
     set guioptions-=T	    " turn off toolbar
     set guioptions-=m	    " turn off toolbar
-
-    set bg=light
-    colorscheme solarized
-else
-    colorscheme default
 endif
 
 nmap <F3> :GundoToggle<CR>
 
+" allow starting commands with ; instead of :
+nnoremap ; :
+
+" tab to skip between braces and such in normal
+nnoremap <tab> %
+vnoremap <tab> %
+
+" disable the help key!
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" gonna give this a try... exit from insert mode with jj
+inoremap jj <ESC>
+
+" make switching windows easier
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" strip all trailing whitespace in the current file
+nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
+
 let mapleader=','
-nmap <leader>v :tabedit $MYVIMRC<CR>
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> <leader><space>  :nohlsearch<CR>
