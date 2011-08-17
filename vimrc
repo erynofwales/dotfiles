@@ -37,7 +37,7 @@ set fo+=2	        " format paragraphs with first line indent different
 set list
 set lcs+=tab:▸\ 	" show tabs
 set lcs+=eol:¬		" show end-of-lines
-set lcs+=trail:.        " show trailing spaces
+set lcs+=trail:･        " show trailing spaces
 set lcs+=extends:#      " show long lines (that go offscreen)
 set lcs+=nbsp:.         " show non-breaking spaces
 
@@ -46,8 +46,10 @@ set smartcase           " case-sensitive search if pattern contains a capital
 set incsearch           " show search matches as you type
 set hlsearch            " highlight search matches
 set gdefault		" apply searches globally to a line by default
-nnoremap / /\v		" use PCREs for searches in normal mode
-vnoremap / /\v		" ditto for visual mode
+
+" use PCREs for searches
+nnoremap / /\v
+vnoremap / /\v
 
 set spelllang=en        " set spelling language
 if has('win32') || has('win64')
@@ -64,7 +66,6 @@ set history=1000        " remember 1000 commands in history
 set undolevels=1000     " keep lots of undo history
 set viminfo=%100,'100,/100,h,\"500,:100,n~/.viminfo
                         " I have *NO* idea what this does...
-
 
 set backspace=indent,eol,start
                         " backspace over everything in insert mode
