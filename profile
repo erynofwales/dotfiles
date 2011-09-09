@@ -26,6 +26,7 @@ case $arch in
     Darwin)
 	alias indent='gnuindent'
 	alias acls='/bin/ls -le'
+	PATH=/opt/local/bin:$PATH
     ;;
 esac
 
