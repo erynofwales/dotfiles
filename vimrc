@@ -1,43 +1,50 @@
 " ~/.vimrc
 " Eryn Wells <eryn@3b518c.com>
 
-set nocompatible	"use enhanced vim features
+set nocompatible        "use enhanced vim features
 
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
-set autoread		"reread files changed outside of vim
-set noautowrite		"don't write files before commands like :next and :make
+set autoread            "reread files changed outside of vim
+set noautowrite         "don't write files before commands like :next and :make
 
-set ffs=unix,dos,mac	"order of line ending formats to try
+set ffs=unix,dos,mac    "order of line ending formats to try
 
 set hidden              " allow hidden buffers (rather than closing them)
 
 set number              " show line numbers
-set relativenumber	" line numbers are relative to current line rather
-			"   than absolute
+set relativenumber      " line numbers are relative to current line rather
+                        "   than absolute
 set ruler               " show ruler (line and col count)
 set showmode            " show mode
 set showcmd             " show last command
 set title               " change terminal title
 set visualbell          " don't beep
 set noerrorbells        " PLEASE don't beep
-set ttyfast		" fast terminals
+set ttyfast             " fast terminals
 
 set nowrap              " don't wrap long lines
 set linebreak           " break at between words
 set textwidth=80        " wrap at 80 characters
-set colorcolumn=80	" highlight 85th column
+set colorcolumn=80      " highlight 85th column
 set showmatch           " show matching things: (), {}, [], etc
 
-set fo+=n	        " format numbered lists properly
-set fo+=2	        " format paragraphs with first line indent different
-			"   from rest
+set fo+=n               " format numbered lists properly
+set fo+=2               " format paragraphs with first line indent different
+                        "   from rest
 
-set list
-set lcs+=tab:▸\ 	" show tabs
-set lcs+=eol:¬		" show end-of-lines
-set lcs+=trail:･        " show trailing spaces
+if has('gui_running')
+    set list
+endif
+"set lcs+=tab:▸\                " show tabs
+"set lcs+=eol:¬         " show end-of-lines
+"set lcs+=trail:･       " show trailing spaces
+"set lcs+=extends:→     " show long lines (that go offscreen)
+"set lcs+=nbsp:.                " show non-breaking spaces
+set lcs+=tab:>\         " show tabs
+set lcs+=eol:$          " show end-of-lines
+set lcs+=trail:.        " show trailing spaces
 set lcs+=extends:#      " show long lines (that go offscreen)
 set lcs+=nbsp:.         " show non-breaking spaces
 
@@ -45,7 +52,7 @@ set ignorecase          " ignore case in searches
 set smartcase           " case-sensitive search if pattern contains a capital
 set incsearch           " show search matches as you type
 set hlsearch            " highlight search matches
-set gdefault		" apply searches globally to a line by default
+set gdefault            " apply searches globally to a line by default
 
 " use PCREs for searches
 nnoremap / /\v
@@ -60,8 +67,8 @@ endif
 
 set noswapfile          " disable swap file
 set nobackup            " disable backup files
-set undofile		" save undo history
-set undodir=~/.vim/undo	" save undo files here
+set undofile            " save undo history
+set undodir=~/.vim/undo " save undo files here
 set history=1000        " remember 1000 commands in history
 set undolevels=1000     " keep lots of undo history
 set viminfo=%100,'100,/100,h,\"500,:100,n~/.viminfo
@@ -74,7 +81,7 @@ set tabstop=8           " tabs are always 8 spaces
 set shiftwidth=4        " shift lines 4 spaces with >> and <<
 set softtabstop=4       " tab key inserts 4 spaces
 set shiftround          " round off indent to multiple of shiftwidth
-set smarttab            " insert tabs on start of line according to sw, not ts
+set expandtab           " always use spaces
 set nojoinspaces        " insert 1 space instead of 2 after punctuation on line
                         "   join
 set autoindent          " always use autoindenting
@@ -104,21 +111,25 @@ if has('autocmd')
     " spaces as tabs for python
     autocmd filetype python setlocal expandtab
     " don't show tabs in html and xml
-    autocmd filetype html,xml set listchars-=tab:>-
+    autocmd filetype html,xml set listchars-=tab:▸\ 
 
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
     autocmd BufReadPost *
-	\ if line("'\"") > 1 && line("'\"") <= line("$") |
-	\   exe "normal! g`\"" |
-	\ endif
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
 endif
 
 " use a colorscheme if the terminal can support it (or we're in a GUI)
 if &t_Co >= 256 || has('gui_running')
-    set cursorline
-    set bg=light
-    colorscheme solarized
+    if has('gui_running')
+        set bg=light
+        colorscheme solarized
+    else
+        set bg=dark
+        colorscheme default
+    endif
 endif
 
 " use syntax highlighting if the terminal can support it (or we're in a GUI)
@@ -127,18 +138,19 @@ if &t_Co > 2 || has('gui_running')
 endif
 
 " tell SnipMate who I am
-let g:snips_author = 'Eryn Wells <eryn@3b518c.com>'
+let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 
 if has('gui_running')
+    set cursorline
     if has('win32') || has('win64')
-	set guifont=Inconsolata:h18
+        set guifont=Inconsolata:h18
     elseif has('mac')
-	set guifont=Menlo:h14
+        set guifont=Menlo:h14
     elseif has('linux')
-	set guifont=Inconsolata\ 14
+        set guifont=Inconsolata\ 14
     endif
-    set guioptions-=T	    " turn off toolbar
-    set guioptions-=m	    " turn off toolbar
+    set guioptions-=T       " turn off toolbar
+    set guioptions-=m       " turn off toolbar
 endif
 
 nmap <F3> :GundoToggle<CR>
@@ -164,10 +176,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" strip all trailing whitespace in the current file
-nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 
 let mapleader=','
+" strip all trailing whitespace in the current file
+nnoremap <leader>W mkHml:%s/\v\s+$//<CR>`lzt`k
+" edit and source my .vimrc
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
+" hide search terms
 nmap <silent> <leader><space>  :nohlsearch<CR>
+" find all
+nmap <leader>fa :%s/\v
