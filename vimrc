@@ -37,15 +37,10 @@ set fo+=2               " format paragraphs with first line indent different
 if has('gui_running')
     set list
 endif
-"set lcs+=tab:▸\                " show tabs
-"set lcs+=eol:¬         " show end-of-lines
-"set lcs+=trail:･       " show trailing spaces
-"set lcs+=extends:→     " show long lines (that go offscreen)
-"set lcs+=nbsp:.                " show non-breaking spaces
-set lcs+=tab:>\         " show tabs
-set lcs+=eol:$          " show end-of-lines
-set lcs+=trail:.        " show trailing spaces
-set lcs+=extends:#      " show long lines (that go offscreen)
+set lcs+=tab:▸\         " show tabs
+set lcs+=eol:¬          " show end-of-lines
+set lcs+=trail:･        " show trailing spaces
+set lcs+=extends:→      " show long lines (that go offscreen)
 set lcs+=nbsp:.         " show non-breaking spaces
 
 set ignorecase          " ignore case in searches
