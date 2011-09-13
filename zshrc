@@ -47,7 +47,7 @@ setopt \
 # load bash/zsh/ksh agnostic configurations
 source $HOME/.rc
 
-alias -g nc='netcat'
+#alias -g nc='netcat'
 alias -g lessnw='less -S'
 
 # suffix aliases
