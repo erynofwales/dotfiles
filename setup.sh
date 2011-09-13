@@ -8,6 +8,7 @@ ln -s $dfdir/rc $HOME/.rc
 ln -s $dfdir/zshrc $HOME/.zshrc
 ln -s $dfdir/zsh $HOME/.zsh
 ln -s $dfdir/zprofile $HOME/.zprofile
+ln -s $dfdir/zshenv $HOME/.zshenv
 
 ln -s $dfdir/vimrc $HOME/.vimrc
 ln -s $dfdir/vim $HOME/.vim
