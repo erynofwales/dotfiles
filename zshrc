@@ -127,3 +127,13 @@ autoload mkmdir
 autoload pw
 autoload mkcmod
 
+# Go up n directories (saves me from having to type ../ ad # nauseum)
+function up {
+    if [[ -z $1 ]]; then
+        pushd ..
+    else
+        updirs=()
+        for (( i=0; $i < $1; i++ )); do updirs+='..' done
+        pushd ${(j./.)updirs}
+    fi
+}
