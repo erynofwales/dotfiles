@@ -47,6 +47,8 @@ setopt \
 # load bash/zsh/ksh agnostic configurations
 source $HOME/.rc
 
+alias pd='popd'
+
 #alias -g nc='netcat'
 alias -g lessnw='less -S'
 
