@@ -99,23 +99,6 @@ endif
 set modeline
 set modelines=12
 
-if has('autocmd')
-    filetype plugin indent on
-    " spelling for text files
-    autocmd FileType text set spell
-    " spaces as tabs for python
-    autocmd filetype python setlocal expandtab
-    " don't show tabs in html and xml
-    autocmd filetype html,xml set listchars-=tab:▸\ 
-
-    " Jump to last known cursor position unless it's the first line, or past the
-    " end of the file
-    autocmd BufReadPost *
-        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
-        \ endif
-endif
-
 " use a colorscheme if the terminal can support it (or we're in a GUI)
 if &t_Co >= 256 || has('gui_running')
     if has('gui_running')
@@ -172,9 +155,22 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 
+function! <SID>StripTrailingWhitespace()
+    " save last search
+    let _s=@/
+    " save cursor position
+    let l = line('.')
+    let c = col('.')
+    " do the clean up
+    %s/\s\+$//e
+    " restore saved stuff
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
 let mapleader=','
 " strip all trailing whitespace in the current file
-nnoremap <leader>W mkHml:%s/\v\s+$//<CR>`lzt`k
+nnoremap <silent> <leader>W :call <SID>StripTrailingWhitespace()<CR>
 " edit and source my .vimrc
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
@@ -182,3 +178,24 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 nmap <silent> <leader><space>  :nohlsearch<CR>
 " find all
 nmap <leader>fa :%s/\v
+
+
+if has('autocmd')
+    filetype plugin indent on
+    " spelling for text files
+    autocmd FileType text set spell
+    " spaces as tabs for python
+    autocmd filetype python setlocal expandtab
+    " don't show tabs in html and xml
+    autocmd filetype html,xml set listchars-=tab:▸\ 
+
+    " Jump to last known cursor position unless it's the first line, or past the
+    " end of the file
+    autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
+
+    " Clean whitespace before saving
+    autocmd BufWritePre *.py,*.c,*.html :call <SID>StripTrailingWhitespace()
+endif
