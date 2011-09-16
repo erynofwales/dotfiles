@@ -29,14 +29,26 @@ else
     #mytime="%T"
 fi
 
-PROMPT=" %(?.%h.%B%F{red}%h%F{default}%b) %* %(!.%B%F{red}.)%3~ %#%(!.%F{default}%b.) "
-RPROMPT="%m"
+PROMPT=" %(?.%h.%B%F{red}%h%F{default}%b) %m %(!.%B%F{red}.)%3~ %#%(!.%F{default}%b.) "
+#RPROMPT="%m"
 
-precmd ()
+
+precmd_xterm_title ()
 {
     # Set xterm and screen titles
     [ -n $DISPLAY ] && print -Pn "\e]2;%n@%m\a"
 }
+
+precmd_separator ()
+{
+    # time divider
+    local fillnum=$(($COLUMNS - 9))
+    local sep=''
+    for (( i=0; $i < $fillnum; i++)); do sep="-$sep"; done
+    print -P "%B%F{black}$sep %*%F{default}%b"
+}
+
+precmd_functions=(precmd_xterm_title precmd_separator)
 
 # Shell options
 setopt \
@@ -137,5 +149,19 @@ function up {
         updirs=()
         for (( i=0; $i < $1; i++ )); do updirs+='..' done
         pushd ${(j./.)updirs}
+    fi
+}
+
+
+# Toggle showing a separator before every command
+function tsep {
+    if (($precmd_functions[(Ie)precmd_separator] > 0)); then
+        precmd_functions=${precmd_functions#precmd_separator}
+        PROMPT=${PROMPT:s/%m/%*/}
+        RPROMPT="%m"
+    else
+        precmd_functions+=(precmd_separator)
+        PROMPT=${PROMPT:s/%\*/%m/}
+        unset RPROMPT
     fi
 }
