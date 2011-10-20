@@ -1,6 +1,6 @@
 set foldmethod=syntax
 set sw=4 sts=4
-set noet
+set et
 
 "For the new omni-completion ":help ft-c-omni"
 if has('mac')
