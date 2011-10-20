@@ -189,6 +189,8 @@ if has('autocmd')
     " don't show tabs in html and xml
     autocmd filetype html,xml set listchars-=tab:▸\ 
 
+    autocmd BufNewFile,BufRead *.ledger setf ledger | comp ledger
+
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
     autocmd BufReadPost *
