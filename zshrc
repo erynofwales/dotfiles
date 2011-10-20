@@ -1,26 +1,23 @@
 # .zshrc
-# Eryn Wells <eryn@3b518c.com>
+# Eryn Wells <eryn@erynwells.me>
 
 # PROMPT
-#   :--:user@host:dir%
-#   Dash one gets filled with * when there are background jobs
-#   Dash two gets filled with ! when the last command failed
-#   Colors are determined based on terminal type (I think there's a better way)
-#   With elevated privilieges, user is colored red and/or bolded
-# RPROMPT (currently unused)
-#   Time in 24 hour format
-#   Current working directory and parent
+#   ' histnum bgjobsflag time (%|#)'
+#   Colors are determined based on zsh capability (>= version 4.3.7)
+#   With elevated privilieges, % is a red #
+# RPROMPT
+#   Hostname:Current directory to three places
 autoload is-at-least
 if (is-at-least '4.3.7'); then
-    bgjob="%(1j.%B%F{magenta}*%F{default}%b.)"
-    cmdstat="%(0?..%B%F{red}!%F{default}%b)"
-    isroot="%(!.%B%F{red}# %F{default}%b.)"
+    bgjob="%(1j.%B%F{magenta}* %F{default}%b.)"
+    hist="%(0?.%h.%B%F{red}%h%F{default}%b)"
+    isroot="%(!.%B%F{red}%#%F{default}%b.%#)"
 else
     autoload -U colors
     colors
-    bgjob="%(1j.%{$fg_bold[magenta]%}*%{$reset_color%}.)"
-    cmdstat="%(0?..%{$fg_bold[red]%}!%{$reset_color%})"
-    isroot="%(!.%{$fg_bold[red]%}# %{$reset_color%}.)"
+    bgjob="%(1j.%{$fg_bold[magenta]%}* %{$reset_color%}.)"
+    hist="%(0?.%h.%{$fg_bold[red]%}%h%{$reset_color%})"
+    isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
 
     # where do I include these?
     #bgjob="%(1j.%B*%b.)"
@@ -29,8 +26,8 @@ else
     #mytime="%T"
 fi
 
-PROMPT=" %(?.%h.%B%F{red}%h%F{default}%b) %m %(!.%B%F{red}.)%3~ %#%(!.%F{default}%b.) "
-#RPROMPT="%m"
+PROMPT=" $hist $bgjob%* $isroot "
+RPROMPT="%m:%3~"
 
 
 precmd_xterm_title ()
@@ -42,13 +39,13 @@ precmd_xterm_title ()
 precmd_separator ()
 {
     # time divider
-    local fillnum=$(($COLUMNS - 9))
+    local fillnum=$COLUMNS
     local sep=''
     for (( i=0; $i < $fillnum; i++)); do sep="-$sep"; done
-    print -P "%B%F{black}$sep %*%F{default}%b"
+    print -P "%B%F{black}$sep"
 }
 
-precmd_functions=(precmd_xterm_title precmd_separator)
+precmd_functions=(precmd_xterm_title)
 
 # Shell options
 setopt \
@@ -157,11 +154,7 @@ function up {
 function tsep {
     if (($precmd_functions[(Ie)precmd_separator] > 0)); then
         precmd_functions=${precmd_functions#precmd_separator}
-        PROMPT=${PROMPT:s/%m/%*/}
-        RPROMPT="%m"
     else
         precmd_functions+=(precmd_separator)
-        PROMPT=${PROMPT:s/%\*/%m/}
-        unset RPROMPT
     fi
 }
