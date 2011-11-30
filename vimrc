@@ -24,10 +24,10 @@ set visualbell          " don't beep
 set noerrorbells        " PLEASE don't beep
 set ttyfast             " fast terminals
 
-set nowrap              " don't wrap long lines
+set wrap                " wrap long lines
 set linebreak           " break at between words
 set textwidth=80        " wrap at 80 characters
-set colorcolumn=80      " highlight 85th column
+set colorcolumn=80      " highlight 80th column
 set showmatch           " show matching things: (), {}, [], etc
 
 set fo+=n               " format numbered lists properly
@@ -41,7 +41,7 @@ set lcs+=tab:▸\         " show tabs
 set lcs+=eol:¬          " show end-of-lines
 set lcs+=trail:･        " show trailing spaces
 set lcs+=extends:→      " show long lines (that go offscreen)
-set lcs+=nbsp:.         " show non-breaking spaces
+set lcs+=nbsp:･         " show non-breaking spaces
 
 set ignorecase          " ignore case in searches
 set smartcase           " case-sensitive search if pattern contains a capital
@@ -100,14 +100,20 @@ set modeline
 set modelines=12
 
 " use a colorscheme if the terminal can support it (or we're in a GUI)
-if &t_Co >= 256 || has('gui_running')
-    if has('gui_running')
-        set bg=light
-        colorscheme solarized
-    else
-        set bg=dark
-        colorscheme default
-    endif
+if has('gui_running')
+    colorscheme solarized
+    set bg=light
+else
+    colorscheme default
+    set bg=dark
+endif
+
+if !has('gui_running')
+    " line numbers
+    highlight LineNr cterm=bold ctermfg=0
+    " list mode characters
+    highlight NonText cterm=bold ctermfg=0
+    highlight SpecialKey cterm=bold ctermfg=0
 endif
 
 " use syntax highlighting if the terminal can support it (or we're in a GUI)
