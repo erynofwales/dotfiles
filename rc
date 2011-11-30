@@ -1,9 +1,9 @@
 # .rc
 # vim: ft=zsh
 # Generic interactive shell setup
-# Eryn Wells <eryn@3b518c.com>
+# Eryn Wells <eryn@erynwells.me>
 
-gls &>/dev/null
+which gls &>/dev/null
 if [[ $? -eq 0 ]]; then
     lsbin='gls'
 else
