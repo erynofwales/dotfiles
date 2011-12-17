@@ -23,3 +23,11 @@ export PATH \
        GREP_OPTIONS GREP_COLOR
 
 [ `uname -s` = "Linux" ] && export MAIL="/var/mail/$USER"
+
+local py27local=$HOME/.local/lib/python2.7/site-packages
+if [[ ! -z $PYTHONPATH ]]; then
+    [ -d $py27local ] && PYTHONPATH=$PYTHONPATH:$py27local
+else
+    PYTHONPATH=$py27local
+fi
+export PYTHONPATH
