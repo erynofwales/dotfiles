@@ -185,6 +185,8 @@ nmap <silent> <leader><space>  :nohlsearch<CR>
 " find all
 nmap <leader>fa :%s/\v
 
+nmap <leader>sn :e ~/.vim/bundle/snipmate/snippets/<C-r>=&filetype<CR>.snippets<CR>
+
 
 if has('autocmd')
     filetype plugin indent on
