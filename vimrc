@@ -210,3 +210,7 @@ if has('autocmd')
     " Clean whitespace before saving
     autocmd BufWritePre *.py,*.c,*.html :call <SID>StripTrailingWhitespace()
 endif
+
+if exists("~/.vimrc-local")
+    source ~/.vimrc-local
+endif
