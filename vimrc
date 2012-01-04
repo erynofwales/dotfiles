@@ -193,11 +193,12 @@ if has('autocmd')
     " spelling for text files
     autocmd FileType text set spell
     " spaces as tabs for python
-    autocmd filetype python setlocal expandtab
+    autocmd FileType python setlocal expandtab
     " don't show tabs in html and xml
-    autocmd filetype html,xml set listchars-=tab:▸\ 
+    autocmd FileType html,htmldjango,xml set sw=2 sts=2 listchars-=tab:▸\ 
 
     autocmd BufNewFile,BufRead *.ledger setf ledger | comp ledger
+    autocmd FileType ledger normal zR
 
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
