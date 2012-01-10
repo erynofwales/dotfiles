@@ -3,3 +3,4 @@ setlocal expandtab
 "setlocal fdm=indent
 setlocal textwidth=80
 
+setlocal makeprg="pylint -f parseable %"
