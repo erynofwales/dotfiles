@@ -1,3 +1,4 @@
 --date-format %Y-%m-%d
 --sort d
 --register-format %D %-.20P %X%-.22A %12.66t %12.80T\n%/%32|%-.22A %12.66t %12.80T\n
+--price-db ~/.pricedb
