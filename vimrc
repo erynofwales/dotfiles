@@ -124,6 +124,9 @@ endif
 " tell SnipMate who I am
 let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 
+" set the Gundo preview window on the bottom
+let g:gundo_preview_bottom = 1
+
 if has('gui_running')
     set cursorline
     if has('win32') || has('win64')
