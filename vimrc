@@ -181,18 +181,24 @@ let mapleader=','
 " strip all trailing whitespace in the current file
 nnoremap <silent> <leader>W :call <SID>StripTrailingWhitespace()<CR>
 " edit and source my .vimrc
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> <leader>ev :tabnew $MYVIMRC<CR>
+nmap <silent> <leader>sv :source $MYVIMRC<CR>
 " hide search terms
-nmap <silent> <leader><space>  :nohlsearch<CR>
+nmap <silent> <leader><space> :nohlsearch<CR>
 " find all
 nmap <leader>fa :%s/\v
 
 nmap <leader>sn :e ~/.vim/bundle/snipmate/snippets/<C-r>=&filetype<CR>.snippets<CR>
 
+" Command-T should open files in tabs when I hit <CR>; move opening files in
+" buffers to <C-b>
+let g:CommandTAcceptSelectionMap='<C-b>'
+let g:CommandTAcceptSelectionTabMap='<CR>'
 
 if has('autocmd')
     filetype plugin indent on
+
+    autocmd BufAdd,BufEnter,BufFilePost *.md :set ft=markdown
 
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
