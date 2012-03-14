@@ -13,8 +13,6 @@ if (is-at-least '4.3.7'); then
     hist="%(0?.%h.%B%F{red}%h%F{default}%b)"
     isroot="%(!.%B%F{red}%#%F{default}%b.%#)"
 else
-    autoload -U colors
-    colors
     bgjob="%(1j.%{$fg_bold[magenta]%}* %{$reset_color%}.)"
     hist="%(0?.%h.%{$fg_bold[red]%}%h%{$reset_color%})"
     isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
@@ -30,13 +28,13 @@ PROMPT=" $hist $bgjob%* $isroot "
 RPROMPT="%m:%3~"
 
 
-precmd_xterm_title ()
+precmd_xterm_title()
 {
     # Set xterm and screen titles
     [ -n $DISPLAY ] && print -Pn "\e]2;%n@%m\a"
 }
 
-precmd_separator ()
+precmd_separator()
 {
     # time divider
     local fillnum=$COLUMNS
@@ -45,7 +43,30 @@ precmd_separator ()
     print -P "%B%F{black}$sep"
 }
 
-precmd_functions=(precmd_xterm_title)
+precmd_separator_info()
+{
+    pstr=`print -P "\-\-\( %n@%m \)\-\-\( %~ \)"`
+    time=`print -P "\( %T \)\-\-"`
+    filler=$(($COLUMNS - ${#pstr} - ${#time}))
+    for (( i=0; $i < $filler; i++)); do
+        pstr="${pstr}-"
+    done
+    print -P "%{\e[38;5;240m%}$pstr$time%{\e[0m%}"
+}
+
+precmd_git_rprompt()
+{
+    gstat=`git status 2>/dev/null`
+    if [[ $? != 0 ]]; then 
+        RPROMPT=''
+        return
+    fi
+    branch=`echo $gstat | sed -n -e '2,$d' \
+                                 -e 's/.*\ \([^\ ^:\\*?\[]*\)$/\1/p'`
+    RPROMPT="%B%F{green}$branch%f%b"
+}
+
+precmd_functions=(precmd_xterm_title precmd_separator_info precmd_git_rprompt)
 
 # Shell options
 setopt \
