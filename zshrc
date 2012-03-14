@@ -24,8 +24,7 @@ else
     #mytime="%T"
 fi
 
-PROMPT=" $hist $bgjob%* $isroot "
-RPROMPT="%m:%3~"
+PROMPT=" $hist $bgjob$isroot "
 
 
 precmd_xterm_title()
@@ -63,7 +62,11 @@ precmd_git_rprompt()
     fi
     branch=`echo $gstat | sed -n -e '2,$d' \
                                  -e 's/.*\ \([^\ ^:\\*?\[]*\)$/\1/p'`
-    RPROMPT="%B%F{green}$branch%f%b"
+    RPROMPT="$branch"
+    echo $gstat | grep '^nothing' 1>/dev/null 2>&1
+    if [[ $? != 0 ]]; then
+        RPROMPT="$RPROMPT%B%F{green}*%f%b"
+    fi
 }
 
 precmd_functions=(precmd_xterm_title precmd_separator_info precmd_git_rprompt)
