@@ -65,7 +65,7 @@ precmd_git_rprompt()
     RPROMPT="$branch"
     echo $gstat | grep '^nothing' 1>/dev/null 2>&1
     if [[ $? != 0 ]]; then
-        RPROMPT="$RPROMPT%B%F{green}*%f%b"
+        RPROMPT="%B%F{green}*%f%b$RPROMPT"
     fi
 }
 
