@@ -1,0 +1,38 @@
+# .muttrc
+# Eryn Wells <eryn@erynwells.me>
+
+set realname='Eryn Wells'
+set folder='~/Mail'
+set spoolfile='~/Mail/INBOX'
+set mbox_type=maildir
+
+set use_from=yes
+set envelope_from=yes
+
+# Interface
+set quit=ask-yes
+set nomove
+unset mark_old
+set charset=UTF8
+set sort=threads
+set sort_browser=alpha
+set tilde=no
+set pager_index_lines=6
+set markers=no
+set smart_wrap
+set pager_context=5
+unset beep
+
+# Aliases
+set reverse_alias=yes
+set alias_file='~/.mutt/aliases'
+
+# Composing and Sending
+set edit_headers=yes
+set include=yes
+set record=+sent
+set postponed=+drafts
+
+# Colors
+color normal        default             default
+color tree          brightred           default
