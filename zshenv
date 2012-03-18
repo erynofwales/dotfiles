@@ -4,9 +4,9 @@
 
 
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/X11/bin
-[ -d /opt/local/bin ]   && PATH=$PATH:/opt/local/bin
-[ -d $HOME/.local/bin ] && PATH=$PATH:$HOME/.local/bin
-[ -d $HOME/bin ]        && PATH=$PATH:$HOME/bin
+[ -d /opt/local/bin ]   && PATH=/opt/local/bin:$PATH
+[ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
+[ -d $HOME/bin ]        && PATH=$HOME/bin:$PATH
 
 PAGER="less"
 MANPAGER=$PAGER
