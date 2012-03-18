@@ -17,10 +17,8 @@ set charset=UTF8
 set sort=threads
 set sort_browser=alpha
 set tilde=no
-set pager_index_lines=6
 set markers=no
 set smart_wrap
-set pager_context=5
 unset beep
 
 # Aliases
