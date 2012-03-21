@@ -99,26 +99,18 @@ endif
 set modeline
 set modelines=12
 
-" use a colorscheme if the terminal can support it (or we're in a GUI)
-if has('gui_running')
-    colorscheme solarized
-    set bg=light
-else
-    colorscheme default
-    set bg=dark
-endif
-
-if !has('gui_running')
-    " line numbers
-    highlight LineNr cterm=bold ctermfg=0
-    " list mode characters
-    highlight NonText cterm=bold ctermfg=0
-    highlight SpecialKey cterm=bold ctermfg=0
-endif
-
 " use syntax highlighting if the terminal can support it (or we're in a GUI)
 if &t_Co > 2 || has('gui_running')
     syntax on           " turn on syntax highlighting
+endif
+
+" use a colorscheme if the terminal can support it (or we're in a GUI)
+if has('gui_running')
+    set bg=light
+    colorscheme solarized
+else
+    set bg=dark
+    colorscheme solarized
 endif
 
 " tell SnipMate who I am
@@ -127,8 +119,11 @@ let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 " set the Gundo preview window on the bottom
 let g:gundo_preview_bottom = 1
 
-if has('gui_running')
+if &t_Co > 2 || has('gui_running')
     set cursorline
+endif
+
+if has('gui_running')
     if has('win32') || has('win64')
         set guifont=Inconsolata:h18
     elseif has('mac')
