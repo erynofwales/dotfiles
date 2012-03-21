@@ -31,6 +31,5 @@ set include=yes
 set record=+sent
 set postponed=+drafts
 
-# Colors
-color normal        default             default
-color tree          brightred           default
+# Solarized (light theme) colors
+source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
