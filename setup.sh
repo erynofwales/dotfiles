@@ -13,11 +13,11 @@ ln -s "$dfdir/zshenv" "$HOME/.zshenv"
 ln -s "$dfdir/vimrc" "$HOME/.vimrc"
 ln -s "$dfdir/vim" "$HOME/.vim"
 
-ln -s $dfdir/indent.pro $HOME/.indent.pro
-ln -s $dfdir/screenrc $HOME/.screenrc
-ln -s $dfdir/tmux.conf $HOME/.tmux.conf
-ln -s $dfdir/ledgerrc $HOME/.ledgerrc
-ln -s $dfdir/toprc $HOME/.toprc
+ln -s "$dfdir/indent.pro" "$HOME/.indent.pro"
+ln -s "$dfdir/screenrc" "$HOME/.screenrc"
+ln -s "$dfdir/tmux.conf" "$HOME/.tmux.conf"
+ln -s "$dfdir/ledgerrc" "$HOME/.ledgerrc"
+ln -s "$dfdir/toprc" "$HOME/.toprc"
 
 ln -s "$dfdir/gitconfig" "$HOME/.gitconfig"
 
