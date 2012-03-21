@@ -19,6 +19,9 @@ ln -s $dfdir/tmux.conf $HOME/.tmux.conf
 ln -s $dfdir/ledgerrc $HOME/.ledgerrc
 ln -s $dfdir/toprc $HOME/.toprc
 
+ln -s "$dfdir/muttrc" "$HOME/.muttrc"
+ln -s "$dfdir/mutt" "$HOME/.mutt"
+
 ln -s "$dfdir/gitconfig" "$HOME/.gitconfig"
 
 ln -s "$dfdir/irssi" "$HOME/.irssi"
