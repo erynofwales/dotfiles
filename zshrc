@@ -62,10 +62,10 @@ precmd_git_rprompt()
     fi
     branch=`echo $gstat | sed -n -e '2,$d' \
                                  -e 's/.*\ \([^\ ^:\\*?\[]*\)$/\1/p'`
-    RPROMPT="$branch"
+    RPROMPT="%F{yellow}$branch%f"
     echo $gstat | grep '^nothing' 1>/dev/null 2>&1
     if [[ $? != 0 ]]; then
-        RPROMPT="%B%F{green}*%f%b$RPROMPT"
+        RPROMPT="%B%F{red}*%f%b$RPROMPT"
     fi
 }
 
