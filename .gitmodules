@@ -24,7 +24,7 @@
 	url = https://github.com/altercation/vim-colors-solarized.git
 [submodule "vim/bundle/gundo"]
 	path = vim/bundle/gundo
-	url = http://github.com/sjl/gundo.vim.git
+	url = https://github.com/sjl/gundo.vim.git
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
 	url = https://git.wincent.com/command-t.git
