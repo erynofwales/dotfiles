@@ -159,6 +159,7 @@ fpath=($HOME/.zsh/func $fpath)
 
 # Wikipedia lookup, courtesy of msanders@github
 autoload wiki
+# A few of my own modules...
 autoload mkmdir
 autoload pw
 autoload mkcmod
