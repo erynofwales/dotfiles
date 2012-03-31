@@ -27,7 +27,7 @@
 	url = https://github.com/sjl/gundo.vim.git
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
-	url = https://git.wincent.com/command-t.git
+	url = https://github.com/wincent/Command-T.git
 [submodule "vim/bundle/repeat"]
 	path = vim/bundle/repeat
 	url = https://github.com/tpope/vim-repeat
