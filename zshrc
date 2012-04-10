@@ -50,7 +50,7 @@ precmd_separator_info()
     for (( i=0; $i < $filler; i++)); do
         pstr="${pstr}-"
     done
-    print -P "%{\e[38;5;240m%}$pstr$time%{\e[0m%}"
+    print -P "%K{black}$pstr$time%k"
 }
 
 precmd_git_rprompt()
@@ -148,7 +148,6 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
 # Expand partial paths
 zstyle ':completion:*' expand 'yes'
-
 
 ###
 # FUNCTIONS
