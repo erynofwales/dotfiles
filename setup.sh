@@ -1,36 +1,39 @@
-#!/bin/bash
+#!/bin/zsh
 
 dfdir=$(cd "$(dirname "$0")" && pwd)
 
-ln -s "$dfdir/profile" "$HOME/.profile"
-ln -s "$dfdir/rc" "$HOME/.rc"
+print -P "%BSymlinking config files%b"
+for dotfile in `ls .`
+do
+    [ $dotfile = 'setup.sh' ] && continue
 
-ln -s "$dfdir/zshrc" "$HOME/.zshrc"
-ln -s "$dfdir/zsh" "$HOME/.zsh"
-ln -s "$dfdir/zprofile" "$HOME/.zprofile"
-ln -s "$dfdir/zshenv" "$HOME/.zshenv"
+    local dest="$HOME/.$dotfile"
+    local action='skipped'
 
-ln -s "$dfdir/vimrc" "$HOME/.vimrc"
-ln -s "$dfdir/vim" "$HOME/.vim"
+    if [[ ! -L "$dest" ]]; then
+        action='linked'
+    else
+        action='skipped'
+    fi
+    filler=$(($COLUMNS - ${#dest} - ${#action} - 4))
+    spaces=''
+    for (( i=0; $i < $filler; i++ )); do spaces="$spaces " done
 
-ln -s "$dfdir/indent.pro" "$HOME/.indent.pro"
-ln -s "$dfdir/screenrc" "$HOME/.screenrc"
-ln -s "$dfdir/tmux.conf" "$HOME/.tmux.conf"
-ln -s "$dfdir/ledgerrc" "$HOME/.ledgerrc"
-ln -s "$dfdir/toprc" "$HOME/.toprc"
+    echo -n "  $dest"
+    if [[ $action = 'linked' ]]; then
+        ln -fs "$dfdir/$dotfile" "$dest"
+        action="%F{yellow}$action%f"
+    else
+        action="%F{green}$action%f"
+    fi
+    print -P "$spaces%F{green}$action%f"
+done
 
-ln -s "$dfdir/muttrc" "$HOME/.muttrc"
-ln -s "$dfdir/mutt" "$HOME/.mutt"
-
-ln -s "$dfdir/gitconfig" "$HOME/.gitconfig"
-
-ln -s "$dfdir/irssi" "$HOME/.irssi"
-
-[ `uname -s` = "Linux" ] && ln -s "$dfdir/Xdefaults" "$HOME/.Xdefaults"
-
+echo "touch $HOME/.hushlogin"
 touch "$HOME/.hushlogin"
 
-# Initialized submodules
+# Initialize submodules
+print -P "%BInitializing git submodules%b"
 cd "$dfdir"
 git submodule init
 git submodule update
