@@ -1,5 +1,12 @@
 # .zshrc
+# vim: ft=zsh
+#
+# ZSH init for interactive shells
+#
 # Eryn Wells <eryn@erynwells.me>
+
+# load bash/zsh/ksh agnostic configurations
+source $HOME/.rc
 
 # PROMPT
 #   ' histnum bgjobsflag time (%|#)'
@@ -16,12 +23,6 @@ else
     bgjob="%(1j.%{$fg_bold[magenta]%}* %{$reset_color%}.)"
     hist="%(0?.%h.%{$fg_bold[red]%}%h%{$reset_color%})"
     isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
-
-    # where do I include these?
-    #bgjob="%(1j.%B*%b.)"
-    #cmdstat="%(0?..%B!%b)"
-    #isroot="%(!.%B#%b.)"
-    #mytime="%T"
 fi
 
 PROMPT=" $hist $bgjob$isroot "
@@ -77,9 +78,6 @@ setopt \
     EXTENDED_GLOB \
     MULTIOS
 
-# load bash/zsh/ksh agnostic configurations
-source $HOME/.rc
-
 alias pd='pushd'
 alias pod='popd'
 
@@ -111,16 +109,21 @@ HISTFILE="$HOME/.zhistory"
 #[ -n "$DISPLAY" ] && alias -s pdf='evince'
 #[ -n "$DISPLAY" ] && alias -s dvi='evince'
 
-# host specific initialization
-[ -e $HOME/.zshrc-local ] && . ~/.zshrc-local
+# Set up dircolors
+if [ -e $HOME/.dircolors/$sys.cfg ]; then
+    dircolors=$HOME/.dircolors/$sys.cfg
+else
+    dircolors=$HOME/.dircolors/default.cfg
+fi
+eval `dircolors $dircolors`
 
 # emacs command line editing
 bindkey -v
 
 
-#
+###
 # Completion
-#
+###
 
 # load completion system
 autoload -U compinit
@@ -158,8 +161,11 @@ fpath=($HOME/.zsh/func $fpath)
 
 # Wikipedia lookup, courtesy of msanders@github
 autoload wiki
+# Make a Maildir
 autoload mkmdir
+# Generate a password
 autoload pw
+# Make a C module (.c and .h pair)
 autoload mkcmod
 
 # Go up $1 directories, where $1 is an integer (saves me from having to type ../
@@ -178,11 +184,5 @@ function up {
 }
 
 
-# Toggle showing a separator before every command
-function tsep {
-    if (($precmd_functions[(Ie)precmd_separator] > 0)); then
-        precmd_functions=${precmd_functions#precmd_separator}
-    else
-        precmd_functions+=(precmd_separator)
-    fi
-}
+[ -e $HOME/.zshrc.$SYS ] && source $HOME/.zshrc.$SYS
+[ -e $HOME/.zshrc.local ] && source $HOME/.zshrc.local
