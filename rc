@@ -25,9 +25,15 @@ alias today='date +%Y-%m-%d'
 
 alias addkey="ssh-agent ~/.ssh/id_rsa"
 
+alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.stdin), indent=2)'"
+
 which osascript &>/dev/null
 if [[ $? -eq 0 ]]; then
     alias itp="osascript $HOME/Code/AppleScripts/iTunes/previous-track.scpt"
     alias itn="osascript $HOME/Code/AppleScripts/iTunes/next-track.scpt"
     alias ito="osascript $HOME/Code/AppleScripts/iTunes/toggle.scpt"
+fi
+
+if [[ -e $HOME/.rc-local ]]; then
+    source $HOME/.rc-local
 fi

@@ -1,0 +1,20 @@
+# .env
+# vim: ft=zsh
+#
+# Environment settings for bash and derivatives
+#
+# Eryn Wells <eryn@erynwells.me>
+
+export SYS=`uname -s | tr A-Z a-z`
+
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+[ -d /usr/X11/bin ]     && PATH=$PATH:/usr/X11/bin
+[ -d /opt/local/bin ]   && PATH=/opt/local/bin:$PATH
+[ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
+[ -d $HOME/bin ]        && PATH=$HOME/bin:$PATH
+export PATH
+
+# System specific environment settings
+[ -e $HOME/.env.$SYS ] && source $HOME/.env.$SYS
+# Local environment settings
+[ -e $HOME/.env.local ] && source $HOME/.env.local

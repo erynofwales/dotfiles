@@ -104,7 +104,9 @@ if &t_Co > 2 || has('gui_running')
     syntax on           " turn on syntax highlighting
 endif
 
-" use a colorscheme if the terminal can support it (or we're in a GUI)
+" use solarized colorscheme if the terminal can support it (or we're in a GUI)
+let g:solarized_termtrans=1
+let g:solarized_visibility='low'
 if has('gui_running')
     set bg=light
     colorscheme solarized
