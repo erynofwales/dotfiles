@@ -3,17 +3,13 @@
 # Generic interactive shell setup
 # Eryn Wells <eryn@erynwells.me>
 
-which gls &>/dev/null
-if [[ $? -eq 0 ]]; then
-    lsbin='gls'
-else
-    lsbin='ls'
-fi
+[ -e $HOME/.rc.$SYS ] && source $HOME/.rc.$SYS
+[ -e $HOME/.rc.local ] && source $HOME/.rc.local
 
-alias ls="$lsbin --color=auto"
-alias la="$lsbin -A --color=auto"
-alias ll="$lsbin -l --color=auto"
-alias l.="$lsbin -d --color=auto .*"
+alias ls="ls --color=auto"
+alias la="ls -A --color=auto"
+alias ll="ls -l --color=auto"
+alias l.="ls -d --color=auto .*"
 alias j='jobs'
 alias h='history'
 alias df='df -h'
@@ -26,14 +22,3 @@ alias today='date +%Y-%m-%d'
 alias addkey="ssh-agent ~/.ssh/id_rsa"
 
 alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.stdin), indent=2)'"
-
-which osascript &>/dev/null
-if [[ $? -eq 0 ]]; then
-    alias itp="osascript $HOME/Code/AppleScripts/iTunes/previous-track.scpt"
-    alias itn="osascript $HOME/Code/AppleScripts/iTunes/next-track.scpt"
-    alias ito="osascript $HOME/Code/AppleScripts/iTunes/toggle.scpt"
-fi
-
-if [[ -e $HOME/.rc-local ]]; then
-    source $HOME/.rc-local
-fi
