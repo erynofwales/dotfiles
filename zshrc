@@ -110,8 +110,8 @@ HISTFILE="$HOME/.zhistory"
 #[ -n "$DISPLAY" ] && alias -s dvi='evince'
 
 # Set up dircolors
-if [ -e $HOME/.dircolors/$sys.cfg ]; then
-    dircolors=$HOME/.dircolors/$sys.cfg
+if [ -e $HOME/.dircolors/$SYS.cfg ]; then
+    dircolors=$HOME/.dircolors/$SYS.cfg
 else
     dircolors=$HOME/.dircolors/default.cfg
 fi
