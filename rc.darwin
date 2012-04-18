@@ -2,7 +2,10 @@
 # Darwin specific interactive shell setup for Bash and derivatives
 # Eryn Wells <eryn@erynwells.me>
 
-alias ls='gls'
+alias ls="gls --color=auto"
+alias la="gls -A --color=auto"
+alias ll="gls -l --color=auto"
+alias l.="gls -d --color=auto .*"
 alias dircolors='gdircolors'
 
 if [[ $? -eq 0 ]]; then
