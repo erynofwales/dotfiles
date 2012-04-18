@@ -6,7 +6,7 @@
 # Eryn Wells <eryn@erynwells.me>
 
 # load bash/zsh/ksh agnostic configurations
-source $HOME/.rc
+[ -e $HOME/.rc ] && source $HOME/.rc
 
 # PROMPT
 #   ' histnum bgjobsflag time (%|#)'
@@ -182,7 +182,6 @@ function up {
         pushd $updir
     fi
 }
-
 
 [ -e $HOME/.zshrc.$SYS ] && source $HOME/.zshrc.$SYS
 [ -e $HOME/.zshrc.local ] && source $HOME/.zshrc.local
