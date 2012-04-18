@@ -5,7 +5,9 @@ dfdir=$(cd "$(dirname "$0")" && pwd)
 print -P "%BSymlinking config files%b"
 for dotfile in `ls .`
 do
+    # metafiles; don't link them
     [ $dotfile = 'setup.sh' ] && continue
+    [ $dotfile = 'README.md' ] && continue
 
     local dest="$HOME/.$dotfile"
     local action='skipped'
