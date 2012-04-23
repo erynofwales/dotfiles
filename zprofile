@@ -1,5 +1,13 @@
 # .zprofile
 # vim:ft=zsh
-# Eryn Wells <eryn@3b518c.com>
+#
+# Login shell setup
+#
+# Eryn Wells <eryn@erynwells.me>
 
-source $HOME/.profile
+[ -e $HOME/.profile ] && source $HOME/.profile
+
+# Any ZSH stuff goes here.
+
+[ -e $HOME/.profile.$SYS ] && source $HOME/.profile.$SYS
+[ -e $HOME/.profile.local ] && source $HOME/.profile.local
