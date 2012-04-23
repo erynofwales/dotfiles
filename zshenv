@@ -23,14 +23,6 @@ export PATH \
 
 [ $SYS = 'linux' ] && export MAIL="/var/mail/$USER"
 
-local py27local=$HOME/.local/lib/python2.7/site-packages
-if [[ ! -z $PYTHONPATH ]]; then
-    [ -d $py27local ] && PYTHONPATH=$py27local:$PYTHONPATH
-else
-    PYTHONPATH=$py27local
-fi
-export PYTHONPATH
-
 # System specific environment settings
 [ -e $HOME/.zshenv.$SYS ] && source $HOME/.zshenv.$SYS
 # Local environment settings
