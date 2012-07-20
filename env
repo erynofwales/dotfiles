@@ -1,20 +1,55 @@
 # .env
 # vim: ft=zsh
 #
-# Environment settings for bash and derivatives
+# Environment settings for bash and derivatives. The env scripts are sources by
+# Zsh for every shell, even the non-interactive ones, so this needs to be small
+# and quick. Any configuration that will only be used for interactive sessions
+# should be in the rc scripts.
 #
 # Eryn Wells <eryn@erynwells.me>
 
 export SYS=`uname -s | tr A-Z a-z`
 
+PAGER="less"
+MANPAGER=$PAGER
+EDITOR="vim"
+VISUAL=$EDITOR
+LESSHISTFILE="-"
+GREP_OPTIONS="--color=auto"
+GREP_COLOR="1;32"
+
+export PAGER MANPAGER \
+       EDITOR VISUAL \
+       LESSHISTFILE \
+       GREP_OPTIONS GREP_COLOR
+
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+# NOTE: These prepended to $PATH in reverse order, so $HOME/bin will end up
+# being the first path component.
 [ -d /usr/X11/bin ]     && PATH=$PATH:/usr/X11/bin
 [ -d /opt/local/bin ]   && PATH=/opt/local/bin:$PATH
 [ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
 [ -d $HOME/bin ]        && PATH=$HOME/bin:$PATH
+
 export PATH
 
 # System specific environment settings
-[ -e $HOME/.env.$SYS ] && source $HOME/.env.$SYS
+case $SYS in
+    darwin)
+        export PATH=$HOME/Library/Python/2.7/bin:$PATH
+
+        local py27local=$HOME/Library/Python/2.7/lib/python/site-packages
+        if [[ ! -z $PYTHONPATH ]]; then
+            [ -d $py27local ] && PYTHONPATH=$py27local:$PYTHONPATH
+        else
+            PYTHONPATH=$py27local
+        fi
+        export PYTHONPATH
+        ;;
+    linux)
+        export MAIL="/var/mail/$USER"
+        ;;
+esac
+
 # Local environment settings
 [ -e $HOME/.env.local ] && source $HOME/.env.local
