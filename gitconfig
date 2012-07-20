@@ -3,7 +3,7 @@
     email = eryn@erynwells.me
 [core]
     editor = vim
-	quotepath = false
+    quotepath = false
 [color]
     ui = auto
 [merge]
