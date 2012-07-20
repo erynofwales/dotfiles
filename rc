@@ -3,16 +3,18 @@
 # Generic interactive shell setup
 # Eryn Wells <eryn@erynwells.me>
 
-alias ls="ls --color=auto"
-alias la="ls -A --color=auto"
-alias ll="ls -l --color=auto"
-alias l.="ls -d --color=auto .*"
 alias j='jobs'
 alias h='history'
 alias df='df -h'
 alias du='du -h'
 alias g='git'
-alias l='ledger'
+alias v='view'
+
+$(hash ledger 1>/dev/null 2>&1) && alias l='ledger'
+
+alias cux='chmod u+x'
+alias cuw='chmod u+w'
+alias cur='chmod u+r'
 
 alias today='date +%Y-%m-%d'
 
@@ -20,5 +22,29 @@ alias addkey="ssh-agent ~/.ssh/id_rsa"
 
 alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.stdin), indent=2)'"
 
-[ -e $HOME/.rc.$SYS ] && source $HOME/.rc.$SYS
+case $SYS in
+    darwin)
+        if $(hash gls 1>/dev/null 2>&1); then
+            ls='gls'
+            ls_options="--color=auto"
+        else
+            ls='ls'
+            ls_options='-G'
+        fi
+        alias ls="$ls $ls_options"
+        alias la="$ls -A $ls_options"
+        alias ll="$ls -l $ls_options"
+        $(hash gdircolors 1>/dev/null 2>&1) && alias dircolors='gdircolors'
+        ;;
+    linux)
+        alias ls="ls --color=auto"
+        alias la="ls -A --color=auto"
+        alias ll="ls -l --color=auto"
+        alias l.="ls -d --color=auto .*"
+        ;;
+    *)
+        print -P "%F{red}==>%f What system *is* this, anyway?"
+        ;;
+esac
+
 [ -e $HOME/.rc.local ] && source $HOME/.rc.local
