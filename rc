@@ -3,6 +3,8 @@
 # Generic interactive shell setup
 # Eryn Wells <eryn@erynwells.me>
 
+. $HOME/.shell-functions
+
 alias j='jobs'
 alias h='history'
 alias df='df -h'
@@ -10,7 +12,7 @@ alias du='du -h'
 alias g='git'
 alias v='view'
 
-$(hash ledger 1>/dev/null 2>&1) && alias l='ledger'
+binary_exists ledger && alias l='ledger'
 
 alias cux='chmod u+x'
 alias cuw='chmod u+w'
@@ -24,7 +26,7 @@ alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.std
 
 case $SYS in
     darwin)
-        if $(hash gls 1>/dev/null 2>&1); then
+        if binary_exists gls; then
             ls='gls'
             ls_options="--color=auto"
         else
@@ -34,7 +36,7 @@ case $SYS in
         alias ls="$ls $ls_options"
         alias la="$ls -A $ls_options"
         alias ll="$ls -l $ls_options"
-        $(hash gdircolors 1>/dev/null 2>&1) && alias dircolors='gdircolors'
+        binary_exists gdircolors && alias dircolors='gdircolors'
         ;;
     linux)
         alias ls="ls --color=auto"
@@ -43,7 +45,7 @@ case $SYS in
         alias l.="ls -d --color=auto .*"
         ;;
     *)
-        print -P "%F{red}==>%f What system *is* this, anyway?"
+        print_error "What system %Bis%b this, anyway?"
         ;;
 esac
 
