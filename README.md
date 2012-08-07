@@ -41,6 +41,14 @@ environment files have three levels:
 Files 2 and 3 are sourced at the end of the main file, so any settings you add
 there will override those set in the main file.
 
+## Loud Noises!
+
+In a recent change I added some extra functions to print out status
+messages as ZSH starts up. These are all defined in `shell-functions`
+(symlinked to `~/.shell-functions` by the setup script). At any point in the
+setup process, you can set the variable `$NOISY` to a number greater than 0 to
+see extra status messages.
+
 ## License
 
 Everything in this repository is licensed under the [Creative Commons
