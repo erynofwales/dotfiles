@@ -5,6 +5,8 @@
 #
 # Eryn Wells <eryn@erynwells.me>
 
+print_info_noisy 1 'Initializing login shell'
+
 [ -e $HOME/.profile ] && source $HOME/.profile
 
 # Any ZSH stuff goes here.

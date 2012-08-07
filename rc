@@ -3,16 +3,21 @@
 # Generic interactive shell setup
 # Eryn Wells <eryn@erynwells.me>
 
-alias ls="ls --color=auto"
-alias la="ls -A --color=auto"
-alias ll="ls -l --color=auto"
-alias l.="ls -d --color=auto .*"
+print_info_noisy 1 'Initializing interactive shell'
+
+print_info_sub_noisy 2 'Creating aliases'
 alias j='jobs'
 alias h='history'
 alias df='df -h'
 alias du='du -h'
 alias g='git'
-alias l='ledger'
+alias v='view'
+
+binary_exists ledger && alias l='ledger'
+
+alias cux='chmod u+x'
+alias cuw='chmod u+w'
+alias cur='chmod u+r'
 
 alias today='date +%Y-%m-%d'
 
@@ -20,5 +25,51 @@ alias addkey="ssh-agent ~/.ssh/id_rsa"
 
 alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.stdin), indent=2)'"
 
-[ -e $HOME/.rc.$SYS ] && source $HOME/.rc.$SYS
+case $SYS in
+    darwin)
+        if binary_exists gls; then
+            ls='gls'
+            ls_options="--color=auto"
+        else
+            ls='ls'
+            ls_options='-G'
+        fi
+        alias ls="$ls $ls_options"
+        alias la="$ls -A $ls_options"
+        alias ll="$ls -l $ls_options"
+        binary_exists gdircolors && alias dircolors='gdircolors'
+	alias indent='gnuindent'
+	alias acls='/bin/ls -le'
+        ;;
+    linux)
+        alias ls="ls --color=auto"
+        alias la="ls -A --color=auto"
+        alias ll="ls -l --color=auto"
+        alias l.="ls -d --color=auto .*"
+        # iptables aliases
+        alias iptls='sudo iptables --line-numbers -nv -L'
+        alias ip6tls='sudo ip6tables --line-numbers -nv -L'
+        alias rlx="xrdb $HOME/.Xdefaults"
+        ;;
+    *)
+        print_error "What system %Bis%b this, anyway?"
+        ;;
+esac
+
+# Set up dircolors
+if [ -e $HOME/.dircolors/$SYS.cfg ]; then
+    dircolors=$HOME/.dircolors/$SYS.cfg
+else
+    dircolors=$HOME/.dircolors/default.cfg
+fi
+eval `dircolors $dircolors`
+
+# NetHack options
+# use color in the terminal
+export NETHACKOPTIONS="color"
+
+# Default ledger file
+[ -e "$HOME/Documents/Financial/personal.ledger" ] && \
+    LEDGER_FILE=$HOME/Documents/Financial/personal.ledger
+
 [ -e $HOME/.rc.local ] && source $HOME/.rc.local

@@ -1,5 +1,5 @@
 " ~/.vimrc
-" Eryn Wells <eryn@3b518c.com>
+" Eryn Wells <eryn@erynwells.me>
 
 set nocompatible        "use enhanced vim features
 
@@ -31,8 +31,6 @@ set colorcolumn=80      " highlight 80th column
 set showmatch           " show matching things: (), {}, [], etc
 
 set fo+=n               " format numbered lists properly
-set fo+=2               " format paragraphs with first line indent different
-                        "   from rest
 
 if has('gui_running')
     set list
@@ -60,8 +58,10 @@ else
     set spellfile=~/.vim/spelling.en.add
 endif
 
-set noswapfile          " disable swap file
-set nobackup            " disable backup files
+set noswapfile          " don't keep swap files
+set nobackup            " don't keep backup files
+set backupdir=~/.vim/backup
+                        " save backup files here
 set undofile            " save undo history
 set undodir=~/.vim/undo " save undo files here
 set history=1000        " remember 1000 commands in history
@@ -129,7 +129,7 @@ if has('gui_running')
     if has('win32') || has('win64')
         set guifont=Inconsolata:h18
     elseif has('mac')
-        set guifont=Menlo:h14
+        set guifont=Menlo:h11
     elseif has('linux')
         set guifont=Inconsolata\ 14
     endif
@@ -151,15 +151,11 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-" gonna give this a try... exit from insert mode with jj
-inoremap jj <ESC>
-
 " make switching windows easier
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
 
 function! <SID>StripTrailingWhitespace()
     " save last search
@@ -195,7 +191,8 @@ let g:CommandTAcceptSelectionTabMap='<CR>'
 if has('autocmd')
     filetype plugin indent on
 
-    autocmd BufAdd,BufEnter,BufFilePost *.md :set ft=markdown
+    " Markdown files can also have the .md extension
+    autocmd BufAdd,BufEnter,BufFilePost *.md :setlocal ft=markdown
 
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
@@ -204,10 +201,11 @@ if has('autocmd')
         \   exe "normal! g`\"" |
         \ endif
 
-    " Clean whitespace before saving
-    autocmd BufWritePre *.py,*.c,*.html :call <SID>StripTrailingWhitespace()
+    " Clean whitespace before saving: Python, C, HTML, and Objective-C
+    autocmd BufWritePre *.py,*.h,*.c,*.html,*.m
+        \ :call <SID>StripTrailingWhitespace()
 endif
 
-if exists("~/.vimrc-local")
-    source ~/.vimrc-local
+if exists("~/.vimrc.local")
+    source ~/.vimrc.local
 endif

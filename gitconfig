@@ -1,9 +1,9 @@
 [user]
-    name = Eryn Wells
-    email = eryn@erynwells.me
+	name = Eryn Wells
+	email = eryn@erynwells.me
 [core]
     editor = vim
-	quotepath = false
+    quotepath = false
 [color]
     ui = auto
 [merge]
@@ -14,3 +14,8 @@
     ci = commit
     br = branch
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    push = push -u
+[ui]
+	color = true
+[mergetool]
+	keepBackup = true
