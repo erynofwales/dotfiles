@@ -25,6 +25,7 @@ else
     isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
 fi
 
+print_info_sub_noisy 2 'Setting prompt'
 PROMPT=" $hist $bgjob$isroot "
 
 
@@ -72,6 +73,7 @@ precmd_git_rprompt()
 
 precmd_functions=(precmd_xterm_title precmd_separator_info precmd_git_rprompt)
 
+print_info_sub_noisy 2 'Initializing ZSH'
 # Shell options
 setopt \
     TRANSIENT_RPROMPT \
@@ -106,17 +108,6 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE="$HOME/.zhistory"
 
-#[ -n "$DISPLAY" ] && alias -s pdf='evince'
-#[ -n "$DISPLAY" ] && alias -s dvi='evince'
-
-# Set up dircolors
-if [ -e $HOME/.dircolors/$SYS.cfg ]; then
-    dircolors=$HOME/.dircolors/$SYS.cfg
-else
-    dircolors=$HOME/.dircolors/default.cfg
-fi
-eval `dircolors $dircolors`
-
 # emacs command line editing
 bindkey -v
 
@@ -124,6 +115,8 @@ bindkey -v
 ###
 # Completion
 ###
+
+print_info_sub_noisy 2 'Initializing completion'
 
 # load completion system
 autoload -U compinit

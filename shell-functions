@@ -9,5 +9,16 @@ function print_msg { print -P "%F{$1}==>%f $2" }
 function print_info { print_msg 'blue' "$@" }
 function print_error { print_msg 'red' "$@" }
 
+function print_msg_sub { print -P "    %F{$1}*%f $2" }
+function print_info_sub { print_msg_sub 'blue' "$@" }
+function print_error_sub { print_msg_sub 'error' "$@" }
+
+# Print if $NOISY is set
+function print_info_noisy { [ ${NOISY:-0} -ge $1 ] && print_info $@[2,-1] }
+function print_error_noisy { [ ${NOISY:-0} -ge $1 ] && print_error $@[2,-1] }
+
+function print_info_sub_noisy { [ ${NOISY:-0} -ge $1 ] && print_info_sub $@[2,-1] }
+function print_error_sub_noisy { [ ${NOISY:-0} -ge $1 ] && print_error_sub $@[2,-1] }
+
 # Return 1 if the binary exists (according to hash); 0 otherwise.
 function binary_exists { return $(hash $1 1>/dev/null 2>&1) }

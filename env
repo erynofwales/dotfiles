@@ -8,8 +8,13 @@
 #
 # Eryn Wells <eryn@erynwells.me>
 
-export SYS=`uname -s | tr A-Z a-z`
+[ -e $HOME/.shell-functions ] && source $HOME/.shell-functions
 
+export SYS=`uname -s | tr A-Z a-z`
+# Set this to a non-zero integer to see startup messages
+export NOISY=0
+
+print_info_noisy 1 "Initializing environment for $SYS system"
 PAGER="less"
 MANPAGER=$PAGER
 EDITOR="vim"
@@ -33,7 +38,6 @@ PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
 export PATH
 
-# System specific environment settings
 case $SYS in
     darwin)
         export PATH=$HOME/Library/Python/2.7/bin:$PATH

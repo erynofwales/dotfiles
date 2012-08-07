@@ -3,8 +3,9 @@
 # Generic interactive shell setup
 # Eryn Wells <eryn@erynwells.me>
 
-. $HOME/.shell-functions
+print_info_noisy 1 'Initializing interactive shell'
 
+print_info_sub_noisy 2 'Creating aliases'
 alias j='jobs'
 alias h='history'
 alias df='df -h'
@@ -37,16 +38,38 @@ case $SYS in
         alias la="$ls -A $ls_options"
         alias ll="$ls -l $ls_options"
         binary_exists gdircolors && alias dircolors='gdircolors'
+	alias indent='gnuindent'
+	alias acls='/bin/ls -le'
         ;;
     linux)
         alias ls="ls --color=auto"
         alias la="ls -A --color=auto"
         alias ll="ls -l --color=auto"
         alias l.="ls -d --color=auto .*"
+        # iptables aliases
+        alias iptls='sudo iptables --line-numbers -nv -L'
+        alias ip6tls='sudo ip6tables --line-numbers -nv -L'
+        alias rlx="xrdb $HOME/.Xdefaults"
         ;;
     *)
         print_error "What system %Bis%b this, anyway?"
         ;;
 esac
+
+# Set up dircolors
+if [ -e $HOME/.dircolors/$SYS.cfg ]; then
+    dircolors=$HOME/.dircolors/$SYS.cfg
+else
+    dircolors=$HOME/.dircolors/default.cfg
+fi
+eval `dircolors $dircolors`
+
+# NetHack options
+# use color in the terminal
+export NETHACKOPTIONS="color"
+
+# Default ledger file
+[ -e "$HOME/Documents/Financial/personal.ledger" ] && \
+    LEDGER_FILE=$HOME/Documents/Financial/personal.ledger
 
 [ -e $HOME/.rc.local ] && source $HOME/.rc.local
