@@ -107,13 +107,12 @@ endif
 " use solarized colorscheme if the terminal can support it (or we're in a GUI)
 let g:solarized_termtrans=1
 let g:solarized_visibility='low'
-if has('gui_running')
+if has('gui')
     set bg=light
-    colorscheme solarized
 else
     set bg=dark
-    colorscheme solarized
 endif
+colorscheme solarized
 
 " tell SnipMate who I am
 let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
@@ -134,7 +133,7 @@ if has('gui_running')
         set guifont=Inconsolata\ 14
     endif
     set guioptions-=T       " turn off toolbar
-    set guioptions-=m       " turn off toolbar
+    set guioptions-=m       " turn off menubar
 endif
 
 nmap <F3> :GundoToggle<CR>
