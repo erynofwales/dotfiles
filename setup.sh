@@ -37,14 +37,16 @@ do
     spaces=''
     for (( i=0; $i < $filler; i++ )); do spaces="$spaces "; done
 
-    echo -n "  $dest$spaces"
-    if [[ $action = 'linked' ]]; then
+    echo -n "  $dest"
+    if [[ $action == 'linked' ]]; then
         ln -fs "$dfdir/$dotfile" "$dest"
+        action="%F{green}$action%f"
+    elif [[ $action == 'skipped' ]]; then
         action="%F{yellow}$action%f"
     else
-        action="%F{green}$action%f"
+        action="%F{red}red%f"
     fi
-    print -P $action
+    print -P "$spaces$action"
 done
 
 echo "touch $HOME/.hushlogin"
