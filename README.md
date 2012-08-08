@@ -19,8 +19,8 @@ Run the setup script.
     cd ~/.dotfiles
     ./setup.sh
 
-This script will symlink all the files in the directory to your home directory
-and initialize the various submodules (mostly Vim plugins).
+This script will symlink all the config files in the directory to your home
+directory, clone a bunch of git repos, and do some other miscellaneous setup.
 
 Enjoy.
 
