@@ -82,4 +82,9 @@ for module in ${(k)vimbundles}; do
     print -P "$spaces%F{$color}$result%f"
 done
 
+print -P "%BSetting up command-t%b"
+cd "$dfdir/vim/bundle/command-t"
+ruby extconf.rb
+make
+
 exit 0
