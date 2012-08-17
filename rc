@@ -25,6 +25,7 @@ alias addkey="ssh-agent ~/.ssh/id_rsa"
 
 alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.stdin), indent=2)'"
 
+print_info_sub_noisy 2 "Sourcing ${SYS}-specific settings"
 case $SYS in
     darwin)
         if binary_exists gls; then
@@ -57,6 +58,7 @@ case $SYS in
 esac
 
 # Set up dircolors
+print_info_sub_noisy 3 "Setting up dircolors"
 if [ -e $HOME/.dircolors/$SYS.cfg ]; then
     dircolors=$HOME/.dircolors/$SYS.cfg
 else
@@ -72,4 +74,7 @@ export NETHACKOPTIONS="color"
 [ -e "$HOME/Documents/Financial/personal.ledger" ] && \
     LEDGER_FILE=$HOME/Documents/Financial/personal.ledger
 
-[ -e $HOME/.rc.local ] && source $HOME/.rc.local
+if [ -e $HOME/.rc.local ]; then
+    print_info_noisy 2 "Sourcing local settings for interactive shells"
+    source $HOME/.rc.local
+fi

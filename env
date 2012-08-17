@@ -14,7 +14,7 @@ export SYS=`uname -s | tr A-Z a-z`
 # Set this to a non-zero integer to see startup messages
 export NOISY=0
 
-print_info_noisy 1 "Initializing environment for $SYS system"
+print_info_noisy 1 'Initializing environment'
 PAGER="less"
 MANPAGER=$PAGER
 EDITOR="vim"
@@ -38,6 +38,7 @@ PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
 export PATH
 
+print_info_sub_noisy 2 "Setting up $SYS environment"
 case $SYS in
     darwin)
         export PATH=$HOME/Library/Python/2.7/bin:$PATH
@@ -56,4 +57,7 @@ case $SYS in
 esac
 
 # Local environment settings
-[ -e $HOME/.env.local ] && source $HOME/.env.local
+if [ -e $HOME/.env.local ]; then
+    print_info_noisy 2 "Sourcing local environment setup"
+    source $HOME/.env.local
+fi

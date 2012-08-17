@@ -8,6 +8,8 @@
 # load bash/zsh/ksh agnostic configurations
 [ -e $HOME/.rc ] && source $HOME/.rc
 
+print_info_noisy 1 "Initializing interactive Z Shell"
+
 # PROMPT
 #   ' histnum bgjobsflag time (%|#)'
 #   Colors are determined based on zsh capability (>= version 4.3.7)
@@ -57,29 +59,29 @@ precmd_separator_info()
 
 precmd_git_rprompt()
 {
-    gstat=`git status 2>/dev/null`
+    #local gstat=`git status 2>/dev/null`
+    local branch=`git branch 2>/dev/null | grep '^\*' | cut -d' ' -f2`
     if [[ $? != 0 ]]; then 
         RPROMPT=''
         return
     fi
-    branch=`echo $gstat | sed -n -e '2,$d' \
-                                 -e 's/.*\ \([^\ ^:\\*?\[]*\)$/\1/p'`
     RPROMPT="%F{yellow}$branch%f"
-    echo $gstat | grep '^nothing' 1>/dev/null 2>&1
-    if [[ $? != 0 ]]; then
-        RPROMPT="%B%F{red}*%f%b$RPROMPT"
-    fi
+    #echo $gstat | grep '^nothing' 1>/dev/null 2>&1
+    #if [[ $? != 0 ]]; then
+    #    RPROMPT="%B%F{red}*%f%b$RPROMPT"
+    #fi
 }
 
 precmd_functions=(precmd_xterm_title precmd_separator_info precmd_git_rprompt)
 
-print_info_sub_noisy 2 'Initializing ZSH'
+print_info_sub_noisy 2 'Setting options'
 # Shell options
 setopt \
     TRANSIENT_RPROMPT \
     EXTENDED_GLOB \
     MULTIOS
 
+print_info_sub_noisy 3 'Creating aliases'
 alias pd='pushd'
 alias pod='popd'
 
@@ -94,6 +96,7 @@ alias -s xml='vim'
 alias -s jar='java -jar'
 
 # History settings
+print_info_sub_noisy 4 'Setting up history'
 setopt \
     APPEND_HISTORY \
     EXTENDED_HISTORY \
@@ -108,15 +111,23 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE="$HOME/.zhistory"
 
-# emacs command line editing
-bindkey -v
+# command line editing mode
+function {
+    local mode='vim'
+    print_info_sub_noisy 5 "Using $mode command line editing mode"
+    if [[ $mode == 'vim' ]]; then
+        bindkey -v
+    elif [[ $mode == 'emacs' ]]; then
+        bindkey -e
+    fi
+}
 
 
 ###
 # Completion
 ###
 
-print_info_sub_noisy 2 'Initializing completion'
+print_info_sub_noisy 2 'Initializing completion system'
 
 # load completion system
 autoload -U compinit
@@ -176,5 +187,12 @@ function up {
     fi
 }
 
-[ -e $HOME/.zshrc.$SYS ] && source $HOME/.zshrc.$SYS
-[ -e $HOME/.zshrc.local ] && source $HOME/.zshrc.local
+if [ -e $HOME/.zshrc.$SYS ]; then
+    print_info_noisy 3 "Sourcing ${SYS}-specific Z Shell settings"
+    source $HOME/.zshrc.$SYS
+fi
+
+if [ -e $HOME/.zshrc.local ]; then
+    print_info_noisy 3 "Sourcing local Z Shell settings"
+    source $HOME/.zshrc.local
+fi
