@@ -48,7 +48,11 @@ precmd_separator()
 
 precmd_separator_info()
 {
-    pstr=`print -P "\-\-\( %n@%m \)\-\-\( %~ \)"`
+    pstr=''
+    if [ ! -z "$SSH_CONNECTION" ]; then
+        pstr+=`print -P "\-\-\( %n@%m \)"`
+    fi
+    pstr+=`print -P "\-\-\( %~ \)"`
     time=`print -P "\( %T \)\-\-"`
     filler=$(($COLUMNS - ${#pstr} - ${#time}))
     for (( i=0; $i < $filler; i++)); do
