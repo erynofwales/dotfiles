@@ -1,6 +1,6 @@
 [user]
-	name = Eryn Wells
-	email = eryn@erynwells.me
+    name = Eryn Wells
+    email = eryn@erynwells.me
 [core]
     editor = vim
     quotepath = false
@@ -9,13 +9,36 @@
 [merge]
     tool = vimdiff
 [alias]
-    st = status
-    co = checkout
-    ci = commit
-    br = branch
+    # Commits
+    c = commit
+    cm = commit -m
+    cma = commit -am
+    ca = commit --amend
+
+    # Status, diffs
+    s = status
+    l = log
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    push = push -u
+    d = diff
+    dc = diff --cached
+
+    # Branches, etc
+    b = branch
+    co = checkout
+    cob = checkout -b
+
+    # Resets, moving HEAD
+    r = reset
+    r1 = reset HEAD^
+    r2 = reset HEAD^^
+    rh = reset --hard
+    rh1 = reset --hard HEAD^
+    rh2 = reset --hard HEAD^^
+
+    # Remotes
+    p = push -u
+    f = fetch
 [ui]
-	color = true
+    color = true
 [mergetool]
-	keepBackup = true
+    keepBackup = true
