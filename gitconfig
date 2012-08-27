@@ -12,8 +12,12 @@
     # Commits
     c = commit
     cm = commit -m
-    cma = commit -am
-    ca = commit --amend
+    ca = commit -a
+    cam = commit -am
+    # Amended commits
+    cn = commit --amend
+    cna = commit --amend -a
+    cnam = commit --amend -am
 
     # Status, diffs
     s = status
