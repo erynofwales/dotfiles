@@ -23,30 +23,21 @@ alias today='date +%Y-%m-%d'
 
 alias addkey="ssh-agent ~/.ssh/id_rsa"
 
+alias pprint="python -c 'import sys,pprint; pprint.pprint(eval(sys.stdin.read()))'"
 alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.stdin), indent=2)'"
+
+
 
 print_info_sub_noisy 2 "Sourcing ${SYS}-specific settings"
 case $SYS in
     darwin)
-        if binary_exists gls; then
-            ls='gls'
-            ls_options="--color=auto"
-        else
-            ls='ls'
-            ls_options='-G'
-        fi
-        alias ls="$ls $ls_options"
-        alias la="$ls -A $ls_options"
-        alias ll="$ls -l $ls_options"
+	alias acls='command ls -le'
+        # These things might have been installed by Homebrew
         binary_exists gdircolors && alias dircolors='gdircolors'
-	alias indent='gnuindent'
-	alias acls='/bin/ls -le'
+        binary_exists gfind && alias find='gfind'
+	binary_exists gnuindent && alias indent='gnuindent'
         ;;
     linux)
-        alias ls="ls --color=auto"
-        alias la="ls -A --color=auto"
-        alias ll="ls -l --color=auto"
-        alias l.="ls -d --color=auto .*"
         # iptables aliases
         alias iptls='sudo iptables --line-numbers -nv -L'
         alias ip6tls='sudo ip6tables --line-numbers -nv -L'
@@ -57,18 +48,47 @@ case $SYS in
         ;;
 esac
 
-# Set up dircolors
-print_info_sub_noisy 3 "Setting up dircolors"
-if [ -e $HOME/.dircolors/$SYS.cfg ]; then
-    dircolors=$HOME/.dircolors/$SYS.cfg
-else
-    dircolors=$HOME/.dircolors/default.cfg
-fi
-eval `dircolors $dircolors`
+function {
+    local has_gnu_ls=1
+    local ls='ls'
+    local ls_options='--color=auto'
+
+    case $SYS in
+        darwin)
+            if binary_exists gls; then
+                ls='gls'
+            else
+                has_gnu_ls=0
+                ls_options='-G'
+            fi
+            ;;
+        linux)
+            ;;
+        *)
+            has_gnu_ls=0
+            ;;
+    esac
+
+    print_info_sub_noisy 3 "Setting up ls: `which $ls`"
+    alias ls="$ls $ls_options"
+    alias la="$ls -A $ls_options"
+    alias ll="$ls -l $ls_options"
+    alias l.="$ls -d $ls_options .*"
+
+    if [ $has_gnu_ls ]; then
+        if [ -e $HOME/.dircolors/$SYS.cfg ]; then
+            dircolors=$HOME/.dircolors/$SYS.cfg
+        else
+            dircolors=$HOME/.dircolors/default.cfg
+        fi
+        print_info_sub_noisy 3 "Setting up dircolors: `basename $dircolors`"
+        eval `dircolors $dircolors`
+    fi
+}
 
 # NetHack options
 # use color in the terminal
-export NETHACKOPTIONS="color"
+binary_exists nethack && export NETHACKOPTIONS="color"
 
 # Default ledger file
 [ -e "$HOME/Documents/Financial/personal.ledger" ] && \
