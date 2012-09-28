@@ -5,10 +5,12 @@ sys=`uname -s | tr A-Z a-z`
 
 # Vim bundles
 typeset -A vimbundles
+
+# Commented out Vim plugin repos, 'cause I'm not using them...
+#    blackboard "https://github.com/nelstrom/vim-blackboard.git" \
+#    fugitive "https://github.com/tpope/vim-fugitive.git" \
 vimbundles=( \
-    blackboard "https://github.com/nelstrom/vim-blackboard.git" \
     command-t "https://github.com/wincent/Command-T.git" \
-    fugitive "https://github.com/tpope/vim-fugitive.git" \
     gundo "https://github.com/sjl/gundo.vim.git" \
     repeat "https://github.com/tpope/vim-repeat" \
     snipmate "https://github.com/msanders/snipmate.vim.git" \
