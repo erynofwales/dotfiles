@@ -11,13 +11,14 @@ alias h='history'
 alias df='df -h'
 alias du='du -h'
 alias g='git'
-alias v='view'
+alias v='vim'
 
 binary_exists ledger && alias l='ledger'
 
-alias cux='chmod u+x'
-alias cuw='chmod u+w'
-alias cur='chmod u+r'
+alias chux='chmod u+x'
+alias chuw='chmod u+w'
+alias chur='chmod u+r'
+alias cho="chown $USER"
 
 alias today='date +%Y-%m-%d'
 
