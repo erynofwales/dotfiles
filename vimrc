@@ -14,7 +14,7 @@ set ffs=unix,dos,mac    "order of line ending formats to try
 set hidden              " allow hidden buffers (rather than closing them)
 
 set number              " show line numbers
-set relativenumber      " line numbers are relative to current line rather
+"set relativenumber      " line numbers are relative to current line rather
                         "   than absolute
 set ruler               " show ruler (line and col count)
 set showmode            " show mode
@@ -90,7 +90,12 @@ set pastetoggle=<F2>    " toggle paste mode with F2
 " completion menu
 set wildmenu
 set wildmode=longest,list
-set wildignore+=*.o,*~,.lo,*.pdf
+
+" Wild ignores
+" build artifacts
+set wildignore+=*.o,*.pyc,*~,.lo
+set wildignore+=*.db,*.pdf,*.jpg,*.jpeg,*.png,*.gif
+set wildignore+=.git,env,migrations
 
 if has('mouse')
     set mouse=a
