@@ -19,16 +19,16 @@ print_info_noisy 1 "Initializing interactive Z Shell"
 autoload is-at-least
 if (is-at-least '4.3.7'); then
     bgjob="%(1j.%B%F{magenta}* %F{default}%b.)"
-    hist="%(0?.%h.%B%F{red}%h%F{default}%b)"
+    cmdstat="%(0?..%B%F{red}! %F{default}%b)"
     isroot="%(!.%B%F{red}%#%F{default}%b.%#)"
 else
     bgjob="%(1j.%{$fg_bold[magenta]%}* %{$reset_color%}.)"
-    hist="%(0?.%h.%{$fg_bold[red]%}%h%{$reset_color%})"
+    cmdstat="%(0?.%h.%{$fg_bold[red]%}%h%{$reset_color%})"
     isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
 fi
 
 print_info_sub_noisy 2 'Setting prompt'
-PROMPT=" $hist $bgjob$isroot "
+PROMPT_LINE="$cmdstat$bgjob$isroot "
 
 
 precmd_xterm_title()
@@ -37,46 +37,34 @@ precmd_xterm_title()
     [ -n $DISPLAY ] && print -Pn "\e]2;%n@%m\a"
 }
 
-precmd_separator()
+precmd_info()
 {
-    # time divider
-    local fillnum=$COLUMNS
-    local sep=''
-    for (( i=0; $i < $fillnum; i++)); do sep="-$sep"; done
-    print -P "%B%F{black}$sep"
+    PROMPT_NAME='%B%F{magenta}%n%f%b'
+    PROMPT_HOST='%B%F{red}%m%f%b'
+    PROMPT_CWD='%B%F{green}%~%f%b'
 }
 
-precmd_separator_info()
-{
-    pstr=''
-    if [ ! -z "$SSH_CONNECTION" ]; then
-        pstr+=`print -P "\-\-\( %n@%m \)"`
-    fi
-    pstr+=`print -P "\-\-\( %~ \)"`
-    time=`print -P "\( %T \)\-\-"`
-    filler=$(($COLUMNS - ${#pstr} - ${#time}))
-    for (( i=0; $i < $filler; i++)); do
-        pstr="${pstr}-"
-    done
-    print -P "%K{black}$pstr$time%k"
-}
-
-precmd_git_rprompt()
+precmd_git_prompt()
 {
     #local gstat=`git status 2>/dev/null`
     local branch=`git branch 2>/dev/null | grep '^\*' | cut -d' ' -f2`
-    if [[ $? != 0 ]]; then 
-        RPROMPT=''
-        return
+    if [[ $? -eq 0 ]]; then 
+        PROMPT_REPO="%B%F{cyan}$branch%f%b"
     fi
-    RPROMPT="%F{yellow}$branch%f"
     #echo $gstat | grep '^nothing' 1>/dev/null 2>&1
     #if [[ $? != 0 ]]; then
     #    RPROMPT="%B%F{red}*%f%b$RPROMPT"
     #fi
 }
 
-precmd_functions=(precmd_xterm_title precmd_separator_info precmd_git_rprompt)
+precmd_assemble_prompt()
+{
+    PROMPT="
+$PROMPT_NAME on $PROMPT_HOST at $PROMPT_CWD on $PROMPT_REPO
+$PROMPT_LINE"
+}
+
+precmd_functions=(precmd_xterm_title precmd_info precmd_git_prompt)
 
 print_info_sub_noisy 2 'Setting options'
 # Shell options
@@ -200,3 +188,8 @@ if [ -e $HOME/.zshrc.local ]; then
     print_info_noisy 3 "Sourcing local Z Shell settings"
     source $HOME/.zshrc.local
 fi
+
+# Put this down here 'cause some of the local stuff might modify the prompt or
+# add functions to $precmd_functions. Doing this here ensures it's always the
+# last function to be executed before the prompt is displayed.
+precmd_functions+=(precmd_assemble_prompt)
