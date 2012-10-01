@@ -10,31 +10,41 @@
 
 print_info_noisy 1 "Initializing interactive Z Shell"
 
-# PROMPT
-#   ' histnum bgjobsflag time (%|#)'
-#   Colors are determined based on zsh capability (>= version 4.3.7)
-#   With elevated privilieges, % is a red #
-# RPROMPT
-#   Hostname:Current directory to three places
 autoload is-at-least
-if (is-at-least '4.3.7'); then
-    bgjob="%(1j.%B%F{magenta}* %F{default}%b.)"
-    cmdstat="%(0?..%B%F{red}! %F{default}%b)"
-    isroot="%(!.%B%F{red}%#%F{default}%b.%#)"
-else
-    bgjob="%(1j.%{$fg_bold[magenta]%}* %{$reset_color%}.)"
-    cmdstat="%(0?.%h.%{$fg_bold[red]%}%h%{$reset_color%})"
-    isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
-fi
+#
+# Report seconds since shell was invoked in milliseconds
+typeset -F SECONDS
 
-print_info_sub_noisy 2 'Setting prompt'
-PROMPT_LINE="$cmdstat$bgjob$isroot "
+print_info_sub_noisy 2 'Setting up prompt'
 
+is_first_prompt=1
+
+prompt_newline()
+{
+    # Don't print newlines the first time the prompt is displayed.
+    if [[ $is_first_prompt == 1 ]]; then   
+        is_first_prompt=0
+        return
+    fi
+
+    echo
+}
 
 precmd_xterm_title()
 {
     # Set xterm and screen titles
     [ -n $DISPLAY ] && print -Pn "\e]2;%n@%m\a"
+}
+
+precmd_prompt()
+{
+    if (is-at-least '4.3.7'); then
+        isroot="%(!.%B%F{red}%#%F{default}%b.%#)"
+    else
+        isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
+    fi
+
+    PROMPT_LINE="$isroot "
 }
 
 precmd_info()
@@ -44,34 +54,48 @@ precmd_info()
     PROMPT_CWD='%B%F{green}%~%f%b'
 }
 
-precmd_git_prompt()
+precmd_git_branch()
 {
-    #local gstat=`git status 2>/dev/null`
-    local branch=`git branch 2>/dev/null | grep '^\*' | cut -d' ' -f2`
+    git_branch_output=`git branch 2>/dev/null`
     if [[ $? -eq 0 ]]; then 
+        local branch=`echo $git_branch_output | grep '^\*' | cut -d' ' -f2`
         PROMPT_REPO="%B%F{cyan}$branch%f%b"
+    else
+        PROMPT_REPO=''
     fi
-    #echo $gstat | grep '^nothing' 1>/dev/null 2>&1
-    #if [[ $? != 0 ]]; then
-    #    RPROMPT="%B%F{red}*%f%b$RPROMPT"
-    #fi
+    unset git_branch_output
+}
+
+precmd_flags_rprompt()
+{
+    if (is-at-least '4.3.7'); then
+        bgjob="%(1j.[%B%F{magenta}%j%F{default}%b].)"
+        cmdstat="%(0?..[%B%F{red}%?%F{default}%b])"
+        isroot="%(!.%B%F{red}%#%F{default}%b.%#)"
+    else
+        bgjob="%(1j.[%{$fg_bold[magenta]%}%j%{$reset_color%}].)"
+        cmdstat="%(0?..[%{$fg_bold[red]%}%?%{$reset_color%}])"
+        isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
+    fi
+
+    RPROMPT="$cmdstat$bgjob"
 }
 
 precmd_assemble_prompt()
 {
-    PROMPT="
-$PROMPT_NAME on $PROMPT_HOST at $PROMPT_CWD on $PROMPT_REPO
+   local p="$PROMPT_NAME on $PROMPT_HOST at $PROMPT_CWD"
+   if [[ -n "$PROMPT_REPO" ]]; then
+      p+=" on $PROMPT_REPO"
+   fi
+   PROMPT="$p
 $PROMPT_LINE"
 }
 
-precmd_functions=(precmd_xterm_title precmd_info precmd_git_prompt)
+precmd_functions=(precmd_xterm_title prompt_newline \
+                  precmd_prompt precmd_info precmd_git_branch \
+                  precmd_flags_rprompt)
+preexec_functions=(prompt_newline)
 
-preexec_newline()
-{
-    echo
-}
-
-preexec_functions=(preexec_newline)
 
 print_info_sub_noisy 2 'Setting options'
 # Shell options
