@@ -133,7 +133,11 @@ if has('gui_running')
     if has('win32') || has('win64')
         set guifont=Inconsolata:h18
     elseif has('mac')
-        set guifont=Menlo:h11
+        try
+            set guifont=Source\ Code\ Pro:h13
+        catch
+            set guifont=Menlo:h11
+        endtry
     elseif has('linux')
         set guifont=Inconsolata\ 14
     endif
