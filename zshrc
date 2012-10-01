@@ -66,6 +66,13 @@ $PROMPT_LINE"
 
 precmd_functions=(precmd_xterm_title precmd_info precmd_git_prompt)
 
+preexec_newline()
+{
+    echo
+}
+
+preexec_functions=(preexec_newline)
+
 print_info_sub_noisy 2 'Setting options'
 # Shell options
 setopt \
