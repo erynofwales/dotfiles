@@ -100,7 +100,6 @@ preexec_functions=(prompt_newline)
 print_info_sub_noisy 2 'Setting options'
 # Shell options
 setopt \
-    TRANSIENT_RPROMPT \
     EXTENDED_GLOB \
     MULTIOS
 
