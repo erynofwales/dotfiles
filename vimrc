@@ -214,6 +214,6 @@ if has('autocmd')
         \ :call <SID>StripTrailingWhitespace()
 endif
 
-if exists("$HOME/.vimrc.local")
-    source $HOME/.vimrc.local
+if exists("~/.vimrc.local")
+    source ~/.vimrc.local
 endif
