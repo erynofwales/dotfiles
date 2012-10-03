@@ -185,14 +185,12 @@ zstyle ':completion:*' expand 'yes'
 # function path
 fpath=($HOME/.zsh/func $fpath)
 
-# Wikipedia lookup, courtesy of msanders@github
-autoload wiki
-# Make a Maildir
-autoload mkmdir
 # Generate a password
+print_info_sub "Loading pw module"
 autoload pw
-# Make a C module (.c and .h pair)
-autoload mkcmod
+# Maker module -- various functions for makin' stuff
+print_info_sub "Loading mkrs module"
+autoload mkrs
 
 # Go up $1 directories, where $1 is an integer (saves me from having to type ../
 # ad nauseum)
