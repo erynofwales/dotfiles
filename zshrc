@@ -186,10 +186,10 @@ zstyle ':completion:*' expand 'yes'
 fpath=($HOME/.zsh/func $fpath)
 
 # Generate a password
-print_info_sub "Loading pw module"
+print_info_sub_noisy 3 "Loading pw module"
 autoload pw
 # Maker module -- various functions for makin' stuff
-print_info_sub "Loading mkrs module"
+print_info_sub_noisy 3 "Loading mkrs module"
 autoload mkrs
 
 # Go up $1 directories, where $1 is an integer (saves me from having to type ../
