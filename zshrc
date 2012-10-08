@@ -84,7 +84,7 @@ precmd_flags_rprompt()
 precmd_assemble_prompt()
 {
    local p="$PROMPT_NAME "
-   [[ -z "$SSH_CONNECTION" ]] && p+="on $PROMPT_HOST "
+   [[ -n "$SSH_CONNECTION" ]] && p+="on $PROMPT_HOST "
    p+="at $PROMPT_CWD"
    if [[ -n "$PROMPT_REPO" ]]; then
       p+=" on $PROMPT_REPO"
