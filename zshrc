@@ -24,7 +24,7 @@ prompt_newline()
     # Don't print newlines the first time the prompt is displayed.
     if [[ $is_first_prompt == 1 ]]; then   
         is_first_prompt=0
-        return
+        [[ -z $SSH_CONNECTION ]] && return
     fi
 
     echo
@@ -83,7 +83,9 @@ precmd_flags_rprompt()
 
 precmd_assemble_prompt()
 {
-   local p="$PROMPT_NAME on $PROMPT_HOST at $PROMPT_CWD"
+   local p="$PROMPT_NAME "
+   [[ -z "$SSH_CONNECTION" ]] && p+="on $PROMPT_HOST "
+   p+="at $PROMPT_CWD"
    if [[ -n "$PROMPT_REPO" ]]; then
       p+=" on $PROMPT_REPO"
    fi
