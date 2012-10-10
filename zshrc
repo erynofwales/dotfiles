@@ -36,15 +36,29 @@ precmd_xterm_title()
     [[ -n "$DISPLAY" ]] && print -Pn "\e]2;%n@%m\a"
 }
 
-precmd_prompt()
-{
-    if (is-at-least '4.3.7'); then
-        isroot="%(!.%B%F{red}%#%F{default}%b.%#)"
-    else
-        isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
-    fi
-    PROMPT_LINE="$isroot "
-}
+if (is-at-least '4.3.7'); then
+    precmd_prompt() {
+        PROMPT_LINE="%(!.%B%F{red}%#%F{default}%b.%#) "
+    }
+
+    precmd_flags_rprompt() {
+        # background jobs
+        RPROMPT="%(1j.[%B%F{magenta}%j%F{default}%b].)"
+        # exit status
+        RPROMPT+="%(0?..[%B%F{red}%?%F{default}%b])"
+    }
+else
+    precmd_prompt() {
+        PROMPT_LINE="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#) "
+    }
+
+    precmd_flags_rprompt() {
+        # background jobs
+        RPROMPT="%(1j.[%{$fg_bold[magenta]%}%j%{$reset_color%}].)"
+        # exit status
+        RPROMPT+="%(0?..[%{$fg_bold[red]%}%?%{$reset_color%}])"
+    }
+fi
 
 precmd_info()
 {
@@ -62,21 +76,6 @@ precmd_git_branch()
     else
         PROMPT_REPO=''
     fi
-}
-
-precmd_flags_rprompt()
-{
-    local bgjob
-    local cmdstat
-    if (is-at-least '4.3.7'); then
-        bgjob="%(1j.[%B%F{magenta}%j%F{default}%b].)"
-        cmdstat="%(0?..[%B%F{red}%?%F{default}%b])"
-    else
-        bgjob="%(1j.[%{$fg_bold[magenta]%}%j%{$reset_color%}].)"
-        cmdstat="%(0?..[%{$fg_bold[red]%}%?%{$reset_color%}])"
-    fi
-
-    RPROMPT="$cmdstat$bgjob"
 }
 
 precmd_assemble_prompt()
