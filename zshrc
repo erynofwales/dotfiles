@@ -33,7 +33,7 @@ prompt_newline()
 precmd_xterm_title()
 {
     # Set xterm and screen titles
-    [ -n $DISPLAY ] && print -Pn "\e]2;%n@%m\a"
+    [[ -n "$DISPLAY" ]] && print -Pn "\e]2;%n@%m\a"
 }
 
 precmd_prompt()
@@ -66,14 +66,14 @@ precmd_git_branch()
 
 precmd_flags_rprompt()
 {
+    local bgjob
+    local cmdstat
     if (is-at-least '4.3.7'); then
         bgjob="%(1j.[%B%F{magenta}%j%F{default}%b].)"
         cmdstat="%(0?..[%B%F{red}%?%F{default}%b])"
-        isroot="%(!.%B%F{red}%#%F{default}%b.%#)"
     else
         bgjob="%(1j.[%{$fg_bold[magenta]%}%j%{$reset_color%}].)"
         cmdstat="%(0?..[%{$fg_bold[red]%}%?%{$reset_color%}])"
-        isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
     fi
 
     RPROMPT="$cmdstat$bgjob"
