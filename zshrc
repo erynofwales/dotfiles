@@ -22,11 +22,10 @@ is_first_prompt=1
 prompt_newline()
 {
     # Don't print newlines the first time the prompt is displayed.
-    if [[ $is_first_prompt == 1 ]]; then   
-        is_first_prompt=0
+    if [[ -n $is_first_prompt ]]; then
+        unset is_first_prompt
         [[ -z $SSH_CONNECTION ]] && return
     fi
-
     echo
 }
 
@@ -69,8 +68,9 @@ precmd_info()
 
 precmd_git_branch()
 {
-    local git_branch_output=`git branch 2>/dev/null`
-    if [[ $? -eq 0 ]]; then 
+    local git_branch_output
+    git_branch_output=`git branch 2>/dev/null`
+    if [[ $? -eq 0 ]]; then
         export gitbranch=`echo $git_branch_output | grep '^\*' | cut -d' ' -f2`
         PROMPT_REPO="%B%F{cyan}$gitbranch%f%b"
     else
