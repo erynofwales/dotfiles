@@ -43,7 +43,6 @@ precmd_prompt()
     else
         isroot="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#)"
     fi
-
     PROMPT_LINE="$isroot "
 }
 
@@ -56,14 +55,13 @@ precmd_info()
 
 precmd_git_branch()
 {
-    git_branch_output=`git branch 2>/dev/null`
+    local git_branch_output=`git branch 2>/dev/null`
     if [[ $? -eq 0 ]]; then 
-        local branch=`echo $git_branch_output | grep '^\*' | cut -d' ' -f2`
-        PROMPT_REPO="%B%F{cyan}$branch%f%b"
+        export gitbranch=`echo $git_branch_output | grep '^\*' | cut -d' ' -f2`
+        PROMPT_REPO="%B%F{cyan}$gitbranch%f%b"
     else
         PROMPT_REPO=''
     fi
-    unset git_branch_output
 }
 
 precmd_flags_rprompt()
