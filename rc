@@ -31,11 +31,11 @@ alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.std
 print_info_sub_noisy 2 "Sourcing ${SYS}-specific settings"
 case $SYS in
     darwin)
-	alias acls='command ls -le'
+        alias acls='command ls -le'
         # These things might have been installed by Homebrew
         binary_exists gdircolors && alias dircolors='gdircolors'
         binary_exists gfind && alias find='gfind'
-	binary_exists gnuindent && alias indent='gnuindent'
+        binary_exists gnuindent && alias indent='gnuindent'
         ;;
     linux)
         # iptables aliases
