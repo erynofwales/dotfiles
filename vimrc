@@ -32,9 +32,7 @@ set showmatch           " show matching things: (), {}, [], etc
 
 set fo+=n               " format numbered lists properly
 
-if has('gui_running')
-    set list
-endif
+set list                " show spaces, newlines, etc
 set lcs+=tab:▸\         " show tabs
 set lcs+=eol:¬          " show end-of-lines
 set lcs+=trail:･        " show trailing spaces
@@ -109,14 +107,11 @@ if &t_Co > 2 || has('gui_running')
     syntax on           " turn on syntax highlighting
 endif
 
+set bg=dark
+
 " use solarized colorscheme if the terminal can support it (or we're in a GUI)
 let g:solarized_termtrans=1
 let g:solarized_visibility='low'
-if has('gui')
-    set bg=light
-else
-    set bg=dark
-endif
 colorscheme solarized
 
 " tell SnipMate who I am
@@ -125,27 +120,9 @@ let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 " set the Gundo preview window on the bottom
 let g:gundo_preview_bottom = 1
 
-if &t_Co > 2 || has('gui_running')
-    set cursorline
-endif
-
-if has('gui_running')
-    if has('win32') || has('win64')
-        set guifont=Inconsolata:h18
-    elseif has('mac')
-        try
-            set guifont=Source\ Code\ Pro:h13
-        catch
-            set guifont=Menlo:h11
-        endtry
-    elseif has('linux')
-        set guifont=Inconsolata\ 14
-    endif
-    set guioptions-=T       " turn off toolbar
-    set guioptions-=m       " turn off menubar
-endif
-
 nmap <F3> :GundoToggle<CR>
+
+inoremap jj <ESC>
 
 " allow starting commands with ; instead of :
 nnoremap ; :
@@ -191,6 +168,13 @@ nmap <leader>fa :%s/\v
 
 nmap <leader>sn :e ~/.vim/bundle/snipmate/snippets/<C-r>=&filetype<CR>.snippets<CR>
 
+" Toggle position highlighting
+nmap <silent> <leader>cl :set invcursorline<CR>
+nmap <silent> <leader>cc :set invcursorcolumn<CR>
+
+" Toggle listmode
+map <silent> <F4> :set invlist<CR>
+
 " Command-T should open files in tabs when I hit <CR>; move opening files in
 " buffers to <C-b>
 let g:CommandTAcceptSelectionMap='<C-b>'
@@ -214,6 +198,8 @@ if has('autocmd')
         \ :call <SID>StripTrailingWhitespace()
 endif
 
-if exists("~/.vimrc.local")
-    source ~/.vimrc.local
+if has('unix')
+    if filereadable($HOME."/.vimrc.local")
+        source $HOME/.vimrc.local
+    endif
 endif
