@@ -32,7 +32,7 @@ set showmatch           " show matching things: (), {}, [], etc
 
 set fo+=n               " format numbered lists properly
 
-set list                " show spaces, newlines, etc
+set nolist              " don't show spaces, newlines, etc by default
 set lcs+=tab:▸\         " show tabs
 set lcs+=eol:¬          " show end-of-lines
 set lcs+=trail:･        " show trailing spaces

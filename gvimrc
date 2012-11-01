@@ -1,5 +1,6 @@
+" List mode on here because the GUI has more color possibilities.
+set list
 set bg=light
-set cursorline
 
 if has('win32') || has('win64') || has('win32unix')
     set guifont=Inconsolata:h18
