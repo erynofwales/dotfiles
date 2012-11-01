@@ -1,3 +1,4 @@
 setlocal shiftwidth=2
-setlocal listchars-=tab:▸\ 
+setlocal softtabstop=2
+setlocal listchars-=tab:▸\
 
