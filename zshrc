@@ -190,7 +190,7 @@ autoload pw
 
 # Maker module -- various functions for makin' stuff
 print_info_sub_noisy 3 "Loading makers module"
-for func in `ls $HOME/.zsh/makers`; do
+for func in `ls $HOME/.zsh/func/makers`; do
     autoload $func
 done
 
