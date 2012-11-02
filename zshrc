@@ -182,7 +182,10 @@ zstyle ':completion:*' expand 'yes'
 ###
 
 # Function path
-fpath=($HOME/.zsh/makers $HOME/.zsh/func $fpath)
+function {
+    local myfpath="$HOME/.zsh/func"
+    fpath=($myfpath/makers $myfpath $fpath)
+}
 
 # Generate a password
 print_info_sub_noisy 3 "Loading pw module"
