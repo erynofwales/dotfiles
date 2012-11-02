@@ -181,15 +181,18 @@ zstyle ':completion:*' expand 'yes'
 # FUNCTIONS
 ###
 
-# function path
-fpath=($HOME/.zsh/func $fpath)
+# Function path
+fpath=($HOME/.zsh/makers $HOME/.zsh/func $fpath)
 
 # Generate a password
 print_info_sub_noisy 3 "Loading pw module"
 autoload pw
+
 # Maker module -- various functions for makin' stuff
-print_info_sub_noisy 3 "Loading mkrs module"
-autoload mkrs
+print_info_sub_noisy 3 "Loading makers module"
+for func in `ls $HOME/.zsh/makers`; do
+    autoload $func
+done
 
 # Go up $1 directories, where $1 is an integer (saves me from having to type ../
 # ad nauseum)
