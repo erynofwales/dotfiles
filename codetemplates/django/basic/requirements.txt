@@ -1,3 +1,4 @@
 Django==1.4.1
-dj-database-url==0.2.1
 virtualenv==1.7.2
+pytz==2012h
+dj-database-url==0.2.1
