@@ -201,14 +201,14 @@ done
 # ad nauseum)
 function up {
     if [[ -z $1 ]]; then
-        pushd ..
+        cd ..
     else
         local updir=''
         for (( i=0; $i < $1; i++ ))
         do
             updir="../$updir"
         done
-        pushd $updir
+        cd $updir
     fi
 }
 

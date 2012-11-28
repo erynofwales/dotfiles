@@ -13,7 +13,7 @@ vimbundles=( \
     command-t "https://github.com/wincent/Command-T.git" \
     gundo "https://github.com/sjl/gundo.vim.git" \
     repeat "https://github.com/tpope/vim-repeat" \
-    snipmate "https://github.com/msanders/snipmate.vim.git" \
+    snipmate "https://github.com/garbas/vim-snipmate.git" \
     solarized "https://github.com/altercation/vim-colors-solarized.git" \
     speeddating "https://github.com/tpope/vim-speeddating.git" \
     surround "https://github.com/tpope/vim-surround.git" \
