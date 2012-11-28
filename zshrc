@@ -177,6 +177,10 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 # Expand partial paths
 zstyle ':completion:*' expand 'yes'
 
+# Show a pretty menu of killable processes
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:*:kill:*' menu yes select
+
 ###
 # FUNCTIONS
 ###
