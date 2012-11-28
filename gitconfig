@@ -7,7 +7,7 @@
 [color]
     ui = auto
 [merge]
-    tool = vimdiff
+    tool = Kaleidoscope
 [alias]
     # Commits
     c = commit
@@ -25,11 +25,18 @@
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     d = diff
     dc = diff --cached
+    dt = difftool
 
     # Branches, etc
     b = branch
     co = checkout
     cob = checkout -b
+
+    # Merges and rebases
+    m = merge
+    mt = mergetool
+    rb = rebase
+    rbi = rebase --interactive
 
     # Resets, moving HEAD
     r = reset
@@ -44,5 +51,14 @@
     f = fetch
 [ui]
     color = true
+[diff]
+    tool = Kaleidoscope
 [mergetool]
     keepBackup = true
+    prompt = false
+[difftool]
+    prompt = false
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool "Kaleidoscope"]
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
