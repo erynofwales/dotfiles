@@ -22,3 +22,27 @@ function print_error_sub_noisy { [ ${NOISY:-0} -ge $1 ] && print_error_sub $@[2,
 
 function binary_exists { return $(hash $1 1>/dev/null 2>&1) }
 function binary_not_exists { binary_exists $1; return $(( ! $? )) }
+
+function load_module {
+    local mod=$1
+
+    local modpath
+    for p in $fpath; do
+        modpath=$p/$1
+        [[ -d $modpath ]] && break
+        modpath=''
+    done
+
+    if [[ -z "$modpath" ]]; then
+        print_error "Couldn't find path to module: $mod"
+        return 1
+    fi
+
+    print_info "Loading module: $mod"
+    for func in `ls $modpath`; do
+        print_info_sub "Loading function: $func"
+        autoload $func
+    done
+
+    return 0
+}
