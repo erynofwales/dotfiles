@@ -23,6 +23,10 @@ function {
     fpath=($myfpath/makers $myfpath $fpath)
 }
 
+print_info_sub_noisy 2 "Loading vcs_info module"
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git 
+
 
 print_info_sub_noisy 2 "Configuring prompt: $PROMPT_THEME"
 autoload -U promptinit
@@ -153,29 +157,3 @@ if [ -e $HOME/.zshrc.local ]; then
     print_info_noisy 3 "Sourcing local Z Shell settings"
     source $HOME/.zshrc.local
 fi
-
-function zle_get_mode {
-    case "$KEYMAP" in
-        main|viins)
-            echo "vi-ins"
-            ;;
-        vicmd)
-            echo "vi-cmd"
-            ;;
-    esac
-}
-
-function zle_keymap_select {
-    local mode=`zle_get_mode`
-    case "$mode" in
-        vi-ins)
-            RPS1="INSERT"
-            ;;
-        vi-cmd)
-            RPS1="COMMAND"
-            ;;
-    esac
-    zle reset-prompt
-}
-
-zle -N zle-keymap-select zle_keymap_select

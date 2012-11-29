@@ -3,7 +3,6 @@
 # Eryn Wells <eryn@erynwells.me>
 
 
-autoload -U prompt_colorize
 
 
 #
@@ -31,19 +30,25 @@ function prompt_loquacious_setup
     typeset -ga precmd_functions
     typeset -ga preexec_functions
 
-    # preexec_newline is here so there are blank lines on either end of the
-    # command output
-    precmd_functions=(preexec_newline \
-                      precmd_xterm_title \
-                      precmd_prompt \
-                      precmd_info \
-                      precmd_git_branch \
-                      precmd_flags_rprompt \
-                      precmd_assemble_prompt)
+    autoload -U prompt_colorize
 
-    preexec_functions=(preexec_newline)
+    precmd_functions=(set_xterm_title \
+                      print_newline \
+                      set_prompt_info \
+                      set_zle_mode_info)
+    preexec_functions=(prompt_print_newline)
 
     prompt_opts=(cr subst percent)
+
+    # Set up vcs_info
+    zstyle ':vcs_info:git:loquacious:*' formats \
+        '%B%F{green}%r%f%%b:%B%F{blue}%S%f%%b' \
+        '%B%F{magenta}%b%f%%b'
+
+    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_REPO_BRANCH}${PS1_ZLE_MODE}
+$PS1_LINE'
+
+    zle -N zle-keymap-select on_keymap_select
 }
 
 
@@ -54,74 +59,13 @@ function prompt_loquacious_preview
 
 
 #
-# PRECMD FUNCTIONS
-#
-
-
-function precmd_xterm_title
-{
-    # Set xterm and screen titles
-    [[ -n "$DISPLAY" ]] && print -Pn "\e]2;%n@%m\a"
-}
-
-
-function precmd_assemble_prompt
-{
-   local p="$PS1_NAME "
-   [[ -n "$SSH_CONNECTION" ]] && p+="at $PS1_HOST "
-   p+="in $PS1_CWD"
-   if [[ -n "$PS1_REPO" ]]; then
-      p+=" on $PS1_REPO"
-   fi
-   PS1="$p
-$PS1_LINE"
-}
-
-
-function precmd_flags_rprompt
-{
-    # background jobs
-    RPS1="%(1j.[`prompt_colorize -b -f 'magenta' '%j'`].)"
-    # exit status
-    RPS1+="%(0?..[`prompt_colorize -b -f 'red' '%?'`])"
-}
-
-
-function precmd_info
-{
-    PS1_NAME=`prompt_colorize -b -f 'magenta' '%n'`
-    PS1_HOST=`prompt_colorize -b -f 'red' '%m'`
-    PS1_CWD=`prompt_colorize -b -f 'green' '%~'`
-}
-
-
-function precmd_prompt
-{
-    PS1_LINE="%(!.`prompt_colorize -b -f 'red' '%#'`.%#) "
-}
-
-
-function precmd_git_branch
-{
-    local git_branch_output
-    git_branch_output=`git branch 2>/dev/null`
-    if [[ $? -eq 0 ]]; then
-        export gitbranch=`echo $git_branch_output | grep '^\*' | cut -d' ' -f2`
-        PS1_REPO=`prompt_colorize -b -f 'cyan' $gitbranch`
-    else
-        PS1_REPO=''
-    fi
-}
-
-
-#
-# PREEXEC FUNCTIONS
+# HELPER FUNCTIONS
 #
 
 # First prompt flag. See precmd_newline.
 is_first_prompt=1
 
-function preexec_newline
+function print_newline
 {
     # Don't print newlines the first time the prompt is displayed.
     if [[ -n $is_first_prompt ]]; then
@@ -129,6 +73,53 @@ function preexec_newline
         [[ -z $SSH_CONNECTION ]] && return
     fi
     echo
+}
+
+
+function set_prompt_info
+{
+    PS1_NAME="`prompt_colorize -b -f 'magenta' '%n'` "
+    PS1_HOST="at `prompt_colorize -b -f 'red' '%m'` "
+    PS1_CWD="in `prompt_colorize -b -f 'green' '%~'` "
+
+    vcs_info loquacious
+    [[ -n "$vcs_info_msg_0_" ]] && PS1_REPO="in $vcs_info_msg_0_ "
+    [[ -n "$vcs_info_msg_1_" ]] && PS1_REPO_BRANCH="on $vcs_info_msg_1_ "
+
+    # don't show CWD when in a repository
+    [[ -n $PS1_REPO ]] && PS1_CWD=''
+
+    PS1_LINE='%# '
+}
+
+
+function set_xterm_title
+{
+    # Set xterm and screen titles
+    [[ -n "$DISPLAY" ]] && print -Pn "\e]2;%n@%m\a"
+}
+
+
+function set_zle_mode_info
+{
+    if [[ -z "$1" || "$1" == 'viins' || "$1" == 'main' ]]; then
+        PS1_ZLE_MODE=`prompt_colorize -b -f 'black' '<INS>'`
+    elif [[ "$1" == 'vicmd' ]]; then
+        PS1_ZLE_MODE=`prompt_colorize -b -f 'black' '<CMD>'`
+    else
+        PS1_ZLE_MODE=''
+    fi
+}
+
+
+function on_keymap_select
+{
+    # Regenerate the prompt with the new mode
+    set_zle_mode_info $KEYMAP
+    set_prompt_info
+
+    # Redraw the prompt
+    zle reset-prompt
 }
 
 
