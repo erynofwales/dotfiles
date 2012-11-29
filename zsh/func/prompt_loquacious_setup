@@ -36,7 +36,7 @@ function prompt_loquacious_setup
                       print_newline \
                       set_prompt_info \
                       set_zle_mode_info)
-    preexec_functions=(prompt_print_newline)
+    preexec_functions=(print_newline)
 
     prompt_opts=(cr subst percent)
 
