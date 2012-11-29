@@ -1,0 +1,15 @@
+#!/usr/bin/zsh
+# Go up $1 directories, where $1 is an integer (saves me from having to type ../
+# ad nauseum)
+# Eryn Wells <eryn@erynwells.me>
+
+if [[ -z $1 ]]; then
+    cd ..
+else
+    local updir=''
+    for (( i=0; $i < $1; i++ ))
+    do
+        updir="../$updir"
+    done
+    cd $updir
+fi

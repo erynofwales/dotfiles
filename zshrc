@@ -149,27 +149,6 @@ function configure_completion #{{{
 } #}}}
 
 
-###
-# FUNCTIONS
-###
-
-# Generate a password
-
-# Go up $1 directories, where $1 is an integer (saves me from having to type ../
-# ad nauseum)
-function up {
-    if [[ -z $1 ]]; then
-        cd ..
-    else
-        local updir=''
-        for (( i=0; $i < $1; i++ ))
-        do
-            updir="../$updir"
-        done
-        cd $updir
-    fi
-}
-
 configure_general
 configure_zle
 configure_fpath
@@ -178,6 +157,7 @@ configure_zsh_aliases
 configure_history
 configure_completion
 configure_prompt
+
 
 if [ -e $HOME/.zshrc.$SYS ]; then
     print_info_noisy 3 "Sourcing ${SYS}-specific Z Shell settings"
