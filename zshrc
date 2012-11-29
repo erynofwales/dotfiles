@@ -12,17 +12,17 @@ ZLE_MODE='vim'
 # load bash/zsh/ksh agnostic configurations
 [ -e $HOME/.rc ] && source $HOME/.rc
 
-print_info_noisy 1 "Initializing interactive Z Shell"
+print_heading -l 1 "Initializing interactive Z Shell"
 
 
 function configure_general #{{{
 {
-    print_info_sub_noisy 2 'Configuring general ZSH settings'
+    print_info -l 2 'Configuring general ZSH settings'
 
     # Report seconds since shell was invoked in milliseconds
     typeset -F SECONDS
 
-    print_info_sub_noisy 2 'Setting shell options'
+    print_info_sub -l 3 'Setting shell options'
     # See zshoptions(1)
     setopt EXTENDED_GLOB \
            MULTIOS \
@@ -33,9 +33,9 @@ function configure_general #{{{
 
 function configure_zle #{{{
 {
-    print_info_sub_noisy 2 'Configuring ZLE'
+    print_info -l 2 'Configuring ZLE'
 
-    print_info_sub_noisy 5 "Using $ZLE_MODE command line editing mode"
+    print_info_sub -l 5 "Using $ZLE_MODE command line editing mode"
     [[ -z "$ZLE_MODE" ]] && ZLE_MODE='vim'
     if [[ $ZLE_MODE == 'vim' ]]; then
         bindkey -v
@@ -55,26 +55,26 @@ function configure_zle #{{{
 
 function configure_modules_and_functions #{{{
 {
-    print_info_noisy 2 'Loading modules'
+    print_info -l 2 'Loading modules'
 
     local myfpath="$HOME/.zsh/func"
-    print_info_sub_noisy 2 "Adding $myfpath to \$fpath"
+    print_info_sub -l 2 "Adding $myfpath to \$fpath"
     fpath=($myfpath/makers $myfpath $fpath)
 
-    print_info_sub_noisy 3 'Loading vcs_info'
+    print_info -l 3 'Loading vcs_info'
     autoload -Uz vcs_info
     zstyle ':vcs_info:*' enable git
 
     load_module 'makers'
 
-    print_info_sub_noisy 3 "Loading pw module"
+    print_info -l 3 "Loading pw module"
     autoload pw
 } #}}}
 
 
 function configure_prompt #{{{
 {
-    print_info_sub_noisy 2 "Configuring prompt: $PROMPT_THEME"
+    print_info -l 2 "Configuring prompt: $PROMPT_THEME"
     autoload -U promptinit
     promptinit
     prompt $PROMPT_THEME
@@ -83,7 +83,7 @@ function configure_prompt #{{{
 
 function configure_zsh_aliases #{{{
 {
-    print_info_sub_noisy 3 'Creating ZSH-specific aliases'
+    print_info -l 3 'Creating ZSH-specific aliases'
     alias pd='pushd'
     alias pod='popd'
 
@@ -101,7 +101,7 @@ function configure_zsh_aliases #{{{
 
 function configure_history #{{{
 {
-    print_info_sub_noisy 4 'Setting up history'
+    print_info -l 2 'Setting up history'
     setopt \
         APPEND_HISTORY \
         EXTENDED_HISTORY \
@@ -120,7 +120,7 @@ function configure_history #{{{
 
 function configure_completion #{{{
 {
-    print_info_sub_noisy 2 'Initializing completion system'
+    print_info -l 2 'Initializing completion system'
 
     autoload -U compinit
     compinit
@@ -151,7 +151,6 @@ function configure_completion #{{{
 
 configure_general
 configure_zle
-configure_fpath
 configure_modules_and_functions 
 configure_zsh_aliases
 configure_history
@@ -160,11 +159,11 @@ configure_prompt
 
 
 if [ -e $HOME/.zshrc.$SYS ]; then
-    print_info_noisy 3 "Sourcing ${SYS}-specific Z Shell settings"
+    print_info -l 3 "Sourcing ${SYS}-specific Z Shell settings"
     source $HOME/.zshrc.$SYS
 fi
 
 if [ -e $HOME/.zshrc.local ]; then
-    print_info_noisy 3 "Sourcing local Z Shell settings"
+    print_info -l 3 "Sourcing local Z Shell settings"
     source $HOME/.zshrc.local
 fi

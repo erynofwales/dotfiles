@@ -5,20 +5,42 @@
 
 
 # Print prettier, more uniform messages
-function print_msg { print -P "%F{$1}==>%f $2" }
-function print_info { print_msg 'blue' "$@" }
-function print_error { print_msg 'red' "$@" }
+function print_msg {
+    # Level 0: always show
+    local -i level=0 bold=0
+    local prefix message
+    local foreground background
 
-function print_msg_sub { print -P "    %F{$1}*%f $2" }
-function print_info_sub { print_msg_sub 'blue' "$@" }
-function print_error_sub { print_msg_sub 'error' "$@" }
+    while getopts 'bl:f:k:p:' opt; do
+        case $opt in
+            b) bold=1;;
+            l) level="$OPTARG";;
+            f) foreground="$OPTARG";;
+            k) background="$OPTARG";;
+            p) prefix="$OPTARG";;
+        esac
+    done
 
-# Print if $NOISY is set
-function print_info_noisy { [ ${NOISY:-0} -ge $1 ] && print_info $@[2,-1] }
-function print_error_noisy { [ ${NOISY:-0} -ge $1 ] && print_error $@[2,-1] }
+    message=$@[$OPTIND,${#@}]
 
-function print_info_sub_noisy { [ ${NOISY:-0} -ge $1 ] && print_info_sub $@[2,-1] }
-function print_error_sub_noisy { [ ${NOISY:-0} -ge $1 ] && print_error_sub $@[2,-1] }
+    (( bold )) && message="%B${message}%b"
+    [[ -n "$foreground" ]] && message="%F{$foreground}$message%f"
+    [[ -n "$background" ]] && message="%K{$background}$message%k"
+    [[ -n "$prefix" ]] && message="$prefix $message"
+
+    [[ ${NOISY:-0} -ge $level ]] && print -P "${message}"
+}
+
+function print_info { print_msg -p '%F{blue}==>%f' "$@" }
+function print_error { print_msg -p '%F{red}==>%f' "$@" }
+
+function print_heading { print_msg -b "$@" }
+function print_info_heading { print_info -b "$@" }
+function print_error_heading { print_error -b "$@" }
+
+function print_msg_sub { print_msg -p "    *" "$@" }
+function print_info_sub { print_msg_sub -p '    %F{blue}*%f' "$@" }
+function print_error_sub { print_msg_sub -p '    %F{error}*%f' "$@" }
 
 function binary_exists { return $(hash $1 1>/dev/null 2>&1) }
 function binary_not_exists { binary_exists $1; return $(( ! $? )) }

@@ -3,9 +3,9 @@
 # Generic interactive shell setup
 # Eryn Wells <eryn@erynwells.me>
 
-print_info_noisy 1 'Initializing interactive shell'
+print_heading -l 1 'Initializing interactive shell'
 
-print_info_sub_noisy 2 'Creating aliases'
+print_info -l 2 'Creating aliases'
 alias j='jobs'
 alias h='history'
 alias df='df -h'
@@ -28,7 +28,7 @@ alias pprint="python -c 'import sys,pprint; pprint.pprint(eval(sys.stdin.read())
 alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.stdin), indent=2)'"
 
 
-print_info_sub_noisy 2 "Sourcing ${SYS}-specific settings"
+print_info -l 2 "Sourcing ${SYS}-specific settings"
 case $SYS in
     darwin)
         alias acls='command ls -le'
@@ -69,7 +69,7 @@ function {
             ;;
     esac
 
-    print_info_sub_noisy 3 "Setting up ls: `which $ls`"
+    print_info_sub -l 3 "Setting up ls: `which $ls`"
     alias ls="$ls $ls_options"
     alias la="$ls -A $ls_options"
     alias ll="$ls -l $ls_options"
@@ -81,7 +81,7 @@ function {
         else
             dircolors=$HOME/.dircolors/default.cfg
         fi
-        print_info_sub_noisy 3 "Setting up dircolors: `basename $dircolors`"
+        print_info_sub -l 3 "Setting up dircolors: `basename $dircolors`"
         eval `dircolors $dircolors`
     fi
 }
@@ -95,6 +95,6 @@ binary_exists nethack && export NETHACKOPTIONS="color"
     LEDGER_FILE=$HOME/Documents/Financial/personal.ledger
 
 if [ -e $HOME/.rc.local ]; then
-    print_info_noisy 2 "Sourcing local settings for interactive shells"
+    print_info -l 2 'Sourcing local interactive shell setup'
     source $HOME/.rc.local
 fi
