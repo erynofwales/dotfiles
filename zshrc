@@ -5,102 +5,36 @@
 #
 # Eryn Wells <eryn@erynwells.me>
 
+PROMPT_THEME='loquacious'
+
+
 # load bash/zsh/ksh agnostic configurations
 [ -e $HOME/.rc ] && source $HOME/.rc
 
-print_info_noisy 1 "Initializing interactive Z Shell"
 
-autoload is-at-least
-#
 # Report seconds since shell was invoked in milliseconds
 typeset -F SECONDS
 
-print_info_sub_noisy 2 'Setting up prompt'
+print_info_noisy 1 "Initializing interactive Z Shell"
 
-is_first_prompt=1
-
-prompt_newline()
-{
-    # Don't print newlines the first time the prompt is displayed.
-    if [[ -n $is_first_prompt ]]; then
-        unset is_first_prompt
-        [[ -z $SSH_CONNECTION ]] && return
-    fi
-    echo
+# Function path
+function {
+    local myfpath="$HOME/.zsh/func"
+    fpath=($myfpath/makers $myfpath $fpath)
 }
 
-precmd_xterm_title()
-{
-    # Set xterm and screen titles
-    [[ -n "$DISPLAY" ]] && print -Pn "\e]2;%n@%m\a"
-}
 
-if (is-at-least '4.3.7'); then
-    precmd_prompt() {
-        PROMPT_LINE="%(!.%B%F{red}%#%F{default}%b.%#) "
-    }
-
-    precmd_flags_rprompt() {
-        # background jobs
-        RPROMPT="%(1j.[%B%F{magenta}%j%F{default}%b].)"
-        # exit status
-        RPROMPT+="%(0?..[%B%F{red}%?%F{default}%b])"
-    }
-else
-    precmd_prompt() {
-        PROMPT_LINE="%(!.%{$fg_bold[red]%}%#%{$reset_color%}.%#) "
-    }
-
-    precmd_flags_rprompt() {
-        # background jobs
-        RPROMPT="%(1j.[%{$fg_bold[magenta]%}%j%{$reset_color%}].)"
-        # exit status
-        RPROMPT+="%(0?..[%{$fg_bold[red]%}%?%{$reset_color%}])"
-    }
-fi
-
-precmd_info()
-{
-    PROMPT_NAME='%B%F{magenta}%n%f%b'
-    PROMPT_HOST='%B%F{red}%m%f%b'
-    PROMPT_CWD='%B%F{green}%~%f%b'
-}
-
-precmd_git_branch()
-{
-    local git_branch_output
-    git_branch_output=`git branch 2>/dev/null`
-    if [[ $? -eq 0 ]]; then
-        export gitbranch=`echo $git_branch_output | grep '^\*' | cut -d' ' -f2`
-        PROMPT_REPO="%B%F{cyan}$gitbranch%f%b"
-    else
-        PROMPT_REPO=''
-    fi
-}
-
-precmd_assemble_prompt()
-{
-   local p="$PROMPT_NAME "
-   [[ -n "$SSH_CONNECTION" ]] && p+="on $PROMPT_HOST "
-   p+="at $PROMPT_CWD"
-   if [[ -n "$PROMPT_REPO" ]]; then
-      p+=" on $PROMPT_REPO"
-   fi
-   PROMPT="$p
-$PROMPT_LINE"
-}
-
-precmd_functions=(precmd_xterm_title prompt_newline \
-                  precmd_prompt precmd_info precmd_git_branch \
-                  precmd_flags_rprompt)
-preexec_functions=(prompt_newline)
+print_info_sub_noisy 2 "Configuring prompt: $PROMPT_THEME"
+autoload -U promptinit
+promptinit
+prompt $PROMPT_THEME
 
 
-print_info_sub_noisy 2 'Setting options'
-# Shell options
+print_info_sub_noisy 2 'Setting shell options'
 setopt \
     EXTENDED_GLOB \
     MULTIOS
+
 
 print_info_sub_noisy 3 'Creating aliases'
 alias pd='pushd'
@@ -185,12 +119,6 @@ zstyle ':completion:*:*:kill:*' menu yes select
 # FUNCTIONS
 ###
 
-# Function path
-function {
-    local myfpath="$HOME/.zsh/func"
-    fpath=($myfpath/makers $myfpath $fpath)
-}
-
 # Generate a password
 print_info_sub_noisy 3 "Loading pw module"
 autoload pw
@@ -226,7 +154,28 @@ if [ -e $HOME/.zshrc.local ]; then
     source $HOME/.zshrc.local
 fi
 
-# Put this down here 'cause some of the local stuff might modify the prompt or
-# add functions to $precmd_functions. Doing this here ensures it's always the
-# last function to be executed before the prompt is displayed.
-precmd_functions+=(precmd_assemble_prompt)
+function zle_get_mode {
+    case "$KEYMAP" in
+        main|viins)
+            echo "vi-ins"
+            ;;
+        vicmd)
+            echo "vi-cmd"
+            ;;
+    esac
+}
+
+function zle_keymap_select {
+    local mode=`zle_get_mode`
+    case "$mode" in
+        vi-ins)
+            RPS1="INSERT"
+            ;;
+        vi-cmd)
+            RPS1="COMMAND"
+            ;;
+    esac
+    zle reset-prompt
+}
+
+zle -N zle-keymap-select zle_keymap_select

@@ -1,0 +1,136 @@
+#!/usr/bin/zsh
+# A wordy prompt theme.
+# Eryn Wells <eryn@erynwells.me>
+
+
+autoload -U prompt_colorize
+
+
+#
+# PROMPT MODULE SCAFFOLDING
+#
+
+function prompt_loquacious_help
+{
+    cat <<EOF
+This prompt takes up two lines. At its most verbose, it looks like this:
+
+    <user> at <host> in <cwd> on <gitbranch>
+    % 
+
+By default, <host> is only shown when the SSH_CONNECTION variable is set; in
+other words, when this shell session was opened via an SSH connection. The
+prompt will also show the current git branch (<gitbranch>) if the current
+directory is in a git repository.
+EOF
+}
+
+
+function prompt_loquacious_setup
+{
+    typeset -ga precmd_functions
+    typeset -ga preexec_functions
+
+    # preexec_newline is here so there are blank lines on either end of the
+    # command output
+    precmd_functions=(preexec_newline \
+                      precmd_xterm_title \
+                      precmd_prompt \
+                      precmd_info \
+                      precmd_git_branch \
+                      precmd_flags_rprompt \
+                      precmd_assemble_prompt)
+
+    preexec_functions=(preexec_newline)
+
+    prompt_opts=(cr subst percent)
+}
+
+
+function prompt_loquacious_preview
+{
+    # TODO: Implement prompt preview.
+}
+
+
+#
+# PRECMD FUNCTIONS
+#
+
+
+function precmd_xterm_title
+{
+    # Set xterm and screen titles
+    [[ -n "$DISPLAY" ]] && print -Pn "\e]2;%n@%m\a"
+}
+
+
+function precmd_assemble_prompt
+{
+   local p="$PS1_NAME "
+   [[ -n "$SSH_CONNECTION" ]] && p+="at $PS1_HOST "
+   p+="in $PS1_CWD"
+   if [[ -n "$PS1_REPO" ]]; then
+      p+=" on $PS1_REPO"
+   fi
+   PS1="$p
+$PS1_LINE"
+}
+
+
+function precmd_flags_rprompt
+{
+    # background jobs
+    RPS1="%(1j.[`prompt_colorize -b -f 'magenta' '%j'`].)"
+    # exit status
+    RPS1+="%(0?..[`prompt_colorize -b -f 'red' '%?'`])"
+}
+
+
+function precmd_info
+{
+    PS1_NAME=`prompt_colorize -b -f 'magenta' '%n'`
+    PS1_HOST=`prompt_colorize -b -f 'red' '%m'`
+    PS1_CWD=`prompt_colorize -b -f 'green' '%~'`
+}
+
+
+function precmd_prompt
+{
+    PS1_LINE="%(!.`prompt_colorize -b -f 'red' '%#'`.%#) "
+}
+
+
+function precmd_git_branch
+{
+    local git_branch_output
+    git_branch_output=`git branch 2>/dev/null`
+    if [[ $? -eq 0 ]]; then
+        export gitbranch=`echo $git_branch_output | grep '^\*' | cut -d' ' -f2`
+        PS1_REPO=`prompt_colorize -b -f 'cyan' $gitbranch`
+    else
+        PS1_REPO=''
+    fi
+}
+
+
+#
+# PREEXEC FUNCTIONS
+#
+
+# First prompt flag. See precmd_newline.
+is_first_prompt=1
+
+function preexec_newline
+{
+    # Don't print newlines the first time the prompt is displayed.
+    if [[ -n $is_first_prompt ]]; then
+        unset is_first_prompt
+        [[ -z $SSH_CONNECTION ]] && return
+    fi
+    echo
+}
+
+
+# Finally, run setup to get everything going
+prompt_loquacious_setup "$@"

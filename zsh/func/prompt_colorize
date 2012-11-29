@@ -1,0 +1,38 @@
+#!/usr/bin/zsh
+# Return a prompt string with appropriate color escapes
+# Eryn Wells <eryn@erynwells.me>
+
+local bold=0
+local foreground=''
+local background=''
+
+while getopts 'bf:k:' opt; do
+    case $opt in
+        b) bold=1;;
+        f) foreground=$OPTARG;;
+        k) background=$OPTARG;;
+        *) echo "Unknown option: $opt" 1>&2; return -1;;
+    esac
+done
+
+local str=$@[$OPTIND,${#@}]
+
+autoload -U is-at-least
+if is-at-least '4.3.7'; then
+    [[ -n "$foreground" ]] && str="%F{$foreground}$str%f"
+    [[ -n "$background" ]] && str="%K{$background}$str%k"
+    [[ $bold -eq 1 ]] && str="%B$str%b"
+else
+    local fg_hash bg_hash
+    if [[ $bold -eq 1 ]]; then
+        fg_hash='fg_bold'
+        bg_hash='bg_bold'
+    else
+        fg_hash='fg_no_bold'
+        bg_hash='bg_no_bold'
+    fi
+    [[ -n "$foreground" ]] && str="%{\$${fg_hash}[$foreground]%}$str%{\$reset_color%}"
+    [[ -n "$background" ]] && str="%%{\$${bg_hash}[$background]%}$str%{\$reset_color%}"
+fi
+
+print $str
