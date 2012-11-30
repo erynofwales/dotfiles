@@ -42,10 +42,9 @@ function prompt_loquacious_setup
 
     # Set up vcs_info
     zstyle ':vcs_info:git:loquacious:*' formats \
-        '%B%F{green}%r%f%%b:%B%F{blue}%S%f%%b' \
-        '%B%F{magenta}%b%f%%b'
+        '%B%F{cyan}%r%f%%b(%B%F{blue}%b%f%%b)'
 
-    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_REPO_BRANCH}${PS1_ZLE_MODE}
+    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_ZLE_MODE}
 $PS1_LINE'
 
     zle -N zle-keymap-select on_keymap_select
@@ -82,12 +81,9 @@ function set_prompt_info
     PS1_HOST="at `prompt_colorize -b -f 'red' '%m'` "
     PS1_CWD="in `prompt_colorize -b -f 'green' '%~'` "
 
-    vcs_info loquacious
-    [[ -n "$vcs_info_msg_0_" ]] && PS1_REPO="in $vcs_info_msg_0_ "
-    [[ -n "$vcs_info_msg_1_" ]] && PS1_REPO_BRANCH="on $vcs_info_msg_1_ "
 
-    # don't show CWD when in a repository
-    [[ -n $PS1_REPO ]] && PS1_CWD=''
+    vcs_info loquacious
+    [[ -n "$vcs_info_msg_0_" ]] && PS1_REPO="on $vcs_info_msg_0_ "
 
     PS1_LINE='%# '
 }
