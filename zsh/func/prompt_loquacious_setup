@@ -3,12 +3,6 @@
 # Eryn Wells <eryn@erynwells.me>
 
 
-
-
-#
-# PROMPT MODULE SCAFFOLDING
-#
-
 function prompt_loquacious_help
 {
     cat <<EOF
@@ -31,6 +25,7 @@ function prompt_loquacious_setup
     typeset -ga preexec_functions
 
     autoload -U prompt_colorize
+    autoload -Uz vcs_info
 
     precmd_functions=(set_xterm_title \
                       print_newline \
