@@ -1,12 +1,40 @@
 #!/bin/zsh
 # vim:ft=zsh
 
-pw ()
-{
-    length='12'
-    if [[ $1 -ne "" ]]; then
-        length=$1
-    fi
+local ALPHA_SET='A-Za-z'
+local NUMERIC_SET='0-9'
+local SYM_SET='!@#$%^&*.;:-+='
+local ALNUM_SET="$ALPHA_SET$NUMERIC_SET"
+local ALL_SET="$ALNUM_SET$SYM_SET"
 
-    tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | fold -w $length | head -n 1
-}
+local -i length=16 count=1
+local charset="$ALL_SET"
+
+while getopts 'c:l:s:' opt; do
+    case $opt in
+        c) count=$OPTARG;;
+        l) length=$OPTARG;;
+        s) case $OPTARG in
+               alpha) charset="$ALPHA_SET";;
+               num|numeric) charset="$NUMERIC_SET";;
+               alnum) charset="$ALNUM_SET";;
+               sym) charset="$SYM_SET";;
+               all) charset="$ALL_SET";;
+               *) echo "Invalid set name: $OPTARG" 1>&2; return -2;;
+           esac
+           ;;
+        *) echo "Invalid argument: $opt" 1>&2; return -1;;
+    esac
+done
+
+local cmd='tr -dc "$charset" < /dev/urandom | fold -w $length | head -n $count'
+
+if [[ $SYS == 'darwin' ]]; then
+    # The way OS X >=10.6 handles unicode characters causes tr to fail with an
+    # 'Illegal byte sequence' error. Setting the locale here fixes that.
+    #
+    # See: http://nerdbynature.de/s9y/?176
+    cmd="LC_CTYPE=C $cmd"
+fi
+
+eval "$cmd"
