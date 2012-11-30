@@ -78,9 +78,13 @@ function print_newline
 function set_prompt_info
 {
     PS1_NAME="`prompt_colorize -b -f 'magenta' '%n'` "
-    PS1_HOST="at `prompt_colorize -b -f 'red' '%m'` "
     PS1_CWD="in `prompt_colorize -b -f 'green' '%~'` "
 
+    if [[ -n "$SSH_CONNECTION" ]]; then
+        PS1_HOST="at `prompt_colorize -b -f 'red' '%m'` "
+    else
+        PS1_HOST=''
+    fi
 
     vcs_info loquacious
     [[ -n "$vcs_info_msg_0_" ]] && PS1_REPO="on $vcs_info_msg_0_ "
