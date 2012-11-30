@@ -8,13 +8,13 @@ function prompt_loquacious_help
     cat <<EOF
 This prompt takes up two lines. At its most verbose, it looks like this:
 
-    <user> at <host> in <cwd> on <gitbranch>
+    <user> at <host> in <cwd> on <repo>(<branch>)
     % 
 
 By default, <host> is only shown when the SSH_CONNECTION variable is set; in
 other words, when this shell session was opened via an SSH connection. The
-prompt will also show the current git branch (<gitbranch>) if the current
-directory is in a git repository.
+prompt will also show the current repository and branch using vcs_info if the
+current directory is in a repo.
 EOF
 }
 
