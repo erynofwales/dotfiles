@@ -3,9 +3,11 @@
 
 local ALPHA_SET='A-Za-z'
 local NUMERIC_SET='0-9'
-local SYM_SET='!@#$%^&*.;:-+='
-local ALNUM_SET="$ALPHA_SET$NUMERIC_SET"
-local ALL_SET="$ALNUM_SET$SYM_SET"
+local SYM_SET='!@#$%^&*'
+local XSYM_SET="${SYM_SET}.;:-+="
+local ALNUM_SET="${ALPHA_SET}${NUMERIC_SET}"
+local ALL_SET="${ALNUM_SET}${SYM_SET}"
+local XALL_SET="${ALNUM_SET}${XSYM_SET}"
 
 local -i length=16 count=1
 local charset="$ALL_SET"
@@ -16,10 +18,12 @@ while getopts 'c:l:s:' opt; do
         l) length=$OPTARG;;
         s) case $OPTARG in
                alpha) charset="$ALPHA_SET";;
-               num|numeric) charset="$NUMERIC_SET";;
+               num) charset="$NUMERIC_SET";;
                alnum) charset="$ALNUM_SET";;
                sym) charset="$SYM_SET";;
+               xsym) charset="$XSYM_SET";;
                all) charset="$ALL_SET";;
+               xall) charset="$XALL_SET";;
                *) echo "Invalid set name: $OPTARG" 1>&2; return -2;;
            esac
            ;;
