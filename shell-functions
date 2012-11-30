@@ -56,13 +56,13 @@ function load_module {
     done
 
     if [[ -z "$modpath" ]]; then
-        print_error "Couldn't find path to module: $mod"
+        print_error -l 1 "Couldn't find path to module: $mod"
         return 1
     fi
 
-    print_info "Loading module: $mod"
+    print_info -l 1 "Loading module: $mod"
     for func in `ls $modpath`; do
-        print_info_sub "Loading function: $func"
+        print_info_sub -l 2 "Loading function: $func"
         autoload $func
     done
 
