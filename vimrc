@@ -45,6 +45,13 @@ set incsearch           " show search matches as you type
 set hlsearch            " highlight search matches
 set gdefault            " apply searches globally to a line by default
 
+set laststatus=2        " always show status line
+
+" This is basically default status line, with a few exceptions:
+"  1. Show buffer number before filename (b%n:)
+"  2. Show filetype before ruler
+set statusline=%<b%n:%f\ %h%m%r%=%y\ %l,%c%V\ \ %P
+
 " use PCREs for searches
 nnoremap / /\v
 vnoremap / /\v
