@@ -82,7 +82,11 @@ function set_prompt_info
     fi
 
     vcs_info loquacious
-    [[ -n "$vcs_info_msg_0_" ]] && PS1_REPO="on $vcs_info_msg_0_ "
+    if [[ -n "$vcs_info_msg_0_" ]]; then
+       PS1_REPO="on $vcs_info_msg_0_ "
+    else
+       PS1_REPO=""
+    fi
 
     PS1_LINE='%# '
 }
