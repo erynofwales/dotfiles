@@ -182,6 +182,16 @@ nmap <silent> <leader>cc :set invcursorcolumn<CR>
 " Toggle listmode
 map <silent> <F4> :set invlist<CR>
 
+" Text bubbling (these depend on tpope's unimpaired plugin)
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
+" Select last edited text after cut and paste
+nmap gV `[v`]
+
+
 " Command-T should open files in tabs when I hit <CR>; move opening files in
 " buffers to <C-b>
 let g:CommandTAcceptSelectionMap='<C-b>'
