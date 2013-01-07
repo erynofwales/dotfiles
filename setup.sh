@@ -14,6 +14,10 @@ vimbundles=( \
     gundo "https://github.com/sjl/gundo.vim.git" \
     repeat "https://github.com/tpope/vim-repeat" \
     snipmate "https://github.com/garbas/vim-snipmate.git" \
+    tlib "https://github.com/tomtom/tlib_vim.git" \
+    mw-utils "https://github.com/MarcWeber/vim-addon-mw-utils.git" \
+    snipmate-snippets "https://github.com/honza/snipmate-snippets.git" \
+    snipmate-zope "https://github.com/zedr/zope-snipmate-bundle.git" \
     solarized "https://github.com/altercation/vim-colors-solarized.git" \
     speeddating "https://github.com/tpope/vim-speeddating.git" \
     surround "https://github.com/tpope/vim-surround.git" \

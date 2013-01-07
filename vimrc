@@ -42,15 +42,14 @@ set lcs+=nbsp:･         " show non-breaking spaces
 set ignorecase          " ignore case in searches
 set smartcase           " case-sensitive search if pattern contains a capital
 set incsearch           " show search matches as you type
-set hlsearch            " highlight search matches
 set gdefault            " apply searches globally to a line by default
 
 set laststatus=2        " always show status line
 
 " This is basically default status line, with a few exceptions:
-"  1. Show buffer number before filename (b%n:)
-"  2. Show filetype before ruler
-set statusline=%<b%n:%f\ %h%m%r%=%y\ %l,%c%V\ \ %P
+"  1. Show buffer number before filename (%n:)
+"  2. Show filetype between line number and percentage
+set statusline=%2n:%<%f\ %((%Y)%)\ %(%h%m%r%)%=%-12(%l,%c%V%)%P
 
 " use PCREs for searches
 nnoremap / /\v
@@ -90,7 +89,7 @@ set copyindent          " copy previous indentation on autoindent
 set scrolloff=3         " scroll 3 lines ahead of point
 set sidescrolloff=5     " scroll 5 columns ahead of point
 
-set pastetoggle=<F2>    " toggle paste mode with F2
+set pastetoggle=<F12>    " toggle paste mode with F12
 
 " completion menu
 set wildmenu
@@ -114,11 +113,15 @@ if &t_Co > 2 || has('gui_running')
     syntax on           " turn on syntax highlighting
 endif
 
-set bg=dark
+if has('gui_running')
+   set bg=light
+else
+   set bg=dark
+endif
 
 " use solarized colorscheme if the terminal can support it (or we're in a GUI)
-let g:solarized_termtrans=1
-let g:solarized_visibility='low'
+let g:solarized_termtrans = 1
+let g:solarized_visibility = 'low'
 colorscheme solarized
 
 " tell SnipMate who I am
@@ -127,7 +130,9 @@ let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 " set the Gundo preview window on the bottom
 let g:gundo_preview_bottom = 1
 
-nmap <F3> :GundoToggle<CR>
+map <silent> <F3> :GundoToggle<CR>
+map <silent> <F2> :NERDTreeToggle<CR>
+map <silent> <F4> :setlocal invlist<CR>
 
 inoremap jj <ESC>
 
@@ -149,6 +154,9 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+nnoremap <silent> <C-n> :bn<CR>
+nnoremap <silent> <C-p> :bp<CR>
+
 function! <SID>StripTrailingWhitespace()
     " save last search
     let _s=@/
@@ -166,10 +174,10 @@ let mapleader=','
 " strip all trailing whitespace in the current file
 nnoremap <silent> <leader>W :call <SID>StripTrailingWhitespace()<CR>
 " edit and source my .vimrc
-nmap <silent> <leader>ev :tabnew $MYVIMRC<CR>
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :source $MYVIMRC<CR>
 " hide search terms
-nmap <silent> <leader><space> :nohlsearch<CR>
+nmap <silent> <leader><space> :setlocal invhlsearch<CR>
 " find all
 nmap <leader>fa :%s/\v
 
@@ -179,11 +187,19 @@ nmap <leader>esn :e ~/.vim/bundle/snipmate/snippets/<C-r>=&filetype<CR>.snippets
 nmap <leader>eft :e ~/.vim/after/ftplugin/<C-r>=&filetype<CR>.vim<CR>
 
 " Toggle position highlighting
-nmap <silent> <leader>cl :set invcursorline<CR>
-nmap <silent> <leader>cc :set invcursorcolumn<CR>
+nmap <silent> <leader>cl :setlocal invcursorline<CR>
+nmap <silent> <leader>cc :setlocal invcursorcolumn<CR>
 
-" Toggle listmode
-map <silent> <F4> :set invlist<CR>
+
+" Text bubbling (these depend on tpope's unimpaired plugin)
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
+" Select last edited text after cut and paste
+nmap gV `[v`]
+
 
 " Command-T should open files in tabs when I hit <CR>; move opening files in
 " buffers to <C-b>
@@ -193,12 +209,6 @@ let g:CommandTAcceptSelectionTabMap='<CR>'
 if has('autocmd')
     filetype plugin indent on
 
-    " Markdown files can also have the .md extension
-    autocmd BufAdd,BufEnter,BufFilePost *.md :setf markdown
-    " SConstruct and SConscript files are Python
-    autocmd BufAdd,BufEnter,BufFilePost SConstruct :setf python
-    autocmd BufAdd,BufEnter,BufFilePost SConscript :setf python
-
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
     autocmd BufReadPost *
@@ -206,15 +216,15 @@ if has('autocmd')
         \   exe "normal! g`\"" |
         \ endif
 
-    " Clean whitespace before saving code files.
-    autocmd BufWritePre *.py,*.h,*.c,*.html,*.m,*.cc,*.hh,*.mm
-        \ :call <SID>StripTrailingWhitespace()
-
     " Reload snippets after editing the snippets file. Snippet files are
     " <filetype>.snippets. Get <filetype> from the filename and reload the
     " snippets for that type.
     autocmd BufWritePost *.snippets
         \ :call ReloadSnippets(expand('%:t:r'))
+
+    " Clean whitespace before saving: Python, C, HTML, and Objective-C
+    autocmd BufWritePre *.py,*.h,*.c,*.html,*.m,*.mm,*.cc,*.hh
+        \ call <SID>StripTrailingWhitespace()
 endif
 
 if has('unix')
