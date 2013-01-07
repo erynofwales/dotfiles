@@ -194,7 +194,10 @@ if has('autocmd')
     filetype plugin indent on
 
     " Markdown files can also have the .md extension
-    autocmd BufAdd,BufEnter,BufFilePost *.md :setlocal ft=markdown
+    autocmd BufAdd,BufEnter,BufFilePost *.md :setf markdown
+    " SConstruct and SConscript files are Python
+    autocmd BufAdd,BufEnter,BufFilePost SConstruct :setf python
+    autocmd BufAdd,BufEnter,BufFilePost SConscript :setf python
 
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
