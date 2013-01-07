@@ -11,6 +11,6 @@ endif
 " Do comments that look like this:
 " /* stuff and things
 "    more stuff with things */
-"setlocal comments="sO:* -,mO:   ,exO:*/,sl:/*,mb: ,ex:*/"
+setlocal comments="sO:* -,mO:   ,exO:*/,sl:/*,mb: ,ex:*/"
 
 setlocal cinoptions+=(0,Ws
