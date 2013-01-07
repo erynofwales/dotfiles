@@ -126,8 +126,8 @@ let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 " set the Gundo preview window on the bottom
 let g:gundo_preview_bottom = 1
 
-map <silent> <F3> :GundoToggle<CR>
 map <silent> <F2> :NERDTreeToggle<CR>
+map <silent> <F3> :GundoToggle<CR>
 map <silent> <F4> :setlocal invlist<CR>
 
 inoremap jj <ESC>
@@ -196,8 +196,8 @@ nmap gV `[v`]
 
 " Command-T should open files in tabs when I hit <CR>; move opening files in
 " buffers to <C-b>
-let g:CommandTAcceptSelectionMap='<C-b>'
-let g:CommandTAcceptSelectionTabMap='<CR>'
+"let g:CommandTAcceptSelectionMap='<C-b>'
+"let g:CommandTAcceptSelectionTabMap='<CR>'
 
 if has('autocmd')
     filetype plugin indent on
