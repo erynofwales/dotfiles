@@ -173,7 +173,10 @@ nmap <silent> <leader><space> :nohlsearch<CR>
 " find all
 nmap <leader>fa :%s/\v
 
-nmap <leader>sn :e ~/.vim/bundle/snipmate/snippets/<C-r>=&filetype<CR>.snippets<CR>
+" Open the snippet file for the current filetype
+nmap <leader>esn :e ~/.vim/bundle/snipmate/snippets/<C-r>=&filetype<CR>.snippets<CR>
+" Open the ftplugin-after script for the current filetype
+nmap <leader>eft :e ~/.vim/after/ftplugin/<C-r>=&filetype<CR>.vim<CR>
 
 " Toggle position highlighting
 nmap <silent> <leader>cl :set invcursorline<CR>
