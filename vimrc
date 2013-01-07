@@ -206,9 +206,15 @@ if has('autocmd')
         \   exe "normal! g`\"" |
         \ endif
 
-    " Clean whitespace before saving: Python, C, HTML, and Objective-C
-    autocmd BufWritePre *.py,*.h,*.c,*.html,*.m
+    " Clean whitespace before saving code files.
+    autocmd BufWritePre *.py,*.h,*.c,*.html,*.m,*.cc,*.hh,*.mm
         \ :call <SID>StripTrailingWhitespace()
+
+    " Reload snippets after editing the snippets file. Snippet files are
+    " <filetype>.snippets. Get <filetype> from the filename and reload the
+    " snippets for that type.
+    autocmd BufWritePost *.snippets
+        \ :call ReloadSnippets(expand('%:t:r'))
 endif
 
 if has('unix')
