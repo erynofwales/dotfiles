@@ -113,11 +113,7 @@ if &t_Co > 2 || has('gui_running')
     syntax on           " turn on syntax highlighting
 endif
 
-if has('gui_running')
-   set bg=light
-else
-   set bg=dark
-endif
+set bg=dark
 
 " use solarized colorscheme if the terminal can support it (or we're in a GUI)
 let g:solarized_termtrans = 1
