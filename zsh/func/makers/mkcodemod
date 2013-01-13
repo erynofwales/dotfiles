@@ -2,7 +2,7 @@
 # Create a code module
 # Eryn Wells <eryn@erynwells.me>
 
-local opts='cmph'
+local opts='Ccmph'
 local funcname=$0
 
 _usage() {
@@ -24,6 +24,11 @@ local modtype=''
 while getopts $opts opt; do
     [[ $complete -eq 1 ]] && return 2
     case $opt in
+        C)
+            modtype='C++'
+            srcext='cc'
+            headext='hh'
+            ;;
         c)
             modtype='C'
             srcext='c'

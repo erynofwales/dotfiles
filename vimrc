@@ -207,7 +207,10 @@ nmap <silent> <leader><space> :setlocal invhlsearch<CR>
 " find all
 nmap <leader>fa :%s/\v
 
-nmap <leader>sn :e ~/.vim/bundle/snipmate/snippets/<C-r>=&filetype<CR>.snippets<CR>
+" Open the snippet file for the current filetype
+nmap <leader>esn :e ~/.vim/bundle/snipmate/snippets/<C-r>=&filetype<CR>.snippets<CR>
+" Open the ftplugin-after script for the current filetype
+nmap <leader>eft :e ~/.vim/after/ftplugin/<C-r>=&filetype<CR>.vim<CR>
 
 " Toggle position highlighting
 nmap <silent> <leader>cl :setlocal invcursorline<CR>
@@ -243,6 +246,12 @@ if has('autocmd')
     " project.vim file if one exists.
     autocmd VimEnter ~/Code/*
         \ call <SID>source_project_file()
+
+    " Reload snippets after editing the snippets file. Snippet files are
+    " <filetype>.snippets. Get <filetype> from the filename and reload the
+    " snippets for that type.
+    autocmd BufWritePost *.snippets
+        \ :call ReloadSnippets(expand('%:t:r'))
 
     " Clean whitespace before saving: Python, C, HTML, and Objective-C
     autocmd BufWritePre *.py,*.h,*.c,*.html,*.m,*.mm,*.cc,*.hh
