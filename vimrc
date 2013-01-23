@@ -108,6 +108,17 @@ endif
 set modeline
 set modelines=12
 
+" Add my generated system tags files
+set tags=./tags,tags
+" These two are the important ones
+set tags+=~/.tags/apple_frameworks.tags
+set tags+=~/.tags/usr.tags
+"set tags+=~/.tags/3rdparty_frameworks.tags
+" This thing is 853 MB on my last count. It *probably* doesn't need to be
+" included all the time...
+"set tags+=~/.tags/usr_local.tags
+
+
 " use syntax highlighting if the terminal can support it (or we're in a GUI)
 if &t_Co > 2 || has('gui_running')
     syntax on           " turn on syntax highlighting
