@@ -126,8 +126,8 @@ let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 " set the Gundo preview window on the bottom
 let g:gundo_preview_bottom = 1
 
-map <silent> <F3> :GundoToggle<CR>
 map <silent> <F2> :NERDTreeToggle<CR>
+map <silent> <F3> :GundoToggle<CR>
 map <silent> <F4> :setlocal invlist<CR>
 
 inoremap jj <ESC>
@@ -153,7 +153,8 @@ nnoremap <C-l> <C-w>l
 nnoremap <silent> <C-n> :bn<CR>
 nnoremap <silent> <C-p> :bp<CR>
 
-function! <SID>StripTrailingWhitespace()
+
+function! <SID>strip_trailing_whitespace()
     " save last search
     let _s=@/
     " save cursor position
@@ -166,12 +167,41 @@ function! <SID>StripTrailingWhitespace()
     call cursor(l, c)
 endfunction
 
+
+function! <SID>find_project_file()
+    let l:dir = getcwd()
+    " Search up the path, starting at the current working directory, for a
+    " project.vim file and return the path to it, if it exists.
+    while l:dir != '/'
+        let l:project_file = l:dir . '/project.vim'
+        if filereadable(l:project_file)
+            return l:project_file
+        endif
+        let l:dir = fnamemodify(l:dir, ':h')
+    endwhile
+    return ''
+endfunction
+
+
+function! <SID>source_project_file()
+    let l:project_file = <SID>find_project_file()
+    if l:project_file != ''
+        exec 'source ' . l:project_file
+    endif
+endfunction
+
+
 let mapleader=','
 " strip all trailing whitespace in the current file
-nnoremap <silent> <leader>W :call <SID>StripTrailingWhitespace()<CR>
-" edit and source my .vimrc
+nnoremap <silent> <leader>W :call <SID>strip_trailing_whitespace()<CR>
+" (Re)load a project.vim file
+nnoremap <leader>P :exec 'edit ' . <SID>source_project_file()<CR>
+
+" edit and source .vimrc and project.vim files
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :source $MYVIMRC<CR>
+nmap <silent> <leader>eP :e <SID>find_project_file()<CR>
+
 " hide search terms
 nmap <silent> <leader><space> :setlocal invhlsearch<CR>
 " find all
@@ -199,8 +229,8 @@ nmap gV `[v`]
 
 " Command-T should open files in tabs when I hit <CR>; move opening files in
 " buffers to <C-b>
-let g:CommandTAcceptSelectionMap='<C-b>'
-let g:CommandTAcceptSelectionTabMap='<CR>'
+"let g:CommandTAcceptSelectionMap='<C-b>'
+"let g:CommandTAcceptSelectionTabMap='<CR>'
 
 if has('autocmd')
     filetype plugin indent on
@@ -212,6 +242,11 @@ if has('autocmd')
         \   exe "normal! g`\"" |
         \ endif
 
+    " All my projects are in the ~/Code directory. Look for and source a
+    " project.vim file if one exists.
+    autocmd VimEnter ~/Code/*
+        \ call <SID>source_project_file()
+
     " Reload snippets after editing the snippets file. Snippet files are
     " <filetype>.snippets. Get <filetype> from the filename and reload the
     " snippets for that type.
@@ -220,7 +255,7 @@ if has('autocmd')
 
     " Clean whitespace before saving: Python, C, HTML, and Objective-C
     autocmd BufWritePre *.py,*.h,*.c,*.html,*.m,*.mm,*.cc,*.hh
-        \ call <SID>StripTrailingWhitespace()
+        \ call <SID>strip_trailing_whitespace()
 endif
 
 if has('unix')
