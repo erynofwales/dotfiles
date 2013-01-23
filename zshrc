@@ -10,7 +10,7 @@ ZLE_MODE='vim'
 
 
 # load bash/zsh/ksh agnostic configurations
-[ -e $HOME/.rc ] && source $HOME/.rc
+[[ -e $HOME/.rc ]] && source $HOME/.rc
 
 print_heading -l 1 "Initializing interactive Z Shell"
 
@@ -28,6 +28,28 @@ function configure_general #{{{
            MULTIOS \
            AUTO_REMOVE_SLASH \
            COMPLETE_IN_WORD
+} #}}}
+
+
+# Configure oh-my-zsh
+function configure_omz #{{{
+{
+    if [[ ! -d ~/.oh-my-zsh ]]; then
+        print_error -l 2 "No ~/.oh-my-zsh directory; skipping"
+        return
+    fi
+
+    print_info -l 2 'Configuring Oh My ZSH!'
+
+    ZSH=$HOME/.oh-my-zsh
+    DISABLE_AUTO_UPDATE="true"
+    COMPLETION_WAITING_DOTS="true"
+
+    plugins=(autojump brew encode64 fasd git gnu-utils history osx python)
+
+    source $ZSH/oh-my-zsh.sh
+
+    alias v='f -t -e vim -b viminfo'
 } #}}}
 
 
@@ -150,6 +172,7 @@ function configure_completion #{{{
 
 
 configure_general
+configure_omz
 configure_zle
 configure_modules_and_functions 
 configure_zsh_aliases

@@ -3,6 +3,8 @@
 dfdir=$(cd "$(dirname "$0")" && pwd)
 sys=`uname -s | tr A-Z a-z`
 
+omzrepo=git://github.com/robbyrussell/oh-my-zsh.git
+
 # Vim bundles
 typeset -A vimbundles
 
@@ -23,6 +25,11 @@ vimbundles=( \
     surround "https://github.com/tpope/vim-surround.git" \
     unimpaired "https://github.com/tpope/vim-unimpaired.git" \
 )
+
+if [[ ! -d ~/.oh-my-zsh ]]; then
+    print -P "%BCloning Oh my ZSH!"
+    git clone $omzrepo
+fi
 
 print -P "%BSymlinking config files%b"
 for dotfile in `ls $dfdir`
@@ -88,9 +95,11 @@ for module in ${(k)vimbundles}; do
     print -P "$spaces%F{$color}$result%f"
 done
 
-print -P "%BSetting up command-t%b"
-cd "$dfdir/vim/bundle/command-t/ruby/command-t"
-ruby extconf.rb
-make
+if [[ -d "$dfdir/vim/bundle/command-t/ruby/command-t" ]]; then
+    print -P "%BSetting up command-t%b"
+    cd "$dfdir/vim/bundle/command-t/ruby/command-t"
+    ruby extconf.rb
+    make
+fi
 
 exit 0
