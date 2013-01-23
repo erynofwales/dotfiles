@@ -1,0 +1,34 @@
+#!/usr/bin/env zsh
+
+. $HOME/.shell-functions
+
+
+TAGS_DIR=$HOME/.tags
+
+
+function refresh_system_tags
+{
+    if [[ "$SYS" == "darwin" ]]; then
+        print_info "Refreshing Apple frameworks in /System/Library/Frameworks"
+        find /System/Library/Frameworks -maxdepth 2 -name Headers \
+            -exec ctags -Ra -f "$TAGS_DIR/apple_frameworks.tags" {} \;
+
+        print_info "Refreshing 3rd party frameworks in /Library/Frameworks"
+        find /Library/Frameworks -maxdepth 2 -name Headers \
+            -exec ctags -Ra -f "$TAGS_DIR/3rdparty_frameworks.tags" {} \;
+    fi
+
+    # Generic UNIX system include directory
+    if [[ -d /usr/include ]]; then
+        print_info "Refreshing system includes in /usr/include"
+        ctags -Ra -f "$TAGS_DIR/usr.tags" /usr/include
+    fi
+
+    # Generic UNIX local system include directory
+    if [[ -d /usr/local/include ]]; then
+        print_info "Refreshing local system includes in /usr/local/include"
+        ctags -Ra -f "$TAGS_DIR/usr_local.tags" /usr/local/include
+    fi
+}
+
+refresh_system_tags

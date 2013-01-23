@@ -91,6 +91,9 @@ function configure_modules_and_functions #{{{
 
     print_info -l 3 "Loading pw module"
     autoload pw
+
+    print_info -l 3 "Loading refresh_system_tags"
+    autoload refresh_system_tags
 } #}}}
 
 
