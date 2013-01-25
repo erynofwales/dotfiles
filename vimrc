@@ -126,6 +126,8 @@ endif
 
 set bg=dark
 
+call togglebg#map("<F10>")
+
 " use solarized colorscheme if the terminal can support it (or we're in a GUI)
 let g:solarized_termtrans = 1
 let g:solarized_visibility = 'low'
