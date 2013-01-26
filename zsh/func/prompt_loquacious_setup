@@ -26,18 +26,20 @@ function prompt_loquacious_setup
 
     autoload -U prompt_colorize
     autoload -Uz vcs_info
+    autoload -U add-zsh-hook
 
-    precmd_functions=(set_xterm_title \
-                      print_newline \
-                      set_prompt_info \
-                      set_zle_mode_info)
-    preexec_functions=(print_newline)
+    add-zsh-hook precmd set_xterm_title
+    add-zsh-hook precmd print_newline
+    add-zsh-hook precmd set_prompt_info
+    add-zsh-hook precmd set_zle_mode_info
+
+    add-zsh-hook preexec print_newline
 
     prompt_opts=(cr subst percent)
 
     # Set up vcs_info
     zstyle ':vcs_info:git:loquacious:*' formats \
-        '%B%F{cyan}%r%f%%b(%B%F{blue}%b%f%%b)'
+        '%F{cyan}%r%f(%F{blue}%b%f)'
 
     PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_ZLE_MODE}
 $PS1_LINE'
@@ -72,11 +74,11 @@ function print_newline
 
 function set_prompt_info
 {
-    PS1_NAME="`prompt_colorize -b -f 'magenta' '%n'` "
-    PS1_CWD="in `prompt_colorize -b -f 'green' '%~'` "
+    PS1_NAME="`prompt_colorize -f 'magenta' '%n'` "
+    PS1_CWD="in `prompt_colorize -f 'green' '%~'` "
 
     if [[ -n "$SSH_CONNECTION" ]]; then
-        PS1_HOST="at `prompt_colorize -b -f 'red' '%m'` "
+        PS1_HOST="at `prompt_colorize -f 'red' '%m'` "
     else
         PS1_HOST=''
     fi
@@ -104,9 +106,9 @@ function set_xterm_title
 function set_zle_mode_info
 {
     if [[ -z "$1" || "$1" == 'viins' || "$1" == 'main' ]]; then
-        PS1_ZLE_MODE=`prompt_colorize -b -f 'black' '<INS>'`
+        PS1_ZLE_MODE=`prompt_colorize -f 'black' '<INS>'`
     elif [[ "$1" == 'vicmd' ]]; then
-        PS1_ZLE_MODE=`prompt_colorize -b -f 'black' '<CMD>'`
+        PS1_ZLE_MODE=`prompt_colorize -f 'black' '<CMD>'`
     else
         PS1_ZLE_MODE=''
     fi
