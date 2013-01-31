@@ -80,7 +80,7 @@ function configure_modules_and_functions #{{{
     print_info -l 2 'Loading modules'
 
     local myfpath="$HOME/.zsh/func"
-    print_info_sub -l 2 "Adding $myfpath to \$fpath"
+    print_info_sub -l 2 "Adding $myfpath to fpath"
     fpath=($myfpath/makers $myfpath $fpath)
 
     print_info -l 3 'Loading vcs_info'
