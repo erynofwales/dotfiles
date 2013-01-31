@@ -28,7 +28,7 @@ vimbundles=( \
 
 if [[ ! -d ~/.oh-my-zsh ]]; then
     print -P "%BCloning Oh my ZSH!"
-    git clone $omzrepo
+    git clone $omzrepo $HOME/.oh-my-zsh
 fi
 
 print -P "%BSymlinking config files%b"
