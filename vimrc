@@ -126,6 +126,8 @@ endif
 
 set bg=dark
 
+call togglebg#map("<F10>")
+
 " use solarized colorscheme if the terminal can support it (or we're in a GUI)
 let g:solarized_termtrans = 1
 let g:solarized_visibility = 'low'
@@ -178,40 +180,54 @@ function! <SID>strip_trailing_whitespace()
     call cursor(l, c)
 endfunction
 
-
-function! <SID>find_project_file()
+function! <SID>FindProjectFileOrDirectory(fod)
     let l:dir = getcwd()
-    " Search up the path, starting at the current working directory, for a
-    " project.vim file and return the path to it, if it exists.
-    while l:dir != '/'
-        let l:project_file = l:dir . '/project.vim'
-        if filereadable(l:project_file)
-            return l:project_file
+    " Search up the path, starting at the current working directory, for the
+    " file or directory given in a:fod and return the path to it, if it exists.
+    while l:dir != "/"
+        let l:file_or_dir = l:dir . "/" . a:fod
+        if filereadable(l:file_or_dir) || isdirectory(l:file_or_dir)
+            return l:file_or_dir
         endif
         let l:dir = fnamemodify(l:dir, ':h')
     endwhile
-    return ''
+    return ""
 endfunction
 
+function! GetProjectRuntimeDirectory()
+    return <SID>FindProjectFileOrDirectory("vim")
+endfunction
 
-function! <SID>source_project_file()
-    let l:project_file = <SID>find_project_file()
-    if l:project_file != ''
-        exec 'source ' . l:project_file
+function! GetProjectFile()
+    return <SID>FindProjectFileOrDirectory("project.vim")
+endfunction
+
+function! <SID>SourceProjectFile()
+    let l:project_file = GetProjectFile()
+    if l:project_file != ""
+        exec "source " . l:project_file
+    endif
+endfunction
+
+function! <SID>AddProjectRuntimeDirectory()
+    let l:project_rtp = GetProjectRuntimeDirectory()
+    if isdirectory(l:project_rtp)
+        exec "set rtp+=" . l:project_rtp
     endif
 endfunction
 
 
 let mapleader=','
+
 " strip all trailing whitespace in the current file
 nnoremap <silent> <leader>W :call <SID>strip_trailing_whitespace()<CR>
-" (Re)load a project.vim file
-nnoremap <leader>P :exec 'edit ' . <SID>source_project_file()<CR>
 
-" edit and source .vimrc and project.vim files
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :source $MYVIMRC<CR>
-nmap <silent> <leader>eP :e <SID>find_project_file()<CR>
+" Source .vimrc and project.vim files
+nmap <leader>V :source $MYVIMRC<CR>
+nmap <leader>P :call <SID>SourceProjectFile()<CR>
+" Edit my .vimrc and project.vim files
+nmap <leader>eV :edit $MYVIMRC<CR>
+nmap <leader>eP :exec 'edit ' . GetProjectFile()<CR>
 
 " hide search terms
 nmap <silent> <leader><space> :setlocal invhlsearch<CR>
@@ -256,13 +272,15 @@ if has('autocmd')
     " All my projects are in the ~/Code directory. Look for and source a
     " project.vim file if one exists.
     autocmd VimEnter ~/Code/*
-        \ call <SID>source_project_file()
+        \ call <SID>SourceProjectFile()
+    autocmd VimEnter ~/Code/*
+        \ call <SID>AddProjectRuntimeDirectory()
 
     " Reload snippets after editing the snippets file. Snippet files are
     " <filetype>.snippets. Get <filetype> from the filename and reload the
     " snippets for that type.
-    autocmd BufWritePost *.snippets
-        \ :call ReloadSnippets(expand('%:t:r'))
+    "autocmd BufWritePost *.snippets
+    "    \ :call ReloadSnippets(expand('%:t:r'))
 
     " Clean whitespace before saving: Python, C, HTML, and Objective-C
     autocmd BufWritePre *.py,*.h,*.c,*.html,*.m,*.mm,*.cc,*.hh
