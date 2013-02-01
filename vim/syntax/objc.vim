@@ -3,22 +3,6 @@
 " Maintainer:	Eryn Wells <eryn@erynwells.me>
 " Last Change:	2013 Jan 16
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
-if version < 600
-  syntax clear
-elseif exists("b:current_syntax")
-  finish
-endif
-
-" Read the Objective-C syntax to start with
-if version < 600
-  source <sfile>:p:h/objc.vim
-else
-  runtime! syntax/objc.vim
-  unlet b:current_syntax
-endif
-
 " AppKit types
 syn keyword objc2Boolean            YES NO
 syn keyword objc2FrameworkType      NSAppleEventManagerSubscriptionID NSComparator NSDecimal NSHashEnumerator NSHashTable NSHashTableCallbacks NSHashTableOptions NSInteger NSMapEnumerator NSMapTable NSMapTableKeyCallbacks NSMapTableOptions NSMapTableValueCallbacks NSPoint NSPointArray NSPointPointer NSRange NSRangePointer NSRect NSRectArray NSRectPointer NSSize NSSizeArray NSSizePointer NSSocketNativeHandle NSStringEncoding NSSwappedDouble NSSwappedFloat NSTimeInterval NSUncaughtExceptionHandler NSUInteger NSZone
@@ -78,5 +62,3 @@ if version >= 508 || !exists("did_objc_syntax_inits")
 
   delcommand HiLink
 endif
-
-let b:current_syntax = "objc2"
