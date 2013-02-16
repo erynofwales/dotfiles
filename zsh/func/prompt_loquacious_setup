@@ -90,6 +90,8 @@ function set_prompt_info
        PS1_REPO=""
     fi
 
+    RPS1="[%(j1.%F{magenta}%j%f,.)%F{red}%h%f]"
+
     PS1_LINE='%# '
 }
 
