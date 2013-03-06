@@ -15,3 +15,5 @@ endif
 
 set guioptions-=T       " turn off toolbar
 set guioptions-=m       " turn off menubar
+
+call togglebg#map("<F10>")

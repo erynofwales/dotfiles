@@ -126,8 +126,6 @@ endif
 
 set bg=dark
 
-call togglebg#map("<F10>")
-
 " use solarized colorscheme if the terminal can support it (or we're in a GUI)
 let g:solarized_termtrans = 1
 let g:solarized_visibility = 'low'
@@ -163,6 +161,11 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Usual EMACS (oh the horror!) begin-line and end-line keys for first and last
+" buffer.
+"nnoremap <silent> <C-a> :bfirst<CR>
+"nnoremap <silent> <C-e> :blast<CR>
+" Move between buffers with <C-n> and <C-p>
 nnoremap <silent> <C-n> :bn<CR>
 nnoremap <silent> <C-p> :bp<CR>
 
@@ -258,6 +261,11 @@ nmap gV `[v`]
 " buffers to <C-b>
 "let g:CommandTAcceptSelectionMap='<C-b>'
 "let g:CommandTAcceptSelectionTabMap='<CR>'
+
+" GitGutter shows changed lines in files.
+let g:gitgutter_enabled = 0
+highlight clear SignColumn
+nmap <silent> <leader>gg :ToggleGitGutter<CR>
 
 if has('autocmd')
     filetype plugin indent on
