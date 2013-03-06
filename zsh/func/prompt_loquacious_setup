@@ -74,6 +74,7 @@ function print_newline
 
 function set_prompt_info
 {
+    PS1_HISTORY="`prompt_colorize -b -f 'green' '%h'`"
     PS1_NAME="`prompt_colorize -f 'magenta' '%n'` "
     PS1_CWD="in `prompt_colorize -f 'green' '%~'` "
 
@@ -90,7 +91,8 @@ function set_prompt_info
        PS1_REPO=""
     fi
 
-    RPS1="[%(j1.%F{magenta}%j%f,.)%F{red}%h%f]"
+    # Show background job count if any exist.
+    RPS1="%(1j.[`prompt_colorize -f 'magenta' '%j'`].)"
 
     PS1_LINE='%# '
 }
