@@ -83,10 +83,6 @@ function configure_modules_and_functions #{{{
     print_info_sub -l 2 "Adding $myfpath to fpath"
     fpath=($myfpath/makers $myfpath $fpath)
 
-    print_info -l 3 'Loading vcs_info'
-    autoload -Uz vcs_info
-    zstyle ':vcs_info:*' enable git
-
     load_module 'makers'
 
     print_info -l 3 "Loading pw module"
@@ -176,6 +172,8 @@ function configure_completion #{{{
 
 function configure_vcs_info #{{{
 {
+    print_info -l 3 'Loading vcs_info'
+
     autoload -U add-zsh-hook
     autoload -Uz vcs_info
 
