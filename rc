@@ -33,6 +33,7 @@ function g
     else
         git status --short --branch
     fi
+    return $?
 }
 
 

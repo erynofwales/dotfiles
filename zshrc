@@ -45,7 +45,7 @@ function configure_omz #{{{
     DISABLE_AUTO_UPDATE="true"
     COMPLETION_WAITING_DOTS="true"
 
-    plugins=(autojump brew encode64 fasd git gnu-utils history osx python)
+    plugins=(autojump brew encode64 fasd gnu-utils history osx python)
 
     source $ZSH/oh-my-zsh.sh
 
