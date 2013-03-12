@@ -1,5 +1,8 @@
 #!/usr/bin/zsh
+# vim:sw=4:sts=4:
+#
 # A wordy prompt theme.
+#
 # Eryn Wells <eryn@erynwells.me>
 
 
@@ -84,11 +87,18 @@ function set_prompt_info
         PS1_HOST=''
     fi
 
+    # Get git repo information, if it exists. See setup function for
+    # configuration details.
     vcs_info loquacious
     if [[ -n "$vcs_info_msg_0_" ]]; then
-       PS1_REPO="on $vcs_info_msg_0_ "
+        PS1_REPO="on $vcs_info_msg_0_ "
     else
-       PS1_REPO=""
+        PS1_REPO=""
+    fi
+
+    # Show background jobs, if any.
+    if [[ `jobs | wc -l` -ge 1 ]]; then
+        PS1_JOBS='%j'
     fi
 
     # Show background job count if any exist.
