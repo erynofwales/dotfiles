@@ -1,5 +1,5 @@
 # .zshrc
-# vim: ft=zsh fdm=marker
+# vim:ft=zsh:fdm=marker:sw=4:sts=4:
 #
 # ZSH init for interactive shells
 #
@@ -174,6 +174,26 @@ function configure_completion #{{{
 } #}}}
 
 
+function configure_vcs_info #{{{
+{
+    autoload -U add-zsh-hook
+    autoload -Uz vcs_info
+
+    zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla cvs svn
+    zstyle ':vcs_info:*' enable git p4
+
+    zstyle ':vcs_info:git:general:*' formats '%b'
+
+    # Export the current Git branch before every prompt.
+    function export_gitbranch {
+        vcs_info general
+        export gitbranch=${vcs_info_msg_0_}
+    }
+
+    add-zsh-hook precmd export_gitbranch
+} #}}}
+
+
 configure_general
 configure_omz
 configure_zle
@@ -181,6 +201,7 @@ configure_modules_and_functions
 configure_zsh_aliases
 configure_history
 configure_completion
+configure_vcs_info
 configure_prompt
 
 

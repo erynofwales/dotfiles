@@ -183,6 +183,7 @@ function! <SID>strip_trailing_whitespace()
     call cursor(l, c)
 endfunction
 
+
 function! <SID>FindProjectFileOrDirectory(fod)
     let l:dir = getcwd()
     " Search up the path, starting at the current working directory, for the
@@ -197,13 +198,16 @@ function! <SID>FindProjectFileOrDirectory(fod)
     return ""
 endfunction
 
+
 function! GetProjectRuntimeDirectory()
     return <SID>FindProjectFileOrDirectory("vim")
 endfunction
 
+
 function! GetProjectFile()
     return <SID>FindProjectFileOrDirectory("project.vim")
 endfunction
+
 
 function! <SID>SourceProjectFile()
     let l:project_file = GetProjectFile()
@@ -211,6 +215,7 @@ function! <SID>SourceProjectFile()
         exec "source " . l:project_file
     endif
 endfunction
+
 
 function! <SID>AddProjectRuntimeDirectory()
     let l:project_rtp = GetProjectRuntimeDirectory()

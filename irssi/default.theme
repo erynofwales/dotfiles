@@ -118,7 +118,7 @@ abstracts = {
   ##
 
   # the basic styling of how to print message, $0 = nick mode, $1 = nick
-  msgnick = "%K<%n$0$1-%K>%n %|";
+  msgnick = "  %n$0$1-%k>%n %|";
 
   # message from you is printed. "msgownnick" specifies the styling of the
   # nick ($0 part in msgnick) and "ownmsgnick" specifies the styling of the
@@ -250,7 +250,7 @@ abstracts = {
 
   # default background for all statusbars. You can also give
   # the default foreground color for statusbar items.
-  sb_background = "%4%w";
+  sb_background = "%n%0";
 
   # default backround for "default" statusbar group
   #sb_default_bg = "%4";
@@ -266,14 +266,14 @@ abstracts = {
   sbstart = "";
   # text at the end of statusbars. Use space so that it's never
   # used for anything.
-  sbend = " ";
+  sbend = "";
 
   topicsbstart = "{sbstart $*}";
   topicsbend = "{sbend $*}";
 
-  prompt = "[$*] ";
+  prompt = "[%n$*] ";
 
-  sb = " %c[%n$*%c]%n";
+  sb = "%c[%n$*%c]%n ";
   sbmode = "(%c+%n$*)";
   sbaway = " (%GzZzZ%n)";
   sbservertag = ":$0 (change with ^X)";
@@ -286,9 +286,9 @@ abstracts = {
   # normal text
   sb_act_text = "%c$*";
   # public message
-  sb_act_msg = "%W$*";
+  sb_act_msg = "%w$*";
   # hilight
-  sb_act_hilight = "%M$*";
+  sb_act_hilight = "%m$*";
   # hilight with specified color, $0 = color, $1 = text
   sb_act_hilight_color = "$0$1-%n";
 };
