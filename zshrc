@@ -177,8 +177,8 @@ function configure_vcs_info #{{{
     autoload -U add-zsh-hook
     autoload -Uz vcs_info
 
-    zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla cvs svn
-    zstyle ':vcs_info:*' enable git p4
+    zstyle ':vcs_info:*' disable p4 bzr cdv darcs mtn svk tla cvs svn
+    zstyle ':vcs_info:*' enable git
 
     zstyle ':vcs_info:git:general:*' formats '%b'
 
