@@ -235,7 +235,7 @@ nmap <silent> <leader><space> :setlocal invhlsearch<CR>
 nmap <leader>fa :%s/\v
 
 " Open the snippet file for the current filetype
-nmap <leader>esn :e ~/.vim/bundle/snipmate/snippets/<C-r>=&filetype<CR>.snippets<CR>
+nmap <leader>esn :e ~/.vim/bundle/snipmate-snippets/snippets/<C-r>=&filetype<CR>.snippets<CR>
 " Open the ftplugin-after script for the current filetype
 nmap <leader>eft :e ~/.vim/after/ftplugin/<C-r>=&filetype<CR>.vim<CR>
 
