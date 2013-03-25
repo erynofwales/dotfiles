@@ -50,13 +50,13 @@ esac
 
 function {
     local has_gnu_ls=1
-    local ls='ls'
+    local lsbin='ls'
     local ls_options='--color=auto'
 
     case $SYS in
         darwin)
             if binary_exists gls; then
-                ls='gls'
+                lsbin='gls'
             else
                 has_gnu_ls=0
                 ls_options='-G'
@@ -69,11 +69,11 @@ function {
             ;;
     esac
 
-    print_info_sub -l 3 "Setting up ls: `which $ls`"
-    alias ls="$ls $ls_options"
-    alias la="$ls -A $ls_options"
-    alias ll="$ls -l $ls_options"
-    alias l.="$ls -d $ls_options .*"
+    print_info_sub -l 3 "Setting up ls: `which $lsbin`"
+    alias ls="$lsbin $ls_options"
+    alias la="$lsbin -A $ls_options"
+    alias ll="$lsbin -l $ls_options"
+    alias l.="$lsbin -d $ls_options .*"
 
     if [ $has_gnu_ls ]; then
         if [ -e $HOME/.dircolors/$SYS.cfg ]; then
