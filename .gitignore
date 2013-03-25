@@ -1,2 +1,7 @@
+.DS_Store
+
 zsh/cache/
 vim/view/
+vim/spelling*
+
+irssi/away.log

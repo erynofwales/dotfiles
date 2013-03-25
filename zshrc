@@ -1,5 +1,5 @@
 # .zshrc
-# vim: ft=zsh fdm=marker
+# vim:ft=zsh:fdm=marker:sw=4:sts=4:
 #
 # ZSH init for interactive shells
 #
@@ -45,7 +45,7 @@ function configure_omz #{{{
     DISABLE_AUTO_UPDATE="true"
     COMPLETION_WAITING_DOTS="true"
 
-    plugins=(autojump brew encode64 fasd git gnu-utils history osx python)
+    plugins=(autojump brew encode64 fasd gnu-utils history osx python)
 
     source $ZSH/oh-my-zsh.sh
 
@@ -82,10 +82,6 @@ function configure_modules_and_functions #{{{
     local myfpath="$HOME/.zsh/func"
     print_info_sub -l 2 "Adding $myfpath to fpath"
     fpath=($myfpath/makers $myfpath $fpath)
-
-    print_info -l 3 'Loading vcs_info'
-    autoload -Uz vcs_info
-    zstyle ':vcs_info:*' enable git
 
     load_module 'makers'
 
@@ -174,6 +170,28 @@ function configure_completion #{{{
 } #}}}
 
 
+function configure_vcs_info #{{{
+{
+    print_info -l 3 'Loading vcs_info'
+
+    autoload -U add-zsh-hook
+    autoload -Uz vcs_info
+
+    zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla cvs svn
+    zstyle ':vcs_info:*' enable git p4
+
+    zstyle ':vcs_info:git:general:*' formats '%b'
+
+    # Export the current Git branch before every prompt.
+    function export_gitbranch {
+        vcs_info general
+        export gitbranch=${vcs_info_msg_0_}
+    }
+
+    add-zsh-hook precmd export_gitbranch
+} #}}}
+
+
 configure_general
 configure_omz
 configure_zle
@@ -181,6 +199,7 @@ configure_modules_and_functions
 configure_zsh_aliases
 configure_history
 configure_completion
+configure_vcs_info
 configure_prompt
 
 

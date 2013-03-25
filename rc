@@ -10,7 +10,6 @@ print_info -l 2 'Creating aliases'
 alias h='history'
 alias df='df -h'
 alias du='du -h'
-alias g='git'
 alias v='vim'
 
 binary_exists ledger && alias l='ledger'
@@ -26,6 +25,16 @@ alias addkey="ssh-agent ~/.ssh/id_rsa"
 
 alias pprint="python -c 'import sys,pprint; pprint.pprint(eval(sys.stdin.read()))'"
 alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.stdin), indent=2)'"
+
+function g
+{
+    if [[ $# -gt 0 ]]; then
+        git $@
+    else
+        git status --short --branch
+    fi
+    return $?
+}
 
 
 print_info -l 2 "Sourcing ${SYS}-specific settings"

@@ -5,7 +5,7 @@ if has('win32') || has('win64') || has('win32unix')
     set guifont=Inconsolata:h18
 elseif has('mac')
     try
-        set guifont=Source\ Code\ Pro:h13
+        set guifont=Source\ Code\ Pro\ Light:h13
     catch
         set guifont=Menlo:h11
     endtry
@@ -15,3 +15,5 @@ endif
 
 set guioptions-=T       " turn off toolbar
 set guioptions-=m       " turn off menubar
+
+call togglebg#map("<F10>")
