@@ -50,7 +50,7 @@ function load_module {
 
     local modpath
     for p in $fpath; do
-        modpath=$p/$1
+        modpath=$p/$mod
         [[ -d $modpath ]] && break
         modpath=''
     done
@@ -59,6 +59,8 @@ function load_module {
         print_error -l 1 "Couldn't find path to module: $mod"
         return 1
     fi
+
+    fpath+=($modpath)
 
     print_info -l 1 "Loading module: $mod"
     for func in `ls $modpath`; do
