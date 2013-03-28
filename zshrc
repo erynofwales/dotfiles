@@ -81,9 +81,9 @@ function configure_modules_and_functions #{{{
 
     local myfpath="$HOME/.zsh/func"
     print_info_sub -l 2 "Adding $myfpath to fpath"
-    fpath=($myfpath/makers $myfpath $fpath)
+    fpath=($myfpath $fpath)
 
-    load_module 'makers'
+    load_module makers
 
     print_info -l 3 "Loading pw module"
     autoload pw
