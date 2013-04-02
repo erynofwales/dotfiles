@@ -150,6 +150,8 @@ function configure_completion #{{{
     zstyle ':completion::complete:*' use-cache 1
     zstyle ':completion::complete:*' cache-path ~/.zsh/cache
 
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
     # For rm, cp, and mv don't complete if file is on the line already
     zstyle ':completion:*:rm:*' ignore-line yes
     zstyle ':completion:*:cp:*' ignore-line yes
@@ -167,6 +169,10 @@ function configure_completion #{{{
     # Show a pretty menu of killable processes
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
     zstyle ':completion:*:*:kill:*' menu yes select
+
+    # Complete man pages by section
+    zstyle ':completion:*:manuals' separate-sections true
+    zstyle ':completion:*:manuals.*' insert-sections true
 } #}}}
 
 
@@ -193,7 +199,7 @@ function configure_vcs_info #{{{
 
 
 configure_general
-configure_omz
+#configure_omz
 configure_zle
 configure_modules_and_functions 
 configure_zsh_aliases
