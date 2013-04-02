@@ -1,0 +1,45 @@
+# vim:ft=zsh:
+#
+# Import the CAcert root CA on OS X. Based on the tutorial on their wiki.
+#
+# http://wiki.cacert.org/MacOSX_X509Anchors
+#
+# Eryn Wells <eryn@erynwells.me>
+
+
+function import_cacert
+{
+    # SHA1 fingerprints of the root and class3 keys.
+    local root_fingerprint="13:5C:EC:36:F4:9C:B8:E9:3B:1A:B2:70:CD:80:88:46:76:CE:8F:33"
+    local class3_fingerprint="AD:7C:3F:64:FC:44:39:FE:F4:E9:0B:E8:F4:7C:6C:FA:8A:AD:FD:CE"
+
+    local savewd=`pwd`
+    local tmpdir=`mktemp -d`
+    cd "$tmpdir"
+
+    # Download the certificates.
+    curl -k -o root.crt "https://www.cacert.org/certs/root.crt"
+    curl -k -o class3.crt "https://www.cacert.org/certs/class3.crt"
+
+    # Verify fingerprints and import.
+    if   openssl x509 -noout -fingerprint < root.crt \
+       | grep "Fingerprint=$root_fingerprint" 1>/dev/null
+    then
+        sudo security add-trusted-cert -d \
+                                       -k /Library/Keychains/System.keychain \
+                                       -r trustRoot \
+                                       root.crt
+    fi
+
+    if   openssl x509 -noout -fingerprint < class3.crt \
+       | grep "Fingerprint=$class3_fingerprint" 1>/dev/null
+    then
+        sudo security add-trusted-cert -d \
+                                       -k /Library/Keychains/System.keychain \
+                                       -r trustAsRoot \
+                                       class3.crt
+    fi
+
+    cd "$savewd"
+    rm -rf "$tmpdir"
+}
