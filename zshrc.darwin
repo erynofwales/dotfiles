@@ -1,0 +1,10 @@
+# zshrc.darwin
+# OS X customizations for ZSH
+#
+# Eryn Wells <eryn@erynwells.me>
+
+# Open a file/folder in Finder
+alias reveal='open -R'
+
+alias -s app='open'
+alias -s xcodeproj='open -a Xcode'
