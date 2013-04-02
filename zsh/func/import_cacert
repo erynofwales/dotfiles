@@ -14,7 +14,7 @@ function import_cacert
     local class3_fingerprint="AD:7C:3F:64:FC:44:39:FE:F4:E9:0B:E8:F4:7C:6C:FA:8A:AD:FD:CE"
 
     local savewd=`pwd`
-    local tmpdir=`mktemp -d`
+    local tmpdir=`mktemp -dt cacert`
     cd "$tmpdir"
 
     # Download the certificates.
