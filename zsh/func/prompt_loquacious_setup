@@ -110,10 +110,18 @@ function set_prompt_info
 
 function set_xterm_title
 {
+    local title=''
+
+    if [[ -n "$TMUX" ]]; then
+        title+="`tmux display-message -p '#S'`: "
+    fi
+
     # Set xterm and screen titles
     if [[ -n "$DISPLAY" || -n "$TERM_PROGRAM" ]]; then
-        print -Pn "\e]2;%n@%m\a"
+        title+="%n@%m"
     fi
+
+    print -Pn "\e]2;${title}\a"
 }
 
 
