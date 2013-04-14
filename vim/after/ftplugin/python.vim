@@ -4,8 +4,8 @@ setlocal expandtab
 
 let s:buf_filename = expand('%:t')
 if s:buf_filename != "SConscript" && s:buf_filename != "SConstruct"
-    setlocal textwidth=100
-    setlocal colorcolumn=100
+    setlocal textwidth=80
+    setlocal colorcolumn=80
 else
     setlocal textwidth=80
     setlocal colorcolumn=80
