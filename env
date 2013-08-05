@@ -32,21 +32,23 @@ export PAGER MANPAGER \
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 # NOTE: These prepended to $PATH in reverse order, so $HOME/bin will end up
 # being the first path component.
-[ -d /usr/X11/bin ]     && PATH=$PATH:/usr/X11/bin
-[ -d /opt/local/bin ]   && PATH=/opt/local/bin:$PATH
-[ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
-[ -d $HOME/bin ]        && PATH=$HOME/bin:$PATH
+[[ -d /usr/X11/bin ]]     && PATH=$PATH:/usr/X11/bin
+[[ -d /opt/local/bin ]]   && PATH=/opt/local/bin:$PATH
+[[ -d $HOME/.local/bin ]] && PATH=$HOME/.local/bin:$PATH
+[[ -d $HOME/bin ]]        && PATH=$HOME/bin:$PATH
 
 export PATH
 
 print_info -l 2 "Setting up $SYS environment"
 case $SYS in
     darwin)
-        export PATH=$HOME/Library/Python/2.7/bin:$PATH
+        if [[ -d "$HOME/Library/Python/2.7/bin" ]]; then
+            export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+        fi
 
         local py27local=$HOME/Library/Python/2.7/lib/python/site-packages
         if [[ ! -z $PYTHONPATH ]]; then
-            [ -d $py27local ] && PYTHONPATH=$py27local:$PYTHONPATH
+            [[ -d $py27local ]] && PYTHONPATH=$py27local:$PYTHONPATH
         else
             PYTHONPATH=$py27local
         fi
@@ -64,7 +66,7 @@ if [[ -e "$HOME/.env.$SYS" ]]; then
 fi
 
 # Local environment settings
-if [ -e $HOME/.env.local ]; then
+if [[ -e $HOME/.env.local ]]; then
     print_info -l 2 "Sourcing local environment setup"
     source $HOME/.env.local
 fi
