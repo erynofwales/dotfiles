@@ -77,19 +77,26 @@ function configure_zle #{{{
 
 function configure_modules_and_functions #{{{
 {
-    print_info -l 2 'Loading modules'
-
     local myfpath="$HOME/.zsh/func"
-    print_info_sub -l 2 "Adding $myfpath to fpath"
-    fpath=($myfpath $fpath)
+    fpath=($myfpath/makers $myfpath $fpath)
 
-    load_module makers
+    print_info -l 2 "Loading functions in $myfpath"
+    for func in $myfpath/*; do
+        if [[ ! -e "$func" ]]; then
+            continue
+        fi
 
-    print_info -l 3 "Loading pw module"
-    autoload pw
+        # Skip prompt_* functions; these are handled elsewhere.
+        if [[ "$func" =~ "/prompt_*" ]]; then
+            continue
+        fi
 
-    print_info -l 3 "Loading refresh_system_tags"
-    autoload refresh_system_tags
+        local fname=`basename $func`
+        print_info_sub -l 3 "Loading $fname"
+        autoload $fname
+    done
+
+    load_module 'makers'
 } #}}}
 
 
