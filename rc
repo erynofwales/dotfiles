@@ -62,21 +62,12 @@ function {
     local lsbin='ls'
     local ls_options='--color=auto'
 
-    case $SYS in
-        darwin)
-            if binary_exists gls; then
-                lsbin='gls'
-            else
-                has_gnu_ls=0
-                ls_options='-G'
-            fi
-            ;;
-        linux)
-            ;;
-        *)
-            has_gnu_ls=0
-            ;;
-    esac
+    if binary_exists gls; then
+        lsbin='gls'
+    else
+        has_gnu_ls=0
+        ls_options='-G'
+    fi
 
     print_info_sub -l 3 "Setting up ls: `which $lsbin`"
     alias ls="$lsbin $ls_options"
@@ -84,11 +75,11 @@ function {
     alias ll="$lsbin -l $ls_options"
     alias l.="$lsbin -d $ls_options .*"
 
-    if [ $has_gnu_ls ]; then
-        if [ -e $HOME/.dircolors/$SYS.cfg ]; then
-            dircolors=$HOME/.dircolors/$SYS.cfg
+    if [[ $has_gnu_ls -eq 1 ]]; then
+        if [[ -e "$HOME/.dircolors/$SYS.cfg" ]]; then
+            dircolors="$HOME/.dircolors/$SYS.cfg"
         else
-            dircolors=$HOME/.dircolors/default.cfg
+            dircolors="$HOME/.dircolors/default.cfg"
         fi
         print_info_sub -l 3 "Setting up dircolors: `basename $dircolors`"
         eval `dircolors $dircolors`
@@ -100,7 +91,7 @@ function {
 binary_exists nethack && export NETHACKOPTIONS="color"
 
 # Default ledger file
-[ -e "$HOME/Documents/Financial/personal.ledger" ] && \
+[[ -e "$HOME/Documents/Financial/personal.ledger" ]] && \
     LEDGER_FILE=$HOME/Documents/Financial/personal.ledger
 
 if [ -e $HOME/.rc.local ]; then

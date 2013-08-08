@@ -97,7 +97,7 @@ set wildmode=longest,list
 
 " Wild ignores
 " build artifacts
-set wildignore+=*.o,*.pyc,*~,.lo
+set wildignore+=*.o,*.pyc,*~,.lo,*.class
 set wildignore+=*.db,*.pdf,*.jpg,*.jpeg,*.png,*.gif
 set wildignore+=.git,env,migrations
 
@@ -296,7 +296,7 @@ if has('autocmd')
     "    \ :call ReloadSnippets(expand('%:t:r'))
 
     " Clean whitespace before saving: Python, C, HTML, and Objective-C
-    autocmd BufWritePre *.py,*.h,*.c,*.html,*.m,*.mm,*.cc,*.hh
+    autocmd BufWritePre *.py,*.h,*.c,*.html,*.m,*.mm,*.cc,*.hh,*.java
         \ call <SID>strip_trailing_whitespace()
 endif
 
