@@ -1,0 +1,15 @@
+#!/usr/bin/zsh
+#
+# Setup the shell for Android development
+#
+# Eryn Wells <eryn@erynwells.me>
+
+
+function setup_android
+{
+    export ANDROID_ROOT="$HOME/toolchain/android/sdk-r22.0.4"
+    path=("$ANDROID_ROOT/platform-tools" "$ANDROID_ROOT/tools" $path)
+    rehash
+}
+
+setup_android $@
