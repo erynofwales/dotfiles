@@ -6,46 +6,72 @@
 local funcname=$0
 
 
-_usage() {
+_usage_mkdjango() {
     print_info "Usage: $funcname template_name project_name [optional destination directory]"
 }
 
-if [[ ${#@} -lt 2 ]]; then
-    print_error "Need moar arguments" 1>&2
-    _usage
-    return -1
-fi
-
-
-local tname=$1
-local tdir="$HOME/.codetemplates/django/$tname"
-local pname=$2
-local dest=$3
-
-if [[ ! -d "$tdir" ]]; then
-    print_error "Invalid template name: $tname" 1>&2
-    return -2
-fi
-
-
-print_info "Making Django project '$pname' with template '$tname'"
-if [[ -n "$dest" && ! -d "$dest" ]]; then
-    print_info_sub "Destination directory given but does not exist; creating $dest"
-    mkdir -p "$dest"
-fi
-
-# Determine what files might not be rendered by django-admin.py
-local names=()
-for f in `find "$tdir"`; do
-    # Pick up all dotfiles
-    if [[ -e "$f" && "`basename $f`" =~ "^\." ]]; then
-        names+=($f)
+function mkdjango
+{
+    if [[ ${#@} -lt 2 ]]; then
+        print_error "Need moar arguments" 1>&2
+        _usage_mkdjango
+        return -1
     fi
-done
 
-print_info_sub "Calling django-admin.py"
-django-admin.py startproject --template="$tdir" --name=${(j.,.)names} $pname $dest
-exitcode=$?
+    local template_name=$1
+    local template_dir="$HOME/.codetemplates/django/$template_name"
+    local project_name=$2
+    local project_dst=$3
 
-unfunction _usage
-return $exitcode
+    if [[ ! -d "$template_dir" ]]; then
+        print_error "Invalid template name: $template_name" 1>&2
+        return -2
+    fi
+
+    if [[ -n "$project_dst" ]]; then
+        if [[ ! -d "$project_dst" ]]; then
+            print_info_sub "Destination directory given but does not exist; " \
+                           "will create $project_dst"
+        fi
+    else
+        project_dst="`pwd`/$project_name"
+    fi
+
+    print_info "Making Django project '$project_name'"
+    print_info_sub "Template name: $template_name"
+    print_info_sub "Template directory: $template_dir"
+    print_info_sub "Project directory: $project_dst"
+
+    # Determine what files might not be rendered by django-admin.py
+    local missing_files=()
+    for f in `ls -A1 "$template_dir"`; do
+        # Pick up all dotfiles
+        if [[ -e "$f" && "$f" =~ "^\." ]]; then
+            missing_files+=("$f")
+        fi
+    done
+    print_info_sub "Missing files: ${(j., .)missing_files}"
+
+    mkdir -p "$project_dst"
+
+    print_info "Calling django-admin.py"
+    django-admin.py startproject --template="$template_dir" \
+                                 --name=${(j.,.)missing_files} \
+                                 "$project_name" \
+                                 "$project_dst"
+    exitcode=$?
+    if [[ $exitcode -ne 0 ]]; then
+        print_error "django-admin.py failed"
+        return $exitcode
+    fi
+    
+#    print_info "Setting up Git repo"
+#    cd "$project_dir"
+#    git init
+#    git add * .*
+#    git commit -m 'Initial commit'
+
+    return $exitcode
+}
+
+mkdjango $@
