@@ -1,44 +1,76 @@
 #!/bin/zsh
 # vim:ft=zsh
 
-local ALPHA_SET='A-Za-z'
-local NUMERIC_SET='0-9'
-local SYM_SET='!@#$%^&*'
-local XSYM_SET="${SYM_SET}.;:-+="
-local ALNUM_SET="${ALPHA_SET}${NUMERIC_SET}"
-local ALL_SET="${ALNUM_SET}${SYM_SET}"
-local XALL_SET="${ALNUM_SET}${XSYM_SET}"
+function _usage_pw
+{
+    cat <<EOF
+Usage: $1 [-c <num>] [-h] [-l <num>] [-s <set>]
 
-local -i length=16 count=1
-local charset="$ALL_SET"
+Password generator. Uses the system random data generator to produce passwords
+of the provided length.
 
-while getopts 'c:l:s:' opt; do
-    case $opt in
-        c) count=$OPTARG;;
-        l) length=$OPTARG;;
-        s) case $OPTARG in
-               alpha) charset="$ALPHA_SET";;
-               num) charset="$NUMERIC_SET";;
-               alnum) charset="$ALNUM_SET";;
-               sym) charset="$SYM_SET";;
-               xsym) charset="$XSYM_SET";;
-               all) charset="$ALL_SET";;
-               xall) charset="$XALL_SET";;
-               *) echo "Invalid set name: $OPTARG" 1>&2; return -2;;
-           esac
-           ;;
-        *) echo "Invalid argument: $opt" 1>&2; return -1;;
-    esac
-done
+Arguments:
+    -c      Count. Number of passwords to generate. (default: 1)
+    -h      Help. This message.
+    -l      Length. Number of characters per password. (default: 16)
+    -s      Character set. Set of characters from which each character of a 
+            password is generated. (default: all)
 
-local cmd='tr -dc "$charset" < /dev/urandom | fold -w $length | head -n $count'
+            alpha       Uppercase and lowercase ASCII characters (A-Za-z)
+            num         Numeric characters (0-9)
+            alnum       The above two sets combined
+            sym         Symbol set, including: ! @ # $ % ^ & *
+            xsym        Extended symbols. Above plus . ; : - + =
+            all         Alphanumeric and symbol sets above
+            xall        Alphanumeric and extended symbol sets above
+EOF
+}
 
-if [[ $SYS == 'darwin' ]]; then
-    # The way OS X >=10.6 handles unicode characters causes tr to fail with an
-    # 'Illegal byte sequence' error. Setting the locale here fixes that.
-    #
-    # See: http://nerdbynature.de/s9y/?176
-    cmd="LC_CTYPE=C $cmd"
-fi
 
-eval "$cmd"
+function pw
+{
+    local ALPHA_SET='A-Za-z'
+    local NUMERIC_SET='0-9'
+    local SYM_SET='!@#$%^&*'
+    local XSYM_SET="${SYM_SET}.;:-+="
+    local ALNUM_SET="${ALPHA_SET}${NUMERIC_SET}"
+    local ALL_SET="${ALNUM_SET}${SYM_SET}"
+    local XALL_SET="${ALNUM_SET}${XSYM_SET}"
+
+    local -i length=16 count=1
+    local charset="$ALL_SET"
+
+    while getopts 'c:hl:s:' opt; do
+        case $opt in
+            c) count=$OPTARG;;
+            h) _usage_pw $0; return 0;;
+            l) length=$OPTARG;;
+            s) case $OPTARG in
+                alpha) charset="$ALPHA_SET";;
+                num) charset="$NUMERIC_SET";;
+                alnum) charset="$ALNUM_SET";;
+                sym) charset="$SYM_SET";;
+                xsym) charset="$XSYM_SET";;
+                all) charset="$ALL_SET";;
+                xall) charset="$XALL_SET";;
+                *) echo "Invalid set name: $OPTARG" 1>&2; return -2;;
+            esac
+            ;;
+            *) echo "Invalid argument: $opt" 1>&2; return -1;;
+        esac
+    done
+
+    local cmd='tr -dc "$charset" < /dev/urandom | fold -w $length | head -n $count'
+
+    if [[ $SYS == 'darwin' ]]; then
+        # The way OS X >=10.6 handles unicode characters causes tr to fail with an
+        # 'Illegal byte sequence' error. Setting the locale here fixes that.
+        #
+        # See: http://nerdbynature.de/s9y/?176
+        cmd="LC_CTYPE=C $cmd"
+    fi
+
+    eval "$cmd"
+}
+
+pw $@
