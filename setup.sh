@@ -13,16 +13,18 @@ typeset -A vimbundles
 #    fugitive "https://github.com/tpope/vim-fugitive.git" \
 vimbundles=( \
     command-t "https://github.com/wincent/Command-T.git" \
+    dash "https://github.com/rizzatti/dash.vim.git"
+    funcoo "git clone https://github.com/rizzatti/funcoo.vim.git" \
     gundo "https://github.com/sjl/gundo.vim.git" \
+    mw-utils "https://github.com/MarcWeber/vim-addon-mw-utils.git" \
     repeat "https://github.com/tpope/vim-repeat" \
     snipmate "https://github.com/garbas/vim-snipmate.git" \
-    tlib "https://github.com/tomtom/tlib_vim.git" \
-    mw-utils "https://github.com/MarcWeber/vim-addon-mw-utils.git" \
     snipmate-snippets "https://github.com/honza/snipmate-snippets.git" \
     snipmate-zope "https://github.com/zedr/zope-snipmate-bundle.git" \
     solarized "https://github.com/altercation/vim-colors-solarized.git" \
     speeddating "https://github.com/tpope/vim-speeddating.git" \
     surround "https://github.com/tpope/vim-surround.git" \
+    tlib "https://github.com/tomtom/tlib_vim.git" \
     unimpaired "https://github.com/tpope/vim-unimpaired.git" \
 )
 
@@ -35,31 +37,17 @@ print -P "%BSymlinking config files%b"
 for dotfile in `ls $dfdir`
 do
     # metafiles; don't link them
-    [ $dotfile = 'setup.sh' ] && continue
-    [ $dotfile = 'README.md' ] && continue
+    [[ $dotfile = 'setup.sh' ]] && continue
+    [[ $dotfile = 'README.md' ]] && continue
 
     local dest="$HOME/.$dotfile"
-    local action='skipped'
-
-    if [[ ! -L "$dest" ]]; then
-        action='linked'
-    else
-        action='skipped'
-    fi
-    filler=$(($COLUMNS - ${#dest} - ${#action} - 4))
-    spaces=''
-    for (( i=0; $i < $filler; i++ )); do spaces="$spaces "; done
-
-    echo -n "  $dest"
-    if [[ $action == 'linked' ]]; then
+    if [[! -L "$dest" ]]; then
+        action='Linking'
         ln -fs "$dfdir/$dotfile" "$dest"
-        action="%F{green}$action%f"
-    elif [[ $action == 'skipped' ]]; then
-        action="%F{yellow}$action%f"
     else
-        action="%F{red}red%f"
+        action='Skipping'
     fi
-    print -P "$spaces$action"
+    printf "  %8s: %s\n" $action $dest
 done
 
 echo "touch $HOME/.hushlogin"
