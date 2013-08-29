@@ -8,15 +8,16 @@
 function print_msg {
     # Level 0: always show
     local -i level=0 bold=0
-    local prefix message
+    local prefix message noeol
     local foreground background
 
-    while getopts 'bl:f:k:p:' opt; do
+    while getopts 'bl:f:k:np:' opt; do
         case $opt in
             b) bold=1;;
             l) level="$OPTARG";;
             f) foreground="$OPTARG";;
             k) background="$OPTARG";;
+            n) noeol=1;;
             p) prefix="$OPTARG";;
         esac
     done
@@ -28,7 +29,7 @@ function print_msg {
     [[ -n "$background" ]] && message="%K{$background}$message%k"
     [[ -n "$prefix" ]] && message="$prefix $message"
 
-    [[ ${NOISY:-0} -ge $level ]] && print -P "${message}"
+    [[ ${NOISY:-0} -ge $level ]] && print -P${noeol:+n} "${message}"
 }
 
 function print_info { print_msg -p '%F{blue}==>%f' "$@" }
