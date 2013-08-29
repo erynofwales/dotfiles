@@ -57,6 +57,12 @@ case $SYS in
         ;;
 esac
 
+# System specific settings
+if [[ -e "$HOME/.env.$SYS" ]]; then
+    print_info -l 2 "Sourcing environment setup for $SYS systems"
+    source "$HOME/.env.$SYS"
+fi
+
 # Local environment settings
 if [ -e $HOME/.env.local ]; then
     print_info -l 2 "Sourcing local environment setup"
