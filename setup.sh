@@ -14,7 +14,7 @@ typeset -A vimbundles
 vimbundles=( \
     command-t "https://github.com/wincent/Command-T.git" \
     dash "https://github.com/rizzatti/dash.vim.git"
-    funcoo "git clone https://github.com/rizzatti/funcoo.vim.git" \
+    funcoo "https://github.com/rizzatti/funcoo.vim.git" \
     gundo "https://github.com/sjl/gundo.vim.git" \
     mw-utils "https://github.com/MarcWeber/vim-addon-mw-utils.git" \
     repeat "https://github.com/tpope/vim-repeat" \
