@@ -29,13 +29,11 @@ export PAGER MANPAGER \
        LESSHISTFILE \
        GREP_OPTIONS GREP_COLOR
 
-PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
-# NOTE: These prepended to $PATH in reverse order, so $HOME/bin will end up
-# being the first path component.
-[[ -d /usr/X11/bin ]]     && PATH=$PATH:/usr/X11/bin
-[[ -d /opt/local/bin ]]   && PATH=/opt/local/bin:$PATH
-[[ -d $HOME/.local/bin ]] && PATH=$HOME/.local/bin:$PATH
-[[ -d $HOME/bin ]]        && PATH=$HOME/bin:$PATH
+path=("/usr/local/bin" "/usr/bin" "/bin" "/usr/local/sbin" "/usr/sbin" "/sbin")
+[[ -d "/usr/X11/bin" ]]     && path+=("/usr/X11/bin")
+[[ -d "/opt/local/bin" ]]   && path=("/opt/local/bin" $path)
+[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
+[[ -d "$HOME/bin" ]]        && path=("$HOME/bin" $path)
 
 export PATH
 
