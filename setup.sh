@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 dfdir=$(cd "$(dirname "$0")" && pwd)
 sys=`uname -s | tr A-Z a-z`
@@ -12,36 +12,35 @@ typeset -A vimbundles
 #    blackboard "https://github.com/nelstrom/vim-blackboard.git" \
 #    fugitive "https://github.com/tpope/vim-fugitive.git" \
 vimbundles=( \
-    command-t "https://github.com/wincent/Command-T.git" \
-    dash "https://github.com/rizzatti/dash.vim.git"
-    funcoo "https://github.com/rizzatti/funcoo.vim.git" \
-    gundo "https://github.com/sjl/gundo.vim.git" \
-    mw-utils "https://github.com/MarcWeber/vim-addon-mw-utils.git" \
-    repeat "https://github.com/tpope/vim-repeat" \
-    snipmate "https://github.com/garbas/vim-snipmate.git" \
-    snipmate-snippets "https://github.com/honza/snipmate-snippets.git" \
-    snipmate-zope "https://github.com/zedr/zope-snipmate-bundle.git" \
-    solarized "https://github.com/altercation/vim-colors-solarized.git" \
-    speeddating "https://github.com/tpope/vim-speeddating.git" \
-    surround "https://github.com/tpope/vim-surround.git" \
-    tlib "https://github.com/tomtom/tlib_vim.git" \
-    unimpaired "https://github.com/tpope/vim-unimpaired.git" \
+    command-t           "https://github.com/wincent/Command-T.git" \
+    dash                "https://github.com/rizzatti/dash.vim.git"
+    funcoo              "https://github.com/rizzatti/funcoo.vim.git" \
+    gundo               "https://github.com/sjl/gundo.vim.git" \
+    mw-utils            "https://github.com/MarcWeber/vim-addon-mw-utils.git" \
+    repeat              "https://github.com/tpope/vim-repeat" \
+    snipmate            "https://github.com/garbas/vim-snipmate.git" \
+    snipmate-snippets   "https://github.com/honza/vim-snippets.git" \
+    snipmate-zope       "https://github.com/zedr/zope-snipmate-bundle.git" \
+    solarized           "https://github.com/altercation/vim-colors-solarized.git" \
+    speeddating         "https://github.com/tpope/vim-speeddating.git" \
+    surround            "https://github.com/tpope/vim-surround.git" \
+    tlib                "https://github.com/tomtom/tlib_vim.git" \
+    unimpaired          "https://github.com/tpope/vim-unimpaired.git" \
 )
 
-if [[ ! -d ~/.oh-my-zsh ]]; then
-    print -P "%BCloning Oh my ZSH!"
-    git clone $omzrepo $HOME/.oh-my-zsh
-fi
+#if [[ ! -d ~/.oh-my-zsh ]]; then
+#    print -P "%BCloning Oh my ZSH!"
+#    git clone $omzrepo $HOME/.oh-my-zsh
+#fi
 
 print -P "%BSymlinking config files%b"
-for dotfile in `ls $dfdir`
-do
+for dotfile in `ls $dfdir`; do
     # metafiles; don't link them
     [[ $dotfile = 'setup.sh' ]] && continue
     [[ $dotfile = 'README.md' ]] && continue
 
     local dest="$HOME/.$dotfile"
-    if [[! -L "$dest" ]]; then
+    if [[ ! -L "$dest" ]]; then
         action='Linking'
         ln -fs "$dfdir/$dotfile" "$dest"
     else
@@ -59,8 +58,8 @@ cd "$dfdir/vim/bundle"
 for module in ${(k)vimbundles}; do
     echo -n "  $module"
 
-    if [ -d $module ]; then
-        result='skipped'
+    if [[ -d $module ]]; then
+       # result='skipped'
     else
         git clone ${vimbundles[$module]} $module 1>/dev/null 2>&1
         if [[ $? -eq 0 ]]; then
