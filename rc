@@ -37,45 +37,30 @@ function g
 }
 
 
-print_info -l 2 "Sourcing ${SYS}-specific settings"
-case $SYS in
-    darwin)
-        alias acls='command ls -le'
-        # These things might have been installed by Homebrew
-        binary_exists gdircolors && alias dircolors='gdircolors'
-        binary_exists gfind && alias find='gfind'
-        binary_exists gnuindent && alias indent='gnuindent'
-        ;;
-    linux)
-        # iptables aliases
-        alias iptls='sudo iptables --line-numbers -nv -L'
-        alias ip6tls='sudo ip6tables --line-numbers -nv -L'
-        alias rlx="xrdb $HOME/.Xdefaults"
-        ;;
-    *)
-        print_error "What system %Bis%b this, anyway?"
-        ;;
-esac
+function configure_ls
+{
+    local has_gnu_ls
+    local ls_options
 
-function {
-    local has_gnu_ls=1
-    local lsbin='ls'
-    local ls_options='--color=auto'
+    if [[ ! -e "$1" ]]; then
+        return
+    fi
 
-    if binary_exists gls; then
-        lsbin='gls'
+    if $1 --version 2>&1 | grep GNU 1>/dev/null; then
+        has_gnu_ls=1
+        ls_options='--color=auto'
     else
         has_gnu_ls=0
         ls_options='-G'
     fi
 
-    print_info_sub -l 3 "Setting up ls: `which $lsbin`"
-    alias ls="$lsbin $ls_options"
-    alias la="$lsbin -A $ls_options"
-    alias ll="$lsbin -l $ls_options"
-    alias l.="$lsbin -d $ls_options .*"
+    print_info_sub -l 3 "Setting up ls: $1"
+    alias ls="$1 $ls_options"
+    alias la="$1 -A $ls_options"
+    alias ll="$1 -l $ls_options"
+    alias l.="$1 -d $ls_options .*"
 
-    if [[ $has_gnu_ls -eq 1 ]]; then
+    if [[ $has_gnu_ls -eq 1 ]] && binary_exists dircolors; then
         if [[ -e "$HOME/.dircolors/$SYS.cfg" ]]; then
             dircolors="$HOME/.dircolors/$SYS.cfg"
         else
@@ -86,6 +71,7 @@ function {
     fi
 }
 
+
 # NetHack options
 # use color in the terminal
 binary_exists nethack && export NETHACKOPTIONS="color"
@@ -94,7 +80,18 @@ binary_exists nethack && export NETHACKOPTIONS="color"
 [[ -e "$HOME/Documents/Financial/personal.ledger" ]] && \
     LEDGER_FILE=$HOME/Documents/Financial/personal.ledger
 
-if [ -e $HOME/.rc.local ]; then
+
+if [[ -e "$HOME/.rc.$SYS" ]]; then
+    print_info -l 2 "Sourcing interactive shell setup for $SYS systems"
+    source "$HOME/.rc.$SYS"
+fi
+
+# Set up ls if it wasn't already done.
+if ! alias ls 2>&1 1>/dev/null; then
+    configure_ls `which ls`
+fi
+
+if [[ -e "$HOME/.rc.local" ]]; then
     print_info -l 2 'Sourcing local interactive shell setup'
-    source $HOME/.rc.local
+    source "$HOME/.rc.local"
 fi
