@@ -6,7 +6,7 @@
 print_heading -l 1 'Initializing interactive shell'
 
 print_info -l 2 'Creating aliases'
-#alias j='jobs'
+alias j='jobs'
 alias h='history'
 alias df='df -h'
 alias du='du -h'
