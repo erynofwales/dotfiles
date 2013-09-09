@@ -60,14 +60,15 @@ function configure_ls
     alias ll="$1 -l $ls_options"
     alias l.="$1 -d $ls_options .*"
 
-    if [[ $has_gnu_ls -eq 1 ]] && binary_exists dircolors; then
+    local dircolors_bin=`whence -p dircolors || whence -p gdircolors`
+    if [[ $has_gnu_ls -eq 1 && -n "$dircolors_bin" ]]; then
         if [[ -e "$HOME/.dircolors/$SYS.cfg" ]]; then
             dircolors="$HOME/.dircolors/$SYS.cfg"
         else
             dircolors="$HOME/.dircolors/default.cfg"
         fi
         print_info_sub -l 3 "Setting up dircolors: `basename $dircolors`"
-        eval `dircolors $dircolors`
+        eval `$dircolors_bin $dircolors`
     fi
 }
 
