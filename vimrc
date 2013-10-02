@@ -136,29 +136,27 @@ let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 " set the Gundo preview window on the bottom
 let g:gundo_preview_bottom = 1
 
-map <silent> <F2> :NERDTreeToggle<CR>
-map <silent> <F3> :GundoToggle<CR>
-map <silent> <F4> :setlocal invlist<CR>
+noremap <silent> <F2> :NERDTreeToggle<CR>
+noremap <silent> <F3> :GundoToggle<CR>
+noremap <silent> <F4> :setlocal invlist<CR>
 
-inoremap jj <ESC>
+inoremap kj <ESC>
 
 " allow starting commands with ; instead of :
 nnoremap ; :
 
 " tab to skip between braces and such in normal
-nnoremap <tab> %
-vnoremap <tab> %
+nnoremap <silent> <tab> %
+vnoremap <silent> <tab> %
 
 " disable the help key!
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
+noremap <silent> <F1> <ESC>
 
 " make switching windows easier
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <silent> <C-h> <C-w>h
+nnoremap <silent> <C-j> <C-w>j
+nnoremap <silent> <C-k> <C-w>k
+nnoremap <silent> <C-l> <C-w>l
 
 " Usual EMACS (oh the horror!) begin-line and end-line keys for first and last
 " buffer.
@@ -226,39 +224,36 @@ endfunction
 
 let mapleader=','
 
+" hide search terms
+nnoremap <silent> <leader><space> :setlocal invhlsearch<CR>
+" find all
+nnoremap <leader>fa :%s/\v
+
 " strip all trailing whitespace in the current file
 nnoremap <silent> <leader>W :call <SID>strip_trailing_whitespace()<CR>
 
-" Source .vimrc and project.vim files
-nmap <leader>V :source $MYVIMRC<CR>
-nmap <leader>P :call <SID>SourceProjectFile()<CR>
-" Edit my .vimrc and project.vim files
-nmap <leader>eV :edit $MYVIMRC<CR>
-nmap <leader>eP :exec 'edit ' . GetProjectFile()<CR>
+" Source .vimrc
+nnoremap <leader>sv :source $MYVIMRC<CR>
 
-" hide search terms
-nmap <silent> <leader><space> :setlocal invhlsearch<CR>
-" find all
-nmap <leader>fa :%s/\v
-
-" Open the snippet file for the current filetype
-nmap <leader>esn :e ~/.vim/bundle/snipmate-snippets/snippets/<C-r>=&filetype<CR>.snippets<CR>
-" Open the ftplugin-after script for the current filetype
-nmap <leader>eft :e ~/.vim/after/ftplugin/<C-r>=&filetype<CR>.vim<CR>
+" Edit my .vimrc
+nnoremap <leader>ev :split $MYVIMRC<CR>
+" Edit the snippet file for the current filetype
+nnoremap <leader>es :e ~/.vim/bundle/snipmate-snippets/snippets/<C-r>=&filetype<CR>.snippets<CR>
+" Edit the ftplugin-after script for the current filetype
+nnoremap <leader>ef :e ~/.vim/after/ftplugin/<C-r>=&filetype<CR>.vim<CR>
 
 " Toggle position highlighting
-nmap <silent> <leader>cl :setlocal invcursorline<CR>
-nmap <silent> <leader>cc :setlocal invcursorcolumn<CR>
-
+nnoremap <silent> <leader>cl :setlocal invcursorline<CR>
+nnoremap <silent> <leader>cc :setlocal invcursorcolumn<CR>
 
 " Text bubbling (these depend on tpope's unimpaired plugin)
-nmap <C-Up> [e
-nmap <C-Down> ]e
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
+nnoremap <C-Up> [e
+nnoremap <C-Down> ]e
+vnoremap <C-Up> [egv
+vnoremap <C-Down> ]egv
 
 " Select last edited text after cut and paste
-nmap gV `[v`]
+nnoremap gV `[v`]
 
 
 " Command-T should open files in tabs when I hit <CR>; move opening files in
@@ -267,9 +262,9 @@ nmap gV `[v`]
 "let g:CommandTAcceptSelectionTabMap='<CR>'
 
 " GitGutter shows changed lines in files.
-let g:gitgutter_enabled = 0
-highlight clear SignColumn
-nmap <silent> <leader>gg :ToggleGitGutter<CR>
+"let g:gitgutter_enabled = 0
+"highlight clear SignColumn
+"nmap <silent> <leader>gg :ToggleGitGutter<CR>
 
 if has('autocmd')
     filetype plugin indent on
