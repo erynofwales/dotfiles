@@ -3,8 +3,7 @@
 
 set nocompatible        "use enhanced vim features
 
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
+execute pathogen#infect()
 
 set autoread            "reread files changed outside of vim
 set noautowrite         "don't write files before commands like :next and :make
