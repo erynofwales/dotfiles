@@ -61,17 +61,32 @@ function configure_zle #{{{
     [[ -z "$ZLE_MODE" ]] && ZLE_MODE='vim'
     if [[ $ZLE_MODE == 'vim' ]]; then
         bindkey -v
+        configure_zle_vim
     elif [[ $ZLE_MODE == 'emacs' ]]; then
         bindkey -e
+        configure_zle_emacs
     fi
 
     # Allow deleting over the start of insert mode
     zle -A .backward-delete-char vi-backward-delete-char
+} #}}}
+
+
+function configure_zle_vim #{{{
+{
+    # Remove the delay when pressing escape to get to Insert mode.
+    bindkey -rpM viins '\e'
 
     # Edit commands in $EDITOR on 'v' in command mode
     autoload -Uz edit-command-line
     zle -N edit-command-line
     bindkey -M vicmd v edit-command-line
+} #}}}
+
+
+function configure_zle_emacs #{{{
+{
+
 } #}}}
 
 
