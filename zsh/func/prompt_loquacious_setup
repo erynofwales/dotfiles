@@ -141,7 +141,6 @@ function on_keymap_select
 {
     # Regenerate the prompt with the new mode
     set_zle_mode_info $KEYMAP
-    set_prompt_info
 
     # Redraw the prompt
     zle reset-prompt
