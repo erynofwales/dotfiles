@@ -30,12 +30,14 @@ export PAGER MANPAGER \
        GREP_OPTIONS GREP_COLOR
 
 path=("/usr/local/bin" "/usr/bin" "/bin" "/usr/local/sbin" "/usr/sbin" "/sbin")
+# NOTE: These prepended to $PATH in reverse order, so $HOME/bin will end up
+# being the first path component.
 [[ -d "/usr/X11/bin" ]]     && path+=("/usr/X11/bin")
 [[ -d "/opt/local/bin" ]]   && path=("/opt/local/bin" $path)
 [[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
 [[ -d "$HOME/bin" ]]        && path=("$HOME/bin" $path)
 
-export PATH
+export path
 
 # System specific settings
 if [[ -e "$HOME/.env.$SYS" ]]; then
@@ -43,8 +45,14 @@ if [[ -e "$HOME/.env.$SYS" ]]; then
     source "$HOME/.env.$SYS"
 fi
 
+# System-specific settings
+if [[ -e "$HOME/.env.$SYS" ]]; then
+    print_info -l 2 "Sourcing system-specific environment settings for $SYS"
+    source "$HOME/.env.$SYS"
+fi
+
 # Local environment settings
-if [[ -e $HOME/.env.local ]]; then
+if [[ -e "$HOME/.env.local" ]]; then
     print_info -l 2 "Sourcing local environment setup"
-    source $HOME/.env.local
+    source "$HOME/.env.local"
 fi

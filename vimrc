@@ -1,20 +1,34 @@
 " ~/.vimrc
 " Eryn Wells <eryn@erynwells.me>
 
-set nocompatible        "use enhanced vim features
+" Set the location of my vim directory.
+let $VIM = $HOME."/.vim"
 
-execute pathogen#infect()
+" Load Pathogen to get all my plugins.
+try
+    call pathogen#infect()
+catch
+    call pathogen#runtime_append_all_bundles()
+endtry
+call pathogen#helptags()
 
-set autoread            "reread files changed outside of vim
-set noautowrite         "don't write files before commands like :next and :make
 
-set ffs=unix,dos,mac    "order of line ending formats to try
+"
+" CONFIG OPTIONS
+"
+
+set nocompatible        " use enhanced vim features
+
+set autoread            " reread files changed outside of vim
+set noautowrite         " don't write files before commands like :next and :make
+
+set ffs=unix,dos,mac    " order of line ending formats to try
 
 set hidden              " allow hidden buffers (rather than closing them)
+set splitright          " Open vertical splits to the right of the current window
+set splitbelow          " Open horizontal splits below the current window
 
 set number              " show line numbers
-"set relativenumber      " line numbers are relative to current line rather
-                        "   than absolute
 set ruler               " show ruler (line and col count)
 set showmode            " show mode
 set showcmd             " show last command
@@ -47,29 +61,21 @@ set laststatus=2        " always show status line
 
 " This is basically default status line, with a few exceptions:
 "  1. Show buffer number before filename (%n:)
-"  2. Show filetype between line number and percentage
+"  2. Show filetype after file name
 set statusline=%2n:%<%f\ %((%Y)%)\ %(%h%m%r%)%=%-12(%l,%c%V%)%P
 
-" use PCREs for searches
-nnoremap / /\v
-vnoremap / /\v
-
 set spelllang=en        " set spelling language
-if has('win32') || has('win64')
-    set spellfile=~/_vim/spelling.en.add
-else
-    set spellfile=~/.vim/spelling.en.add
-endif
+set spellfile=$VIM/spelling.en.add
 
 set noswapfile          " don't keep swap files
 set nobackup            " don't keep backup files
-set backupdir=~/.vim/backup
+set backupdir=$VIM/backup
                         " save backup files here
 set undofile            " save undo history
-set undodir=~/.vim/undo " save undo files here
+set undodir=$VIM/undo   " save undo files here
 set history=1000        " remember 1000 commands in history
 set undolevels=1000     " keep lots of undo history
-set viminfo=%100,'100,/100,h,\"500,:100,n~/.viminfo
+set viminfo=%100,'100,/100,h,\"500,:100,n$VIM/.viminfo
                         " I have *NO* idea what this does...
 
 set backspace=indent,eol,start
@@ -125,16 +131,23 @@ endif
 
 set bg=dark
 
-" use solarized colorscheme if the terminal can support it (or we're in a GUI)
-let g:solarized_termtrans = 1
-let g:solarized_visibility = 'low'
-colorscheme solarized
+" Try to use the solarized colorscheme if the terminal can support it (or we're in a GUI)
+try
+    colorscheme solarized
+    let g:solarized_termtrans = 1
+    let g:solarized_visibility = 'low'
+endtry
 
 " tell SnipMate who I am
-let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
+if has('loaded_snips')
+    let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
+endif
 
 " set the Gundo preview window on the bottom
-let g:gundo_preview_bottom = 1
+if has('loaded_gundo')
+    let g:gundo_preview_bottom = 1
+    map <silent> <F3> :GundoToggle<CR>
+endif
 
 noremap <silent> <F2> :NERDTreeToggle<CR>
 noremap <silent> <F3> :GundoToggle<CR>
@@ -148,6 +161,10 @@ nnoremap ; :
 " tab to skip between braces and such in normal
 nnoremap <silent> <tab> %
 vnoremap <silent> <tab> %
+
+" use PCREs for searches
+nnoremap / /\v
+vnoremap / /\v
 
 " disable the help key!
 noremap <silent> <F1> <ESC>
@@ -181,47 +198,7 @@ function! <SID>strip_trailing_whitespace()
 endfunction
 
 
-function! <SID>FindProjectFileOrDirectory(fod)
-    let l:dir = getcwd()
-    " Search up the path, starting at the current working directory, for the
-    " file or directory given in a:fod and return the path to it, if it exists.
-    while l:dir != "/"
-        let l:file_or_dir = l:dir . "/" . a:fod
-        if filereadable(l:file_or_dir) || isdirectory(l:file_or_dir)
-            return l:file_or_dir
-        endif
-        let l:dir = fnamemodify(l:dir, ':h')
-    endwhile
-    return ""
-endfunction
-
-
-function! GetProjectRuntimeDirectory()
-    return <SID>FindProjectFileOrDirectory("vim")
-endfunction
-
-
-function! GetProjectFile()
-    return <SID>FindProjectFileOrDirectory("project.vim")
-endfunction
-
-
-function! <SID>SourceProjectFile()
-    let l:project_file = GetProjectFile()
-    if l:project_file != ""
-        exec "source " . l:project_file
-    endif
-endfunction
-
-
-function! <SID>AddProjectRuntimeDirectory()
-    let l:project_rtp = GetProjectRuntimeDirectory()
-    if isdirectory(l:project_rtp)
-        exec "set rtp+=" . l:project_rtp
-    endif
-endfunction
-
-
+" Key Mappings {{{
 let mapleader=','
 
 " hide search terms
@@ -242,7 +219,18 @@ nnoremap <leader>es :e ~/.vim/bundle/snipmate-snippets/snippets/<C-r>=&filetype<
 " Edit the ftplugin-after script for the current filetype
 nnoremap <leader>ef :e ~/.vim/after/ftplugin/<C-r>=&filetype<CR>.vim<CR>
 
+" hide search terms
+nnoremap <silent> <leader><space> :setlocal invhlsearch<CR>
+" find all
+nnoremap <leader>fa :%s/\v
+
 " Toggle position highlighting
+augroup cursor_position
+    autocmd!
+    autocmd InsertEnter * setlocal nocursorline
+    autocmd InsertLeave * setlocal cursorline
+augroup END
+
 nnoremap <silent> <leader>cl :setlocal invcursorline<CR>
 nnoremap <silent> <leader>cc :setlocal invcursorcolumn<CR>
 
@@ -255,6 +243,8 @@ vnoremap <C-Down> ]egv
 " Select last edited text after cut and paste
 nnoremap gV `[v`]
 
+" }}}
+
 
 " Command-T should open files in tabs when I hit <CR>; move opening files in
 " buffers to <C-b>
@@ -266,33 +256,37 @@ nnoremap gV `[v`]
 "highlight clear SignColumn
 "nmap <silent> <leader>gg :ToggleGitGutter<CR>
 
+" Autocommands {{{
 if has('autocmd')
     filetype plugin indent on
 
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
-    autocmd BufReadPost *
-        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
-        \ endif
-
-    " All my projects are in the ~/Code directory. Look for and source a
-    " project.vim file if one exists.
-    autocmd VimEnter ~/Code/*
-        \ call <SID>SourceProjectFile()
-    autocmd VimEnter ~/Code/*
-        \ call <SID>AddProjectRuntimeDirectory()
+    augroup RestoreCursorPosition
+        autocmd!
+        autocmd BufReadPost *
+            \ if line("'\"") > 1 && line("'\"") <= line("$") |
+            \   exe "normal! g`\"" |
+            \ endif
+    augroup END
 
     " Reload snippets after editing the snippets file. Snippet files are
     " <filetype>.snippets. Get <filetype> from the filename and reload the
     " snippets for that type.
-    "autocmd BufWritePost *.snippets
-    "    \ :call ReloadSnippets(expand('%:t:r'))
+    augroup ReloadSnippets
+        autocmd!
+        autocmd BufWritePost *.snippets :call ReloadSnippets(expand('%:t:r'))
+    augroup END
 
     " Clean whitespace before saving: Python, C, HTML, and Objective-C
-    autocmd BufWritePre *.py,*.h,*.c,*.html,*.m,*.mm,*.cc,*.hh,*.java
-        \ call <SID>strip_trailing_whitespace()
+    augroup StripTrailingWhitespace
+        autocmd!
+        autocmd FileType python call <SID>strip_trailing_whitespace()
+        autocmd FileType c,cpp,objc call <SID>strip_trailing_whitespace()
+        autocmd FileType html,css call <SID>strip_trailing_whitespace()
+    augroup END
 endif
+" }}}
 
 if has('unix')
     if filereadable($HOME."/.vimrc.local")
