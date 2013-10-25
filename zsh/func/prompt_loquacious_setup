@@ -31,6 +31,7 @@ function prompt_loquacious_setup
     autoload -Uz vcs_info
     autoload -U add-zsh-hook
 
+    add-zsh-hook chpwd set_repo_name
     add-zsh-hook precmd set_xterm_title
     add-zsh-hook precmd print_newline
     add-zsh-hook precmd set_prompt_info
@@ -41,10 +42,12 @@ function prompt_loquacious_setup
     prompt_opts=(cr subst percent)
 
     # Set up vcs_info
-    zstyle ':vcs_info:git:loquacious:*' formats \
-        '%F{cyan}%r%f(%F{blue}%b%f)'
+    zstyle ':vcs_info:git:loquacious_chpwd:*' formats \
+        '%F{cyan}%r%f'
+    zstyle ':vcs_info:git:loquacious_precmd:*' formats \
+        '(%F{blue}%b%f)'
 
-    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_ZLE_MODE}
+    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_BRANCH}${PS1_ZLE_MODE}
 $PS1_LINE'
 
     zle -N zle-keymap-select on_keymap_select
@@ -75,6 +78,17 @@ function print_newline
 }
 
 
+function set_repo_name
+{
+    vcs_info loquacious_chpwd
+    if [[ -n "${vcs_info_msg_0_}" ]]; then
+        PS1_REPO="on ${vcs_info_msg_0_}"
+    else
+        PS1_REPO=""
+    fi
+}
+
+
 function set_prompt_info
 {
     PS1_HISTORY="`prompt_colorize -b -f 'green' '%h'`"
@@ -89,11 +103,11 @@ function set_prompt_info
 
     # Get git repo information, if it exists. See setup function for
     # configuration details.
-    vcs_info loquacious
+    vcs_info loquacious_precmd
     if [[ -n "$vcs_info_msg_0_" ]]; then
-        PS1_REPO="on $vcs_info_msg_0_ "
+        PS1_BRANCH="${vcs_info_msg_0_}"
     else
-        PS1_REPO=""
+        PS1_BRANCH=""
     fi
 
     # Show background jobs, if any.
