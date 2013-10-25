@@ -252,9 +252,9 @@ nnoremap gV `[v`]
 "let g:CommandTAcceptSelectionTabMap='<CR>'
 
 " GitGutter shows changed lines in files.
-"let g:gitgutter_enabled = 0
-"highlight clear SignColumn
-"nmap <silent> <leader>gg :ToggleGitGutter<CR>
+let g:gitgutter_enabled = 0
+highlight clear SignColumn
+nnoremap <silent> <leader>gg :ToggleGitGutter<CR>
 
 " Autocommands {{{
 if has('autocmd')
