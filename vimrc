@@ -138,6 +138,8 @@ try
     let g:solarized_visibility = 'low'
 endtry
 
+" Empty snipmate options dictionary
+let g:snipMate = {}
 " tell SnipMate who I am
 if has('loaded_snips')
     let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
