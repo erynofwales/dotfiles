@@ -1,0 +1,20 @@
+snippet app
+	${1:App} = Ember.Application.create();${0}
+
+snippet rmap
+	${1:App}.Router.map(function() {
+		${0}
+	});
+
+snippet rroute
+	${1:App}.${2:Foo}Route = Ember.Route.extend({
+		${0}
+	});
+
+snippet rrmodel
+	model: function() {
+		return ${1:null};
+	}${0}
+
+snippet rres
+	this.resource(${1:'foo'})${0}

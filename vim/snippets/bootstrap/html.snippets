@@ -1,0 +1,44 @@
+snippet container
+	<div class="container">
+		${1:<!-- TODO: Fill this in -->}
+	</div>
+snippet row
+	<div class="row">
+		${1:<!-- TODO: Fill this in -->}
+	</div>
+
+snippet nbdefault
+	<nav class="navbar navbar-default" role="navigation">
+		${1:<!-- TODO: Navbar stuff goes here -->}
+	</nav>
+snippet nbheader
+	<div class="navbar-header">
+		${1:<!-- TODO: Header goes here -->}
+	</div>
+snippet nbbrand
+	<a class="navbar-brand" href="${2:#}">${1:FooApp}</a>${0}
+snippet nbnav
+	<ul class="nav navbar-nav">
+		${1:<!-- TODO: Links go here -->}
+	</ul>
+snippet nbnavright
+	<ul class="nav navbar-nav navbar-right">
+		${1:<!-- TODO: Links go here -->}
+	</ul>
+
+snippet dropdown
+	<div class="dropdown">
+		<button class="btn dropdown-toggle sr-only" type="button" id="${1:menu}" data-toggle="dropdown">
+			${2:Title}
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="$2">
+			${3:<!-- TODO: Menu items go here -->}
+		</ul>
+	</div>
+snippet dditem
+	<li role="presentation"><a role="menuitem" tabindex="${3:-1}" href="${2:#}">${1:Title}</a></li>${0}
+snippet dditemdiv
+	<li role="presentation" class="divider"></li>${0}
+snippet dditemhead
+	<li role="presentation" class="dropdown-header">${1:Title}</li>${0}
