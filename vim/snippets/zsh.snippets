@@ -1,0 +1,10 @@
+snippet whgetopt
+	while getopts '${1:h}' ${2:opt}; do
+		case $$2 in
+			${4:# TODO: Cases.}
+			*)
+				echo "Invalid argument: $OPTARG" 1>&2
+				return ${3:-1}
+				;;
+		esac
+	done
