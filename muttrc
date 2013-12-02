@@ -1,17 +1,27 @@
 # .muttrc
 # Eryn Wells <eryn@erynwells.me>
 
+# whoami
 set realname='Eryn Wells'
-set folder='~/Mail'
-set spoolfile='~/Mail/INBOX'
-set mbox_type=maildir
+source ~/.mutt/erynwells.me.rc
+
+# IMAP settings
+set imap_check_subscribed
+set mail_check=120
+set timeout=300
+set imap_keepalive=300
+
+# Caching
+set header_cache="~/.mutt/cache/headers"
+set message_cachedir="~/.mutt/cache/bodies"
+set certificate_file="~/.mutt/certificates"
 
 set use_from=yes
 set envelope_from=yes
 
 # Interface
 set quit=ask-yes
-set nomove
+set move=no
 unset mark_old
 set charset=UTF8
 set sort=threads
@@ -28,8 +38,6 @@ set alias_file='~/.mutt/aliases'
 # Composing and Sending
 set edit_headers=yes
 set include=yes
-set record=+sent
-set postponed=+drafts
 
 # Solarized (light theme) colors
-source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
+#source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
