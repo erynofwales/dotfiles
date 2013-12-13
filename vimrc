@@ -134,7 +134,8 @@ set bg=dark
 " Try to use the solarized colorscheme if the terminal can support it (or we're in a GUI)
 try
     colorscheme solarized
-    let g:solarized_termtrans = 1
+    let g:solarized_termtrans = 0
+    let g:solarized_contrast = 'normal'
     let g:solarized_visibility = 'low'
 endtry
 
