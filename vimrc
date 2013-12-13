@@ -277,10 +277,10 @@ if has('autocmd')
     " Reload snippets after editing the snippets file. Snippet files are
     " <filetype>.snippets. Get <filetype> from the filename and reload the
     " snippets for that type.
-    augroup ReloadSnippets
-        autocmd!
-        autocmd BufWritePost *.snippets :call ReloadSnippets(expand('%:t:r'))
-    augroup END
+    "augroup ReloadSnippets
+    "    autocmd!
+    "    autocmd BufWritePost *.snippets :call ReloadSnippets(expand('%:t:r'))
+    "augroup END
 
     " Clean whitespace before saving: Python, C, HTML, and Objective-C
     augroup StripTrailingWhitespace
