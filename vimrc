@@ -142,9 +142,10 @@ endtry
 " Empty snipmate options dictionary
 let g:snipMate = {}
 " tell SnipMate who I am
-if has('loaded_snips')
-    let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
-endif
+let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
+" Set up some snippet scope aliases
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases["java"] = "android"
 
 " set the Gundo preview window on the bottom
 if has('loaded_gundo')

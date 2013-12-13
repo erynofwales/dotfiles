@@ -1,0 +1,61 @@
+snippet imp android.app.Activity
+	import android.app.Activity;
+snippet imp android.os.Bundle
+	import android.os.Bundle;
+snippet imp android.view.Menu
+	import android.view.Menu;
+snippet imp android.view.MenuInflater
+	import android.view.MenuInflater;
+snippet imp java.util.ArrayList
+	import java.util.ArrayList;
+
+snippet oncreate
+	@Override
+	public void
+	onCreate(Bundle savedInstanceState)
+	{
+		${0}
+	}
+
+snippet oncreateoptionsmenu
+	@Override
+	public void
+	onCreateOptionsMenu(Menu menu,
+	                    MenuInflater inflater)
+	{
+		${0}
+	}
+
+snippet oncreateview Fragment.onCreateView()
+	@Override
+	public View
+	onCreateView(LayoutInflater inflater,
+	             ViewGroup container,
+	             Bundle savedInstanceState)
+	{
+		${0}
+	}
+
+snippet acc
+	/**
+	 * Getter for $3.
+	 *
+	 * @return ${5:A foo.}
+	 */
+	public ${2:int}
+	get${1:Foo}()
+	{
+		return ${3:mFoo};
+	}
+	
+	
+	/**
+	 * Setter for $3.
+	 *
+	 * @param $4 ${6:$5}
+	 */
+	public void
+	set$1(final $2 ${4:foo})
+	{
+		$3 = $4;
+	}${0}
