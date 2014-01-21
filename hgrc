@@ -1,0 +1,18 @@
+[ui]
+username = Eryn Wells <eryn@erynwells.me>
+verbose = True
+editor = vim
+
+[alias]
+s = status
+lg = !$HG log --style=compact | less
+
+[extensions]
+children =
+color =
+graphlog =
+mq =
+pager =
+
+[pager]
+pager = LESS='FRX' less
