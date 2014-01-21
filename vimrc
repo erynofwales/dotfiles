@@ -200,6 +200,19 @@ function! <SID>strip_trailing_whitespace()
 endfunction
 
 
+function! SelectaCommand(choice_command, selecta_args, vim_command)
+    try
+        silent let selection = system(a:choice_command . " | selecta " . a:selecta_args)
+    catch /Vim:Interrupt/
+        " Swallow ^C so the redraw below happens; otherwise there will be leftovers of selecta on screen.
+        redraw!
+        return
+    endtry
+    redraw!
+    exec a:vim_command . " " . selection
+endfunction
+
+
 " Key Mappings {{{
 let mapleader=','
 
@@ -225,6 +238,8 @@ nnoremap <leader>ef :e ~/.vim/after/ftplugin/<C-r>=&filetype<CR>.vim<CR>
 nnoremap <silent> <leader><space> :setlocal invhlsearch<CR>
 " find all
 nnoremap <leader>fa :%s/\v
+
+nnoremap <leader>f :call SelectaCommand("find * -type f", "", ":e")<cr>
 
 " Toggle position highlighting
 augroup cursor_position
