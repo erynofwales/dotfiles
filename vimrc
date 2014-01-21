@@ -141,9 +141,10 @@ endtry
 " Empty snipmate options dictionary
 let g:snipMate = {}
 " tell SnipMate who I am
-if has('loaded_snips')
-    let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
-endif
+let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
+" Set up some snippet scope aliases
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases["java"] = "android"
 
 " set the Gundo preview window on the bottom
 if has('loaded_gundo')
@@ -290,10 +291,10 @@ if has('autocmd')
     " Reload snippets after editing the snippets file. Snippet files are
     " <filetype>.snippets. Get <filetype> from the filename and reload the
     " snippets for that type.
-    augroup ReloadSnippets
-        autocmd!
-        autocmd BufWritePost *.snippets :call ReloadSnippets(expand('%:t:r'))
-    augroup END
+    "augroup ReloadSnippets
+    "    autocmd!
+    "    autocmd BufWritePost *.snippets :call ReloadSnippets(expand('%:t:r'))
+    "augroup END
 
     " Clean whitespace before saving: Python, C, HTML, and Objective-C
     augroup StripTrailingWhitespace
