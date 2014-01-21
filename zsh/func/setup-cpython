@@ -1,0 +1,88 @@
+#!/usr/bin/env zsh
+#
+# Set up for CPython development.
+#
+# Eryn Wells <eryn@erynwells.me>
+
+
+function _usage-setup-cpython
+{
+    cat <<EOF
+Usage: $1 [-h] [-r root]
+
+    Setup for CPython development.
+
+Arguments:
+    -h          Show this help.
+    -r root     Use the given directory as the root of the CPython source tree.
+EOF
+}
+
+
+function setup-cpython
+{
+    root="$HOME/Code/cpython"
+    coverage="$HOME/Code/coveragepy"
+
+    while getopts 'hr:' opt; do
+        case $opt in
+            (h)
+                _usage-setup-cpython "$0"
+                return 0
+                ;;
+            (r)
+                root="$OPTARG"
+                ;;
+            (*)
+                echo "Invalid argument: $OPTARG" 1>&2
+                return -1
+                ;;
+        esac
+    done
+
+    if [[ ! -d "$root" ]]; then
+        print_error "Invalid source root: $root"
+        return 1
+    fi
+
+    export coverage
+    export lib="$root/Lib"
+    export root
+
+    function cov
+    {
+        local cmd
+        case "$1" in
+            (html)
+                local module="$root/Lib/$2"
+                if [[ ! -d "$module" ]]; then
+                    if [[ -f "$module.py" ]]; then
+                        module="$module.py"
+                    fi
+                fi
+                cmd="html -i --include=$module"
+                ;;
+            (report)
+                cmd="report"
+                ;;
+            (run)
+                cmd="run --pylib --source=$2 Lib/test/regrtest.py test_$2"
+                ;;
+        esac
+        (cd "$root"; ./python.exe "$coverage" "$cmd")
+    }
+
+    unsetup_functions=(unsetup-cpython)
+}
+
+
+function unsetup-cpython
+{
+    unset coverage
+    unset lib
+    unset root
+
+    unfunction cov
+}
+
+setup-cpython "$@"
