@@ -133,9 +133,9 @@ set bg=dark
 
 " Try to use the solarized colorscheme if the terminal can support it (or we're in a GUI)
 try
+    let g:solarized_termtrans = 1           " transparent terminals
+    let g:solarized_visibility = 'low'      " visibility of list chars
     colorscheme solarized
-    let g:solarized_termtrans = 1
-    let g:solarized_visibility = 'low'
 endtry
 
 " Empty snipmate options dictionary
