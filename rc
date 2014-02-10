@@ -73,16 +73,6 @@ function configure_ls
 }
 
 
-function nethack
-{
-    if binary_exists nethack; then
-        command nethack
-    else
-        telnet nethack.alt.org
-    fi
-}
-
-
 # NetHack options
 # use color in the terminal
 binary_exists nethack && export NETHACKOPTIONS="color"
