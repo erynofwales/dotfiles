@@ -26,12 +26,12 @@ OPTIONS=fruit:raspberry
 OPTIONS=number_pad:0
 
 # Show HP in color, if properly patched
-OPTIONS=hpmon
+#OPTIONS=hpmon
 
 # Always a female samurai named Eryn
 NAME=Eryn
 CHARACTER=samurai
-RACE=human
+#RACE=human
 OPTIONS=gender:female
 
 # Disclosures at the end of the game: always disclose inventory, prompt for
