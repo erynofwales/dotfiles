@@ -2,7 +2,12 @@
 OPTIONS=fullscreen
 OPTIONS=color
 OPTIONS=DECgraphics
+
+OPTIONS=!news,!splash_screen
+
+# Show full window of 20 messages
 OPTIONS=msg_window:f
+OPTIONS=msghistory:20
 
 # Object representation
 OPTIONS=hilite_pet,lit_corridor
@@ -10,13 +15,26 @@ OPTIONS=boulder:0
 
 OPTIONS=showexp,showscore,time
 
-# Don't auto-pickup items
-OPTIONS=!autopickup
+# auto-pickup scrolls, wands, and potions
+OPTIONS=autopickup
+OPTIONS=pickup_types:?!/
 
-OPTIONS=fruit:'raspberry'
+# Special fruit is a raspberry <3
+OPTIONS=fruit:raspberry
 
+# Don't bother with number pad
 OPTIONS=number_pad:0
 
-# Always a female samurai
+# Show HP in color, if properly patched
+OPTIONS=hpmon
+
+# Always a female samurai named Eryn
+NAME=Eryn
 CHARACTER=samurai
+RACE=human
 OPTIONS=gender:female
+
+# Disclosures at the end of the game: always disclose inventory, prompt for
+# attributes and monsters killed (default yes), don't care about genocided
+# monsters and conduct.
+OPTIONS=disclose:+i ya yv -c -g
