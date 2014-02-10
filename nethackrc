@@ -1,0 +1,22 @@
+# Graphics options
+OPTIONS=fullscreen
+OPTIONS=color
+OPTIONS=DECgraphics
+OPTIONS=msg_window:f
+
+# Object representation
+OPTIONS=hilite_pet,lit_corridor
+OPTIONS=boulder:0
+
+OPTIONS=showexp,showscore,time
+
+# Don't auto-pickup items
+OPTIONS=!autopickup
+
+OPTIONS=fruit:'raspberry'
+
+OPTIONS=number_pad:0
+
+# Always a female samurai
+CHARACTER=samurai
+OPTIONS=gender:female
