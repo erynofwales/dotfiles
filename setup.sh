@@ -11,8 +11,8 @@ typeset -A vimbundles
 # Commented out Vim plugin repos, 'cause I'm not using them...
 #    blackboard "https://github.com/nelstrom/vim-blackboard.git" \
 #    fugitive "https://github.com/tpope/vim-fugitive.git" \
+#    command-t           "https://github.com/wincent/Command-T.git" \
 vimbundles=( \
-    command-t           "https://github.com/wincent/Command-T.git" \
     dash                "https://github.com/rizzatti/dash.vim.git"
     funcoo              "https://github.com/rizzatti/funcoo.vim.git" \
     gundo               "https://github.com/sjl/gundo.vim.git" \
@@ -38,6 +38,7 @@ for dotfile in `ls $dfdir`; do
     # metafiles; don't link them
     [[ $dotfile = 'setup.sh' ]] && continue
     [[ $dotfile = 'README.md' ]] && continue
+    [[ $dotfile = 'py' ]] && continue
 
     local dest="$HOME/.$dotfile"
     if [[ ! -L "$dest" ]]; then
