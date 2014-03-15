@@ -39,6 +39,11 @@ path=("/usr/local/bin" "/usr/bin" "/bin" "/usr/local/sbin" "/usr/sbin" "/sbin")
 
 export path
 
+if which virtualenvwrapper.sh 1>/dev/null 2>&1; then
+    export WORKON_HOME="$HOME/src/py/.envs"
+    source `which virtualenvwrapper.sh`
+fi
+
 # System specific settings
 if [[ -e "$HOME/.env.$SYS" ]]; then
     print_info -l 2 "Sourcing environment setup for $SYS systems"
