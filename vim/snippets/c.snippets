@@ -4,3 +4,34 @@ snippet uchar
 	unsigned char
 snippet ulong
 	unsigned long
+
+snippet head
+	/* `expand('%:t')`
+	 *
+	 * ${1:Description.}
+	 *
+	 * `g:snips_author`
+	 */
+
+snippet main
+	int
+	main(int argc,
+	     char* argv[])
+	{
+		${1}
+		return 0;
+	}
+snippet mainn
+	int
+	main()
+	{
+		${1}
+		return 0;
+	}
+snippet pragma Ignore warning
+	#pragma clang diagnostic push
+	#pragma clang diagnostic ignore "${1}"
+	
+	${0}
+	
+	#pragma clang diagnostic pop
