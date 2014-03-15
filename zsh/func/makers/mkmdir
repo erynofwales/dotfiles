@@ -2,10 +2,17 @@
 # Make a Maildir directory
 # Eryn Wells <eryn@erynwells.me>
 
-if [[ -z $1 || $1 == "" ]]; then
-    echo "Usage: $0 [maildir]"
-    exit 1
-else
+function mkmdir
+{
+    if [[ $#@ -lt 1 ]]; then
+        echo "Usage: $0 [maildir ...]"
+        exit 1
+    fi
 
-mkdir -p $1/{new,cur,tmp}
-return $?
+    for d in $@; do
+        print_info "Making maildir: $d"
+        mkdir -p "$d"/{new,cur,tmp}
+    done
+}
+
+mkmdir "$@"
