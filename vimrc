@@ -303,6 +303,11 @@ if has('autocmd')
         autocmd FileType c,cpp,objc call <SID>strip_trailing_whitespace()
         autocmd FileType html,css call <SID>strip_trailing_whitespace()
     augroup END
+
+    augroup SConsFileType
+        autocmd!
+        autocmd BufRead SCons{truct,cript} setf python
+    augroup END
 endif
 " }}}
 
