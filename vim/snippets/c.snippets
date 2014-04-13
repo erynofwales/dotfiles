@@ -1,18 +1,27 @@
+# v.snippets
+# vim: set ts=8 sw=8 sts=8 noet list:
+# Eryn Wells <eryn@erynwells.me>
+
 snippet uint
 	unsigned int
+
 snippet uchar
 	unsigned char
+
 snippet ulong
 	unsigned long
+
 snippet head
-	/* `expand('%:t')`
-	 *
-	 * ${1:Description.}
-	 *
+	/* ${1:`expand('%:t')`}
+	 * vim: set ${2:tw=80}:
 	 * `g:snips_author`
 	 */
+	/**
+	 * ${3:File description.}
+	 */
 	
-	${2}
+	${4}
+
 snippet main
 	int
 	main(int argc,
@@ -21,6 +30,7 @@ snippet main
 		${1}
 		return 0;
 	}
+
 snippet mainn
 	int
 	main()
@@ -28,30 +38,67 @@ snippet mainn
 		${1}
 		return 0;
 	}
+
 snippet pragma Ignore warning
 	#pragma clang diagnostic push
 	#pragma clang diagnostic ignore "${1}"
 	
-	${0}
+	${2}
 	
 	#pragma clang diagnostic pop
+
 snippet once
-	#ifndef ${1:`expand('%:t')`}
+	#ifndef ${1:__`toupper(substitute(expand('%:t'), '\.', '_', ''))`__}
 	#define $1
 	
 	${2}
 	
 	#endif /* $1 */
-snippet mc
+
+snippet dc Method Header
 	/*
 	 * ${1:Function} --
-	 */
+	 */${2}
+
+snippet dc Method Description
 	/**
-	 * ${2:Description}
-	 */
-snippet m
-	${2:void}
-	${1:Function}(${3:/* args */})
+	 * ${1:Description}
+	 */${2}
+
+snippet dc One-line description
+	/** ${1:Description} */${0}
+
+snippet dcs
+	@see ${1:SomeOtherEntity}
+
+snippet dcp
+	@param [${1:in}] ${2:Description}
+
+snippet dcr
+	@return ${1:Return value}
+
+snippet m Generic method
+	${1:void}
+	${2:Class}::${3:Function}(${4:/* args */})
 	{
-		${3}
+		${5}
 	}
+
+snippet m Getter
+	${1:Type}
+	${2:Class}::Get${3:VarName}()
+		const
+	{
+		return m${4:$3};
+	}${0}
+
+snippet m Setter
+	void
+	${1:Class}::Set${2:VarName}(${3:Type} ${4:var})
+	{
+		m${5:$4} = $4;
+	}${0}
+
+snippet md Getter/Setter
+	${1:Type} Get${2:VarName}() const;
+	void Set${3:$2}(${1} ${4:var});
