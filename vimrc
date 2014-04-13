@@ -39,7 +39,7 @@ set ttyfast             " fast terminals
 
 set wrap                " wrap long lines
 set linebreak           " break at between words
-set textwidth=120       " wrap at 120 characters
+set textwidth=80        " wrap at 120 characters
 set colorcolumn=80,120  " highlight 80th and 120th columns
 set showmatch           " show matching things: (), {}, [], etc
 
