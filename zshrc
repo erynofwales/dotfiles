@@ -81,6 +81,12 @@ function configure_zle_vim #{{{
     autoload -Uz edit-command-line
     zle -N edit-command-line
     bindkey -M vicmd v edit-command-line
+
+    # Use arrow keys to go up and down lines and/or history in insert mode
+    bindkey -M viins "^[OA" up-line-or-history
+    bindkey -M viins "^[[A" up-line-or-history
+    bindkey -M viins "^[OB" down-line-or-history
+    bindkey -M viins "^[[B" down-line-or-history
 } #}}}
 
 
