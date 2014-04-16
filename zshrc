@@ -82,6 +82,12 @@ function configure_zle_vim #{{{
     zle -N edit-command-line
     bindkey -M vicmd v edit-command-line
 
+    # Use 'jj' to get to Cmd mode
+    bindkey -M viins 'jj' vi-cmd-mode
+
+    # Backwards incremental history search on ^R in insert mode
+    bindkey -M viins '^R' history-incremental-search-backwards
+
     # Use arrow keys to go up and down lines and/or history in insert mode
     bindkey -M viins "^[OA" up-line-or-history
     bindkey -M viins "^[[A" up-line-or-history
