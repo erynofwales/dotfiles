@@ -162,8 +162,8 @@ inoremap kj <ESC>
 nnoremap ; :
 
 " tab to skip between braces and such in normal
-nnoremap <silent> <tab> %
-vnoremap <silent> <tab> %
+"nnoremap <silent> <tab> %
+"vnoremap <silent> <tab> %
 
 " use PCREs for searches
 nnoremap / /\v
@@ -300,7 +300,7 @@ if has('autocmd')
     augroup StripTrailingWhitespace
         autocmd!
         autocmd FileType python call <SID>strip_trailing_whitespace()
-        autocmd FileType c,cpp,objc call <SID>strip_trailing_whitespace()
+        autocmd FileType c,cpp,objc,objcpp call <SID>strip_trailing_whitespace()
         autocmd FileType html,css call <SID>strip_trailing_whitespace()
     augroup END
 
