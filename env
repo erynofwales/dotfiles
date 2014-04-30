@@ -8,7 +8,7 @@
 #
 # Eryn Wells <eryn@erynwells.me>
 
-[ -e $HOME/.shell-functions ] && source $HOME/.shell-functions
+[[ -e "$HOME/.shell-functions" ]] && source "$HOME/.shell-functions"
 
 export SYS=`uname -s | tr A-Z a-z`
 # Set this to a non-zero integer to see startup messages
@@ -46,16 +46,16 @@ fi
 
 export GPG_TTY=`tty`
 
-# System specific settings
-if [[ -e "$HOME/.env.$SYS" ]]; then
-    print_info -l 2 "Sourcing environment setup for $SYS systems"
-    source "$HOME/.env.$SYS"
-fi
-
 # System-specific settings
 if [[ -e "$HOME/.env.$SYS" ]]; then
     print_info -l 2 "Sourcing system-specific environment settings for $SYS"
     source "$HOME/.env.$SYS"
+fi
+
+host_env="$HOME/.env.`hostname -s`"
+if [[ -e "$host_env" ]]; then
+    print_info -l 2 "Sourcing host-specific environment settings: $host_env"
+    source "$host_env"
 fi
 
 # Local environment settings
