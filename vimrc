@@ -129,12 +129,16 @@ if &t_Co > 2 || has('gui_running')
     syntax on           " turn on syntax highlighting
 endif
 
-set bg=dark
+if $ITERM_PROFILE =~# '[Ll]ight'
+    set bg=light
+else
+    set bg=dark
+endif
 
 " Try to use the solarized colorscheme if the terminal can support it (or we're in a GUI)
 try
-    let g:solarized_termtrans = 1           " transparent terminals
-    let g:solarized_visibility = 'low'      " visibility of list chars
+    let g:solarized_termtrans = 0           " transparent terminals
+    "let g:solarized_visibility = 'low'      " visibility of list chars
     colorscheme solarized
 endtry
 
@@ -242,13 +246,6 @@ nnoremap <leader>fa :%s/\v
 
 nnoremap <leader>f :call SelectaCommand("find * -type f", "", ":e")<cr>
 
-" Toggle position highlighting
-augroup cursor_position
-    autocmd!
-    autocmd InsertEnter * setlocal nocursorline
-    autocmd InsertLeave * setlocal cursorline
-augroup END
-
 nnoremap <silent> <leader>cl :setlocal invcursorline<CR>
 nnoremap <silent> <leader>cc :setlocal invcursorcolumn<CR>
 
@@ -273,6 +270,9 @@ nnoremap gV `[v`]
 let g:gitgutter_enabled = 0
 highlight clear SignColumn
 nnoremap <silent> <leader>gg :ToggleGitGutter<CR>
+
+" Don't underline folded lines
+highlight Folded cterm=bold
 
 " Autocommands {{{
 if has('autocmd')
@@ -307,6 +307,13 @@ if has('autocmd')
     augroup SConsFileType
         autocmd!
         autocmd BufRead SCons{truct,cript} setf python
+    augroup END
+
+    " Toggle position highlighting
+    augroup HighlightCursorLineInNormalMode
+        autocmd!
+        autocmd InsertEnter * setlocal nocursorline
+        autocmd InsertLeave * setlocal cursorline
     augroup END
 endif
 " }}}
