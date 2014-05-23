@@ -14,3 +14,6 @@ binary_exists gnuindent     && alias indent='gnuindent'
 if binary_exists gls; then
     configure_ls `which gls`
 fi
+
+# ldd doesn't exist on OS X, but otool -L does the same thing.
+alias ldd='otool -L'

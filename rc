@@ -84,9 +84,8 @@ binary_exists nethack && export NETHACKOPTIONS="color"
 [[ -e "$HOME/Documents/Financial/personal.ledger" ]] && \
     LEDGER_FILE=$HOME/Documents/Financial/personal.ledger
 
-
 if [[ -e "$HOME/.rc.$SYS" ]]; then
-    print_info -l 2 "Sourcing interactive shell setup for $SYS systems"
+    print_info -l 2 "Sourcing $SYS interactive shell setup"
     source "$HOME/.rc.$SYS"
 fi
 
