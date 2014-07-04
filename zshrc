@@ -139,8 +139,6 @@ function configure_prompt #{{{
 function configure_zsh_aliases #{{{
 {
     print_info -l 3 'Creating ZSH-specific aliases'
-    alias pd='pushd'
-    alias pod='popd'
 
     #alias -g nc='netcat'
     alias -g lessnw='less -S'
