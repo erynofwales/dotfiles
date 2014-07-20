@@ -39,7 +39,7 @@ set ttyfast             " fast terminals
 
 set wrap                " wrap long lines
 set linebreak           " break at between words
-set textwidth=80        " wrap at 120 characters
+set textwidth=120       " wrap at 120 characters
 set colorcolumn=80,89,120
                         " highlight 80th and 120th columns
 set showmatch           " show matching things: (), {}, [], etc
@@ -130,16 +130,13 @@ if &t_Co > 2 || has('gui_running')
     syntax on           " turn on syntax highlighting
 endif
 
-if $ITERM_PROFILE =~# '[Ll]ight'
-    set bg=light
-else
-    set bg=dark
-endif
+" Dark backgrounds are the only way to travel
+set bg=dark
 
-" Try to use the solarized colorscheme if the terminal can support it (or we're in a GUI)
+" Try to use the solarized colorscheme if the terminal can support it
 try
     let g:solarized_termtrans = 0           " transparent terminals
-    "let g:solarized_visibility = 'low'      " visibility of list chars
+    let g:solarized_visibility = 'low'      " visibility of list chars
     colorscheme solarized
 endtry
 
@@ -152,10 +149,7 @@ let g:snipMate.scope_aliases = {}
 let g:snipMate.scope_aliases["java"] = "android"
 
 " set the Gundo preview window on the bottom
-if has('loaded_gundo')
-    let g:gundo_preview_bottom = 1
-    map <silent> <F3> :GundoToggle<CR>
-endif
+let g:gundo_preview_bottom = 1
 
 noremap <silent> <F2> :NERDTreeToggle<CR>
 noremap <silent> <F3> :GundoToggle<CR>
@@ -210,7 +204,8 @@ function! SelectaCommand(choice_command, selecta_args, vim_command)
     try
         silent let selection = system(a:choice_command . " | selecta " . a:selecta_args)
     catch /Vim:Interrupt/
-        " Swallow ^C so the redraw below happens; otherwise there will be leftovers of selecta on screen.
+        " Swallow ^C so the redraw below happens; otherwise there will be
+        " leftovers of selecta on screen.
         redraw!
         return
     endtry
@@ -268,12 +263,12 @@ nnoremap gV `[v`]
 "let g:CommandTAcceptSelectionTabMap='<CR>'
 
 " GitGutter shows changed lines in files.
-let g:gitgutter_enabled = 0
-highlight clear SignColumn
-nnoremap <silent> <leader>gg :ToggleGitGutter<CR>
+"let g:gitgutter_enabled = 0
+"highlight clear SignColumn
+"nnoremap <silent> <leader>gg :ToggleGitGutter<CR>
 
 " Don't underline folded lines
-highlight Folded cterm=bold
+highlight Folded cterm=bold term=bold ctermfg=NONE ctermbg=NONE
 
 " Autocommands {{{
 if has('autocmd')
@@ -296,6 +291,11 @@ if has('autocmd')
     "    autocmd!
     "    autocmd BufWritePost *.snippets :call ReloadSnippets(expand('%:t:r'))
     "augroup END
+
+    augroup WrapAt80
+        autocmd!
+        autocmd FileType text setlocal tw=80
+    augroup END
 
     " Clean whitespace before saving: Python, C, HTML, and Objective-C
     augroup StripTrailingWhitespace
