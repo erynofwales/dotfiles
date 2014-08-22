@@ -8,9 +8,17 @@
 ; Spaces, not tabs!
 (setq-default indent-tabs-mode 'nil)
 
+; Follow symlinks
+(setq-default vc-follow-symlinks 't)
+
 ; Use solarized color scheme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/solarized")
 (load-theme 'solarized-dark t)
+
+; Enable evil mode
+(add-to-list 'load-path "~/.emacs.d/evil")
+(require 'evil)
+(evil-mode 1)
 
 ;;
 ;; ORG MODE
