@@ -1,3 +1,6 @@
+; .emacs
+; Eryn Wells <eryn@erynwells.me>
+
 ; Show point position in the status bar
 (line-number-mode 1)
 (column-number-mode 1)
@@ -7,6 +10,10 @@
 
 ; Spaces, not tabs!
 (setq-default indent-tabs-mode 'nil)
+
+; Show matching parens with 0 delay
+(setq show-paren-delay 0)
+(show-paren-mode 1)
 
 ; Follow symlinks
 (setq-default vc-follow-symlinks 't)
