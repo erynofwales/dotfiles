@@ -32,8 +32,8 @@
 ;;
 
 ; Use org mode from the ~Internet~
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/org-mode/lisp"))
-(require 'org)
+;(add-to-list 'load-path (expand-file-name "~/.emacs.d/org-mode/lisp"))
+;(require 'org)
 
 ; Files ending in .org
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
