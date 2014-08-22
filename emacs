@@ -5,6 +5,11 @@
 (line-number-mode 1)
 (column-number-mode 1)
 
+; Scroll one line at a time, instead of trying to center the cursor. Also screen
+; margin leads point by three lines.
+(setq-default scroll-step 1)
+(setq-default scroll-margin 3)
+
 ; Fill to 80 columns by default
 (setq-default fill-column 80)
 
