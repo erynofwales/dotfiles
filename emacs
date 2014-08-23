@@ -32,6 +32,9 @@
 (require 'evil)
 (evil-mode 1)
 
+; Don't show the menu bar
+(menu-bar-mode -1)
+
 ;;
 ;; ORG MODE
 ;;
