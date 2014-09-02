@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+
+import os.path
+import sys
+
+BIN_FMT = 2
+OCT_FMT = 8
+DEC_FMT = 10
+HEX_FMT = 16
+
+
+def main():
+    if len(sys.argv) < 2:
+        print('Usage: {} <num> [num...]'.format(sys.argv[0]))
+        return -1
+
+    root = os.path.splitext(os.path.basename(sys.argv[0]))[0]
+
+    if root == 'bin':
+        fmts = {BIN_FMT}
+    elif root == 'oct':
+        fmts = {OCT_FMT}
+    elif root == 'dec':
+        fmts = {DEC_FMT}
+    elif root == 'hex':
+        fmts = {HEX_FMT}
+    else:
+        # All formats
+        fmts = {BIN_FMT, OCT_FMT, DEC_FMT, HEX_FMT}
+
+    for n in sys.argv[1:]:
+        print('---')
+        try:
+            num = int(n)
+        except ValueError:
+            print('Error: cannot parse string as int: {}'.format(n))
+        else:
+            if BIN_FMT in fmts:
+                print('bin: {}'.format(bin(num)[2:]))
+            if OCT_FMT in fmts:
+                print('oct: {}'.format(oct(num)[2:]))
+            if DEC_FMT in fmts:
+                print('int: {}'.format(num))
+            if HEX_FMT in fmts:
+                print('hex: {}'.format(hex(num)[2:]))
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
