@@ -33,22 +33,38 @@ vimbundles=( \
 #    git clone $omzrepo $HOME/.oh-my-zsh
 #fi
 
+
+function link
+{
+    local dest
+    if [[ "$2" == '' ]]; then
+        dest="$HOME/.$dotfile"
+    else
+        dest="$2"
+    fi
+
+    if [[ ! -e "$dest" ]]; then
+        action='Linking'
+        ln -fs "$1" "$dest"
+    else
+        action='Skipping'
+    fi
+    printf "  %8s: %s\n" $action $dest
+}
+
+
 print -P "%BSymlinking config files%b"
 for dotfile in `ls $dfdir`; do
     # metafiles; don't link them
     [[ $dotfile = 'setup.sh' ]] && continue
     [[ $dotfile = 'README.md' ]] && continue
     [[ $dotfile = 'py' ]] && continue
+    [[ $dotfile = 'bin' ]] && continue
 
-    local dest="$HOME/.$dotfile"
-    if [[ ! -L "$dest" ]]; then
-        action='Linking'
-        ln -fs "$dfdir/$dotfile" "$dest"
-    else
-        action='Skipping'
-    fi
-    printf "  %8s: %s\n" $action $dest
+    link "$dfdir/$dotfile"
 done
+
+link "$dfdir/bin" "$HOME/bin"
 
 echo "touch $HOME/.hushlogin"
 touch "$HOME/.hushlogin"
