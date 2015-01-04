@@ -41,12 +41,12 @@ set wrap                " wrap long lines
 set linebreak           " break at between words
 set textwidth=120       " wrap at 120 characters
 set colorcolumn=80,89,120
-                        " highlight 80th and 120th columns
+                        " highlight these columns
 set showmatch           " show matching things: (), {}, [], etc
 
 set fo+=n               " format numbered lists properly
 
-set list
+set nolist
 set lcs+=tab:▸\         " show tabs
 set lcs+=eol:¬          " show end-of-lines
 set lcs+=trail:･        " show trailing spaces
