@@ -1,7 +1,7 @@
 # .env
-# vim: ft=zsh
+# vim: ft=zsh:
 #
-# Environment settings for bash and derivatives. The env scripts are sources by
+# Environment settings for bash and derivatives. The env scripts are sourced by
 # Zsh for every shell, even the non-interactive ones, so this needs to be small
 # and quick. Any configuration that will only be used for interactive sessions
 # should be in the rc scripts.
@@ -16,27 +16,27 @@ export NOISY=0
 
 print_heading -l 1 'Initializing environment'
 
-PAGER="less"
-MANPAGER=$PAGER
-EDITOR="vim"
-VISUAL=$EDITOR
-LESSHISTFILE="-"
-GREP_OPTIONS="--color=auto"
-GREP_COLOR="1;32"
+export PAGER="less"
+export MANPAGER=$PAGER
+export EDITOR="vim"
+export VISUAL=$EDITOR
+export LESSHISTFILE="-"
+export GREP_OPTIONS="--color=auto"
+export GREP_COLOR="1;32"
 
-export PAGER MANPAGER \
-       EDITOR VISUAL \
-       LESSHISTFILE \
-       GREP_OPTIONS GREP_COLOR
+function prepend-to-path
+{
+    if [[ -d "$1" ]]; then
+        path=("$1" $path)
+        export path
+    fi
+}
 
 path=("/usr/local/bin" "/usr/bin" "/bin" "/usr/local/sbin" "/usr/sbin" "/sbin")
-# NOTE: These prepended to $PATH in reverse order, so $HOME/bin will end up
-# being the first path component.
-[[ -d "/usr/X11/bin" ]]     && path+=("/usr/X11/bin")
-[[ -d "/opt/local/bin" ]]   && path=("/opt/local/bin" $path)
-[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
-[[ -d "$HOME/bin" ]]        && path=("$HOME/bin" $path)
-
+prepend-to-path "/usr/X11/bin"
+prepend-to-path "/opt/local/bin"
+prepend-to-path "$HOME/.local/bin"
+prepend-to-path "$HOME/bin"
 export path
 
 if which virtualenvwrapper.sh 1>/dev/null 2>&1; then
@@ -44,6 +44,7 @@ if which virtualenvwrapper.sh 1>/dev/null 2>&1; then
     source `which virtualenvwrapper.sh`
 fi
 
+# Make sure gpg2 knows what to do with the curses-based smartcard PIN prompt.
 export GPG_TTY=`tty`
 
 # System-specific settings
