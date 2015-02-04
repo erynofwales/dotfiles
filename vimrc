@@ -158,9 +158,9 @@ endif
 set bg=dark
 
 " Try to use the solarized colorscheme if the terminal can support it
+let g:solarized_termtrans = 0           " transparent terminals
+let g:solarized_visibility = 'low'      " visibility of list chars
 try
-    let g:solarized_termtrans = 0           " transparent terminals
-    let g:solarized_visibility = 'low'      " visibility of list chars
     colorscheme solarized
 endtry
 
