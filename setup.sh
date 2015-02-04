@@ -12,20 +12,22 @@ typeset -A vimbundles
 #    blackboard "https://github.com/nelstrom/vim-blackboard.git" \
 #    fugitive "https://github.com/tpope/vim-fugitive.git" \
 #    command-t           "https://github.com/wincent/Command-T.git" \
+#
+#    dash                "https://github.com/rizzatti/dash.vim.git"
+#    funcoo              "https://github.com/rizzatti/funcoo.vim.git" \
+#    gundo               "https://github.com/sjl/gundo.vim.git" \
+#    mw-utils            "https://github.com/MarcWeber/vim-addon-mw-utils.git" \
+#    repeat              "https://github.com/tpope/vim-repeat" \
+#    snipmate            "https://github.com/garbas/vim-snipmate.git" \
+#    snipmate-snippets   "https://github.com/honza/vim-snippets.git" \
+#    snipmate-zope       "https://github.com/zedr/zope-snipmate-bundle.git" \
+#    solarized           "https://github.com/altercation/vim-colors-solarized.git" \
+#    speeddating         "https://github.com/tpope/vim-speeddating.git" \
+#    surround            "https://github.com/tpope/vim-surround.git" \
+#    tlib                "https://github.com/tomtom/tlib_vim.git" \
+#    unimpaired          "https://github.com/tpope/vim-unimpaired.git" \
 vimbundles=( \
-    dash                "https://github.com/rizzatti/dash.vim.git"
-    funcoo              "https://github.com/rizzatti/funcoo.vim.git" \
-    gundo               "https://github.com/sjl/gundo.vim.git" \
-    mw-utils            "https://github.com/MarcWeber/vim-addon-mw-utils.git" \
-    repeat              "https://github.com/tpope/vim-repeat" \
-    snipmate            "https://github.com/garbas/vim-snipmate.git" \
-    snipmate-snippets   "https://github.com/honza/vim-snippets.git" \
-    snipmate-zope       "https://github.com/zedr/zope-snipmate-bundle.git" \
-    solarized           "https://github.com/altercation/vim-colors-solarized.git" \
-    speeddating         "https://github.com/tpope/vim-speeddating.git" \
-    surround            "https://github.com/tpope/vim-surround.git" \
-    tlib                "https://github.com/tomtom/tlib_vim.git" \
-    unimpaired          "https://github.com/tpope/vim-unimpaired.git" \
+    Vundle.vim          "https://github.com/gmarik/Vundle.vim.git" \
 )
 
 #if [[ ! -d ~/.oh-my-zsh ]]; then
