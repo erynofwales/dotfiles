@@ -4,20 +4,44 @@
 " Set the location of my vim directory.
 let $VIM = $HOME."/.vim"
 
-" Load Pathogen to get all my plugins.
-try
-    call pathogen#infect()
-catch
-    call pathogen#runtime_append_all_bundles()
-endtry
-call pathogen#helptags()
+" Set this first for Vundle
+set nocompatible        " use enhanced vim features
+filetype off            " Needs to be off for Vundle to work (?)
 
+"
+" VUNDLE PLUGINS
+"
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+" Editing helpers
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-speeddating'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+
+" Documentation and completion
+Plugin 'rizzatti/funcoo.vim'    " Required for dash
+Plugin 'rizzatti/dash.vim'
+"Plugin 'valloric/YouCompleteMe'
+
+Plugin 'sjl/gundo.vim'          " Undo helper
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'erynofwales/vim-fancyfolds'
+
+" Colors~
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+
+call vundle#end()
 
 "
 " CONFIG OPTIONS
 "
-
-set nocompatible        " use enhanced vim features
 
 set autoread            " reread files changed outside of vim
 set noautowrite         " don't write files before commands like :next and :make
