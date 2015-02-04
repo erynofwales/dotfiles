@@ -175,6 +175,14 @@ let g:snipMate.scope_aliases["java"] = "android"
 " set the Gundo preview window on the bottom
 let g:gundo_preview_bottom = 1
 
+if has('mac')
+    let g:xcode_path = system('xcode-select -p')
+    let s:clang_library_path = g:xcode_path . 'Toolchains/XcodeDefault.xctoolchain/usr/lib'
+    if isdirectory(s:clang_library_path)
+        let g:clang_library_path = s:clang_library_path
+    endif
+endif
+
 noremap <silent> <F2> :NERDTreeToggle<CR>
 noremap <silent> <F3> :GundoToggle<CR>
 noremap <silent> <F4> :setlocal invlist<CR>
