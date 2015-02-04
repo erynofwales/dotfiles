@@ -183,6 +183,10 @@ if has('mac')
     endif
 endif
 
+"
+" Mappings
+"
+
 noremap <silent> <F2> :NERDTreeToggle<CR>
 noremap <silent> <F3> :GundoToggle<CR>
 noremap <silent> <F4> :setlocal invlist<CR>
