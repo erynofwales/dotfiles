@@ -50,6 +50,7 @@
     # Remotes
     p = push -u
     f = fetch
+    sup = submodule update --recursive
 [ui]
     color = true
 [difftool "Kaleidoscope"]
