@@ -149,6 +149,8 @@ function configure_zsh_aliases #{{{
     alias -s txt='vim'
     alias -s xml='vim'
     alias -s jar='java -jar'
+
+    alias bx='bundle exec'
 } #}}}
 
 
