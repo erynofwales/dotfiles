@@ -352,6 +352,11 @@ if has('autocmd')
         autocmd InsertEnter * setlocal nocursorline
         autocmd InsertLeave * setlocal cursorline
     augroup END
+
+    augroup XCodeProjectFileType
+        autocmd!
+        autocmd BufRead *.pbxproj setf xcodepbx
+    augroup END
 endif
 " }}}
 
