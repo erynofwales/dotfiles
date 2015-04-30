@@ -4,6 +4,9 @@
 # Emacs backup files
 \#*\#
 
+# Binaries
+bin/mvim
+
 irssi/away.log
 vim/.viminfo
 vim/view/
