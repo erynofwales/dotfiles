@@ -1,7 +1,11 @@
+# OS X
 .DS_Store
-zsh/cache/
-vim/view/
-vim/spelling*
+
+# Emacs backup files
+\#*\#
+
 irssi/away.log
 vim/.viminfo
-\#*\#
+vim/view/
+vim/spelling*
+zsh/cache/
