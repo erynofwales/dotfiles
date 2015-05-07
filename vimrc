@@ -12,7 +12,7 @@ filetype off            " Needs to be off for Vundle to work (?)
 " VUNDLE PLUGINS
 "
 
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=$VIM/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
