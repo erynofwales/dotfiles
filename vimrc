@@ -30,6 +30,7 @@ Plugin 'rizzatti/dash.vim'
 
 Plugin 'sjl/gundo.vim'          " Undo helper
 Plugin 'scrooloose/nerdtree'
+Plugin 'wincent/command-t'
 
 Plugin 'erynofwales/vim-fancyfolds'
 
