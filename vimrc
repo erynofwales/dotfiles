@@ -348,6 +348,12 @@ if has('autocmd')
         autocmd FileType html,css call <SID>strip_trailing_whitespace()
     augroup END
 
+    " Indent wrapped long lines of code to leading indent
+    augroup WrapLongLinesWithProperIndentation
+        autocmd!
+        autocmd FileType python,c,cpp,objc,objcpp,html,css setlocal breakindent showbreak=\ \ \ \ 
+    augroup END
+
     augroup SConsFileType
         autocmd!
         autocmd BufRead SCons{truct,cript} setf python
