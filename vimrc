@@ -24,6 +24,10 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 
 " Documentation and completion
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 Plugin 'rizzatti/funcoo.vim'    " Required for dash
 Plugin 'rizzatti/dash.vim'
 "Plugin 'valloric/YouCompleteMe'
@@ -32,7 +36,7 @@ Plugin 'sjl/gundo.vim'          " Undo helper
 Plugin 'scrooloose/nerdtree'
 Plugin 'wincent/command-t'
 
-Plugin 'erynofwales/vim-fancyfolds'
+"Plugin 'erynofwales/vim-fancyfolds'
 
 " Colors~
 Plugin 'altercation/vim-colors-solarized'
