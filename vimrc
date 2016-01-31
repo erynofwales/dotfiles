@@ -38,6 +38,7 @@ Plugin 'wincent/command-t'
 
 "Plugin 'erynofwales/vim-fancyfolds'
 Plugin 'apple-swift', {'pinned': 1}
+Plugin 'rust-lang/rust.vim'
 
 " Colors~
 Plugin 'altercation/vim-colors-solarized'
