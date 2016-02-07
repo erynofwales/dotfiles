@@ -126,7 +126,7 @@ set copyindent          " copy previous indentation on autoindent
 set scrolloff=3         " scroll 3 lines ahead of point
 set sidescrolloff=5     " scroll 5 columns ahead of point
 
-set pastetoggle=<F12>    " toggle paste mode with F12
+set pastetoggle=<F1>    " toggle paste mode with F12
 
 " completion menu
 set wildmenu
@@ -167,9 +167,9 @@ set bg=dark
 " Try to use the solarized colorscheme if the terminal can support it
 let g:solarized_termtrans = 0           " transparent terminals
 let g:solarized_visibility = 'low'      " visibility of list chars
-try
-    colorscheme solarized
-endtry
+"try
+"    colorscheme solarized
+"endtry
 
 " Empty snipmate options dictionary
 let g:snipMate = {}
@@ -318,6 +318,13 @@ nnoremap gV `[v`]
 
 " Don't underline folded lines
 highlight Folded cterm=bold term=bold ctermfg=NONE ctermbg=NONE
+
+" Line numbers are a touch darker...
+highlight LineNr ctermfg=8 ctermbg=0
+
+" Don't underline the CursorLine in color terminals; use dark black.
+highlight CursorLine term=underline cterm=NONE ctermbg=0
+highlight CursorLineNr term=underline cterm=NONE ctermfg=7 ctermbg=0
 
 " Autocommands {{{
 if has('autocmd')
