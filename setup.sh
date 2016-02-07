@@ -3,6 +3,7 @@
 dfdir=$(cd "$(dirname "$0")" && pwd)
 sys=`uname -s | tr A-Z a-z`
 
+skipitems=(setup.sh README.md py bin Colors)
 
 typeset -A vimbundles
 vimbundles=(Vundle.vim  "https://github.com/gmarik/Vundle.vim.git")
@@ -29,12 +30,7 @@ function link
 
 print -P "%BSymlinking config files%b"
 for dotfile in `ls $dfdir`; do
-    # metafiles; don't link them
-    [[ $dotfile = 'setup.sh' ]] && continue
-    [[ $dotfile = 'README.md' ]] && continue
-    [[ $dotfile = 'py' ]] && continue
-    [[ $dotfile = 'bin' ]] && continue
-
+    [[ ${skipitems[(r)$dotfile]} == $dotfile ]] && continue
     link "$dfdir/$dotfile"
 done
 
@@ -50,7 +46,7 @@ for module in ${(k)vimbundles}; do
     echo -n "  $module"
 
     if [[ -d $module ]]; then
-       # result='skipped'
+    # result='skipped'
     else
         git clone ${vimbundles[$module]} $module 1>/dev/null 2>&1
         if [[ $? -eq 0 ]]; then
