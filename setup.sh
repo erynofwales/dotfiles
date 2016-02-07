@@ -3,7 +3,6 @@
 dfdir=$(cd "$(dirname "$0")" && pwd)
 sys=`uname -s | tr A-Z a-z`
 
-omzrepo=git://github.com/robbyrussell/oh-my-zsh.git
 
 # Vim bundles
 typeset -A vimbundles
@@ -30,10 +29,6 @@ vimbundles=( \
     Vundle.vim          "https://github.com/gmarik/Vundle.vim.git" \
 )
 
-#if [[ ! -d ~/.oh-my-zsh ]]; then
-#    print -P "%BCloning Oh my ZSH!"
-#    git clone $omzrepo $HOME/.oh-my-zsh
-#fi
 
 
 function link
