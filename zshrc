@@ -207,6 +207,11 @@ function configure_completion #{{{
     # Complete man pages by section
     zstyle ':completion:*:manuals' separate-sections true
     zstyle ':completion:*:manuals.*' insert-sections true
+
+    # Use git completion for the g function (which is a small wrapper around git; see .rc)
+    if [[ `whence -w g` =~ "function" ]]; then
+        compdef g='git'
+    fi
 } #}}}
 
 
