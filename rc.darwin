@@ -17,3 +17,8 @@ fi
 
 # ldd doesn't exist on OS X, but otool -L does the same thing.
 alias ldd='otool -L'
+
+SOUNDSDIR=/System/Library/Sounds
+alias glass="afplay $SOUNDSDIR/Glass.aiff"
+alias funk="afplay $SOUNDSDIR/Funk.aiff"
+unset SOUNDSDIR
