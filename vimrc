@@ -22,6 +22,8 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-commentary'
+Plugin 'PeterRincker/vim-argumentative'
 
 " Documentation and completion
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -167,9 +169,9 @@ set bg=dark
 " Try to use the solarized colorscheme if the terminal can support it
 let g:solarized_termtrans = 0           " transparent terminals
 let g:solarized_visibility = 'low'      " visibility of list chars
-"try
-"    colorscheme solarized
-"endtry
+try
+    colorscheme solarized
+endtry
 
 " Empty snipmate options dictionary
 let g:snipMate = {}
