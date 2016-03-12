@@ -3,4 +3,5 @@
 # Local customizations for interactive shells
 # Eryn Wells <eryn@erynwells.me>
 
-
+prepend-to-path "$t/bin"
+export path
