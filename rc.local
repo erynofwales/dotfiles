@@ -1,4 +1,5 @@
 # .rc.local
+# vim: set ft=zsh:
 # Local customizations for interactive shells
 # Eryn Wells <eryn@erynwells.me>
 
