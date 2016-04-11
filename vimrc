@@ -17,6 +17,9 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
+" Filetypes
+Plugin 'keith/swift.vim'
+
 " Editing helpers
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-speeddating'
@@ -45,6 +48,12 @@ Plugin 'rust-lang/rust.vim'
 " Colors~
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
+
+" Snippets
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 
 call vundle#end()
 
