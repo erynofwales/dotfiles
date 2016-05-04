@@ -29,10 +29,6 @@ Plugin 'tpope/vim-commentary'
 Plugin 'PeterRincker/vim-argumentative'
 
 " Documentation and completion
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
 Plugin 'rizzatti/funcoo.vim'    " Required for dash
 Plugin 'rizzatti/dash.vim'
 "Plugin 'valloric/YouCompleteMe'
@@ -331,7 +327,7 @@ nnoremap gV `[v`]
 highlight Folded cterm=bold term=bold ctermfg=NONE ctermbg=NONE
 
 " Line numbers are a touch darker...
-highlight LineNr ctermfg=8 ctermbg=0
+"highlight LineNr ctermfg=8 ctermbg=0
 
 " Don't underline the CursorLine in color terminals; use dark black.
 highlight CursorLine term=underline cterm=NONE ctermbg=0
