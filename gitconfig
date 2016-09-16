@@ -4,11 +4,9 @@
 [core]
     editor = vim
     quotepath = false
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
 [color]
     ui = auto
-[merge]
-	tool = Kaleidoscope
 [alias]
     # Commits
     c = commit
@@ -35,9 +33,13 @@
 
     # Merges and rebases
     m = merge
+    ma = merge --abort
     mt = mergetool
     rb = rebase
     rbi = rebase --interactive
+    rbc = rebase --continue
+    rba = rebase --abort
+    rbs = rebase --skip
 
     # Resets, moving HEAD
     r = reset
@@ -49,21 +51,24 @@
 
     # Remotes
     p = push -u
+    pf = push -uf
     f = fetch
     sup = submodule update --recursive
 [ui]
     color = true
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
-	tool = Kaleidoscope
+    tool = KS
+[difftool]
+    prompt = false
+[difftool "KS"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[merge]
+    tool = KS
 [mergetool]
     keepBackup = true
-	prompt = false
-[difftool]
-	prompt = false
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
+    prompt = false
+[mergetool "KS"]
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+    trustExitCode = true
 [push]
-	default = simple
+    default = simple
