@@ -1,0 +1,17 @@
+# python.snippets
+# vim: set ts=8 sw=8 sts=8 noet list:
+# Eryn Wells <eryn@erynwells.me>
+
+snippet parse_args
+	def parse_args():
+		parser = argparse.ArgumentParser()
+		# TODO: Configure arguments here.
+		args = parser.parse_args()
+		return args
+
+snippet ifmain
+	def main():
+		${1:pass}
+	
+	if __name__ == '__main__':
+		main()
