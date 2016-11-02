@@ -22,3 +22,10 @@ SOUNDSDIR=/System/Library/Sounds
 alias glass="afplay $SOUNDSDIR/Glass.aiff"
 alias funk="afplay $SOUNDSDIR/Funk.aiff"
 unset SOUNDSDIR
+
+function write-defaults
+{
+    # Dim dock icons of apps that have been hidden.
+    defaults write com.apple.Dock showhidden -boolean yes
+    killall Dock
+}
