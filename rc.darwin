@@ -23,9 +23,15 @@ alias glass="afplay $SOUNDSDIR/Glass.aiff"
 alias funk="afplay $SOUNDSDIR/Funk.aiff"
 unset SOUNDSDIR
 
-function write-defaults
+function init-macos
 {
     # Dim dock icons of apps that have been hidden.
     defaults write com.apple.Dock showhidden -boolean yes
     killall Dock
+
+    # Put screenshots in Google Drive, in a directory according to hostname
+    name=`hostname -s | tr A-Z a-z`
+    loc="$HOME/Google Drive/Screenshots/$name"
+    mkdir -p "$loc"
+    defaults write com.apple.screencapture location "$loc"
 }
