@@ -114,7 +114,11 @@ set undofile            " save undo history
 set undodir=$VIM/undo   " save undo files here
 set history=1000        " remember 1000 commands in history
 set undolevels=1000     " keep lots of undo history
-set viminfo=%100,'100,/100,h,\"500,:100,n$VIM/.viminfo
+if !has('nvim')
+    set viminfo=%100,'100,/100,h,\"500,:100,n$VIM/.viminfo
+else
+    set viminfo=%100,'100,/100,h,\"500,:100,n$VIM/.nviminfo
+endif
                         " I have *NO* idea what this does...
 
 set backspace=indent,eol,start
