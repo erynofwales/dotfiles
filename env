@@ -37,6 +37,7 @@ prepend-to-path "/usr/X11/bin"
 prepend-to-path "/opt/local/bin"
 prepend-to-path "$HOME/.local/bin"
 prepend-to-path "$HOME/.gem/ruby/2.2.0/bin"
+prepend-to-path "$HOME/.cargo/bin"
 prepend-to-path "$HOME/bin"
 export path
 
