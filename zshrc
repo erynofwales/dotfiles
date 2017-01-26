@@ -74,9 +74,6 @@ function configure_zle #{{{
 
 function configure_zle_vim #{{{
 {
-    # Remove the delay when pressing escape to get to Insert mode.
-    bindkey -rpM viins '\e'
-
     # Edit commands in $EDITOR on 'v' in command mode
     autoload -Uz edit-command-line
     zle -N edit-command-line
