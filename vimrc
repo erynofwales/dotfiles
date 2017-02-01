@@ -166,6 +166,15 @@ set tags+=~/.tags/usr.tags
 " included all the time...
 "set tags+=~/.tags/usr_local.tags
 
+if $TERM_PROGRAM ==# "Apple_Terminal"
+    set title
+    " Apple Terminal lets you set the current document with this escape.
+    set t_ts=]6;
+    " Alarm character.
+    set t_fs=
+    " Write out the full path to the current file in the title string.
+    set titlestring=file://%{expand('%:p')}
+endif
 
 " use syntax highlighting if the terminal can support it (or we're in a GUI)
 if &t_Co > 2 || has('gui_running')
