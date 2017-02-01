@@ -132,10 +132,13 @@ function set_xterm_title
 
     # Set xterm and screen titles
     if [[ -n "$DISPLAY" || -n "$TERM_PROGRAM" ]]; then
-        title+="%n@%m"
+        print -Pn "\e]2;%n@%m\a"
     fi
 
-    print -Pn "\e]2;${title}\a"
+    # For Apple Terminal.app, add a link to the current directory.
+    if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]]; then
+        print -Pn "\e]7;file://%d\a"
+    fi
 }
 
 
