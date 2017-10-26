@@ -396,6 +396,7 @@ if has('autocmd')
     " Toggle position highlighting
     augroup HighlightCursorLineInNormalMode
         autocmd!
+        autocmd BufEnter * setlocal cursorline
         autocmd InsertEnter * setlocal nocursorline
         autocmd InsertLeave * setlocal cursorline
     augroup END
