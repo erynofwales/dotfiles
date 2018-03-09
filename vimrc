@@ -19,6 +19,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " Filetypes
 Plugin 'keith/swift.vim'
+Plugin 'elmcast/elm-vim'
 
 " Editing helpers
 Plugin 'tpope/vim-repeat'
