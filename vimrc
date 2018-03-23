@@ -20,6 +20,7 @@ Plugin 'gmarik/Vundle.vim'
 " Filetypes
 Plugin 'keith/swift.vim'
 Plugin 'elmcast/elm-vim'
+Plugin 'othree/html5.vim'
 
 " Editing helpers
 Plugin 'tpope/vim-repeat'
