@@ -10,7 +10,6 @@ alias j='jobs'
 alias h='history'
 alias df='df -h'
 alias du='du -h'
-alias v='vim'
 alias e='emacs'
 
 binary_exists ledger && alias l='ledger'
