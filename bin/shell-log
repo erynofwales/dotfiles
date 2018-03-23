@@ -6,8 +6,8 @@ Logging for my shells.
 
 import argparse
 import logging
+import os
 import os.path
-import sys
 
 LOGFILE = os.path.expanduser('~/.shell.log')
 
@@ -15,7 +15,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-b', '--bold', action='store_true')
     parser.add_argument('-f', '--file', default=LOGFILE)
-    parser.add_argument('-l', '--level', type=int, default=0)
+    parser.add_argument('-l', '--level', type=int, default=logging.INFO)
     parser.add_argument('-n', '--noeol', action='store_true')
     parser.add_argument('msg')
     parser.add_argument('args', nargs=argparse.REMAINDER)
@@ -26,21 +26,19 @@ def logger(args):
     logger = logging.getLogger('')
 
     stdout_handler = logging.StreamHandler()
-    # TODO: Set formatter correctly.
+    formatter = logging.Formatter('\033[34m==>\033[39m {msg}', style='{')
+    stdout_handler.setFormatter(formatter)
     logger.addHandler(stdout_handler)
-
-    file_handler = logging.FileHandler(args.file)
-    logger.addHandler(file_handler)
 
     return logger
 
 def main():
     # Set up.
     args = parse_args()
-    log = logger()
-    
+    log = logger(args)
+
     # Set the level from the shell.
-    level = sys.environ.get('NOISY', logging.INFO)
+    level = int(os.environ.get('NOISY', logging.INFO))
     log.setLevel(level)
 
     # Log it.
