@@ -23,6 +23,11 @@ alias glass="afplay $SOUNDSDIR/Glass.aiff"
 alias funk="afplay $SOUNDSDIR/Funk.aiff"
 unset SOUNDSDIR
 
+function darwin-icloud-drive-path
+{
+    return "$HOME/Library/Mobile\ Documents/com\~apple\~CloudDocs"
+}
+
 function init-macos
 {
     # Dim dock icons of apps that have been hidden.
