@@ -32,6 +32,10 @@ set markers=no
 set smart_wrap
 unset beep
 
+ignore *
+unignore Date: From: To: Cc: Subject:
+hdr_order Date: From: To: Cc: Subject:
+
 # Aliases
 set reverse_alias=yes
 set alias_file="~/.mutt/aliases"
@@ -59,7 +63,8 @@ color index color64     default     ~p
 # Collapsed thread
 color index color61     default     ~v
 # Deleted email
-color index color235    default     ~D
+color index color236    default     ~D
+color index color236    default     "~D!~F"
 # Flagged email
 color index brightred   default     ~F
 
