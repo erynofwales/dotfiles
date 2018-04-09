@@ -31,7 +31,15 @@ def main():
     for n in sys.argv[1:]:
         print('---')
         try:
-            num = int(n)
+            base = 10
+            n = n.lower()
+            if n.startswith('0x'):
+                base = 16
+            if n.startswith('0o'):
+                base = 8
+            if n.startswith('0b'):
+                base = 2
+            num = int(n, base=base)
         except ValueError:
             print('Error: cannot parse string as int: {}'.format(n))
         else:
