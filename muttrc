@@ -2,7 +2,7 @@
 # Eryn Wells <eryn@erynwells.me>
 
 # whoami
-set realname='Eryn Wells'
+set realname="Eryn Wells"
 source ~/.mutt/erynwells.me.rc
 
 # IMAP settings
@@ -25,6 +25,7 @@ set move=no
 unset mark_old
 set charset=UTF8
 set sort=threads
+set sort_aux=last-date-received
 set sort_browser=alpha
 set tilde=no
 set markers=no
@@ -33,11 +34,32 @@ unset beep
 
 # Aliases
 set reverse_alias=yes
-set alias_file='~/.mutt/aliases'
+set alias_file="~/.mutt/aliases"
 
 # Composing and Sending
 set edit_headers=yes
 set include=yes
+
+# HTML email :(
+set mailcap_path="~/.mutt/mailcap"
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+
+# A sensible default
+color index default     default     ~A
+# Unread email
+color index color33     default     ~U
+# Email to me
+color index color64     default     ~p
+# Collapsed thread
+color index color61     default     ~v
+# Deleted email
+color index color235    default     ~D
+# Flagged email
+color index brightred   default     ~F
+
+# Radar emails
+color index color166    default     "~p ~s 'Radar Assignment'"
 
 # Solarized (light theme) colors
 #source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
