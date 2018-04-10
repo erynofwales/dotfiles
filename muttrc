@@ -75,5 +75,10 @@ color header    color33     default     "^From:"
 color header    color37     default     "^(To|Cc):"
 color header    color254    default     "^Subject:"
 
+# Quoted email levels. Possible quotedN's go from 0-9.
+color quoted    color61     default
+color quoted1   color37     default
+color quoted2   color64     default
+
 # Solarized (light theme) colors
 #source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
