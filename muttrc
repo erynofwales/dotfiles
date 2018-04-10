@@ -67,6 +67,13 @@ color index color236    default     ~D
 color index color236    default     "~D!~F"
 # Flagged email
 color index brightred   default     ~F
+# Arrows under threaded messages in the index
+color tree  red         default
+
+color header    color136    default     "^Date:"
+color header    color33     default     "^From:"
+color header    color37     default     "^(To|Cc):"
+color header    color254    default     "^Subject:"
 
 # Solarized (light theme) colors
 #source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
