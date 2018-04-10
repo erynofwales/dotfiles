@@ -68,8 +68,5 @@ color index color236    default     "~D!~F"
 # Flagged email
 color index brightred   default     ~F
 
-# Radar emails
-color index color166    default     "~p ~s 'Radar Assignment'"
-
 # Solarized (light theme) colors
 #source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
