@@ -9,6 +9,8 @@ bin/mvim
 
 irssi/away.log
 
+mutt/cache/
+
 vim/.viminfo
 vim/.nviminfo
 vim/view/
