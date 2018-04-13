@@ -4,12 +4,12 @@
   <dict>
     <key>Label</key>
     <string>eryn.offlineimap</string>
-    <key>ProgramArguments</key>
-    <array>
-      <string>/usr/local/bin/offlineimap</string>
-      <string>-l</string>
-      <string>/Users/eryn/.offlineimap.log</string>
-    </array>
+    <key>Program</key>
+    <string>/usr/local/bin/offlineimap</string>
+    <key>StandardOutPath</key>
+    <string>/Users/eryn/.offlineimap.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/eryn/.offlineimap.log</string>
     <key>EnvironmentVariables</key>
     <dict>
       <key>PATH</key>
