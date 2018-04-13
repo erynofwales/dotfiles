@@ -3,7 +3,7 @@
 dfdir=$(cd "$(dirname "$0")" && pwd)
 sys=`uname -s | tr A-Z a-z`
 
-skipitems=(setup.sh README.md py bin Colors)
+skipitems=(setup.sh README.md py bin Colors LaunchAgents)
 
 typeset -A vimbundles
 vimbundles=(Vundle.vim  "https://github.com/gmarik/Vundle.vim.git")
