@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>eryn.offlineimap</string>
+    <string>me.erynwells.offlineimap</string>
     <key>Program</key>
     <string>/usr/local/bin/offlineimap</string>
     <key>StandardOutPath</key>
