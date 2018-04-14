@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  vars:
+    dotfiles: ~/.dotfiles
+    packages: [mutt, offlineimap, w3m]
+  tasks:
+    - name: "Install packages: {{ packages|join(', ') }}"
+      homebrew: name={{ packages }} state=present
+
+    - name: Link mutt config files
+      file: src={{ dotfiles }}/{{ item }} dest=~/.{{ item }} state=link
+      with_items: [muttrc, mutt]
