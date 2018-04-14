@@ -3,6 +3,13 @@
 
 # whoami
 set realname="Eryn Wells"
+
+# Clear out whatever crap the system sets.
+unmailboxes *
+unlists *
+unsubscribe *
+
+# Source my local mail settings
 source ~/.mutt/erynwells.me.rc
 
 # IMAP settings
@@ -27,7 +34,7 @@ set charset=UTF8
 set sort=threads
 set sort_aux=last-date-received
 set sort_browser=alpha
-set tilde=no
+set tilde=yes
 set markers=no
 set smart_wrap
 unset beep
@@ -73,6 +80,8 @@ color index color236    default     "~D!~F"
 color index brightred   default     ~F
 # Arrows under threaded messages in the index
 color tree  red         default
+# Tildes are visible but dark
+color tilde black       default
 
 color header    color136    default     "^Date:"
 color header    color33     default     "^From:"
