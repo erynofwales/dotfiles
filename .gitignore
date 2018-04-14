@@ -18,3 +18,5 @@ vim/spelling*
 vim/init.vim
 
 zsh/cache/
+
+Ansible/*.retry
