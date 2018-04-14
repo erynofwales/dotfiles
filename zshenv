@@ -5,6 +5,9 @@
 #
 # Eryn Wells <eryn@erynwells.me>
 
+# Don't read global startup. It messes things up...
+unsetopt GLOBAL_RCS
+
 [ -e $HOME/.env ] && source $HOME/.env
 
 # System specific environment settings

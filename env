@@ -40,14 +40,24 @@ function append-to-path
     fi
 }
 
-path=("/usr/local/bin" "/usr/bin" "/bin" "/usr/local/sbin" "/usr/sbin" "/sbin")
-prepend-to-path "/usr/X11/bin"
-prepend-to-path "/opt/local/bin"
-prepend-to-path "$HOME/.local/bin"
-prepend-to-path "$HOME/.gem/ruby/2.2.0/bin"
-prepend-to-path "$HOME/.cargo/bin"
-prepend-to-path "$HOME/bin"
-export path
+function setup-path
+{
+    export path=()
+    append-to-path "/usr/local/bin"
+    append-to-path "/usr/bin"
+    append-to-path "/bin"
+    append-to-path "/usr/local/sbin"
+    append-to-path "/usr/sbin"
+    append-to-path "/sbin"
+    prepend-to-path "/usr/X11/bin"
+    prepend-to-path "/opt/local/bin"
+    prepend-to-path "$HOME/.local/bin"
+    prepend-to-path "$HOME/.gem/ruby/2.2.0/bin"
+    prepend-to-path "$HOME/.cargo/bin"
+    prepend-to-path "$HOME/bin"
+}
+
+setup-path
 
 if which virtualenvwrapper.sh 1>/dev/null 2>&1; then
     export WORKON_HOME="$HOME/src/py/.envs"
