@@ -70,7 +70,7 @@ color index default     default     ~A
 # Unread email
 color index color33     default     ~U
 # Email to me
-color index color64     default     ~p
+#color index color64     default     ~p
 # Collapsed thread
 color index color61     default     ~v
 # Deleted email
