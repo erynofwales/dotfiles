@@ -29,7 +29,7 @@ set envelope_from=yes
 # Interface
 set quit=ask-yes
 set move=no
-unset mark_old
+set mark_old=no
 set charset=UTF8
 set sort=threads
 set sort_aux=last-date-received
@@ -37,7 +37,10 @@ set sort_browser=alpha
 set tilde=yes
 set markers=no
 set smart_wrap
-unset beep
+
+# Sounds
+set beep=no
+set beep_new=yes
 
 ignore *
 unignore Date: From: To: Cc: Subject:
