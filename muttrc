@@ -29,7 +29,7 @@ set envelope_from=yes
 # Interface
 set quit=ask-yes
 set move=no
-unset mark_old
+set mark_old=no
 set charset=UTF8
 set sort=threads
 set sort_aux=last-date-received
@@ -37,7 +37,10 @@ set sort_browser=alpha
 set tilde=yes
 set markers=no
 set smart_wrap
-unset beep
+
+# Sounds
+set beep=no
+set beep_new=yes
 
 ignore *
 unignore Date: From: To: Cc: Subject:
@@ -58,7 +61,20 @@ alternative_order text/plain text/enriched text/html
 
 unmailboxes "$record" "$postponed" "$trash"
 
+# Basically the default, but give a little more space to addresses since we are no longer in the 80s.
 set index_format="%4C %Z %{%b %d} %-20.20L (%?l?%4l&%4c?) %s"
+
+# Vim style first and last
+bind index gg       first-entry
+bind index G        last-entry
+
+bind index R        group-reply
+bind index <tab>    sync-mailbox
+bind index <space>  collapse-thread
+
+# First syncs everything, second syncs only INBOX.
+macro index O "<shell-escape>offlineimap<enter>"
+macro index o "<shell-escape>offlineimap -qf INBOX<enter>"
 
 # Some resources for colors:
 # http://www.strcat.de/dotfiles/mutt.color
@@ -70,7 +86,7 @@ color index default     default     ~A
 # Unread email
 color index color33     default     ~U
 # Email to me
-color index color64     default     ~p
+#color index color64     default     ~p
 # Collapsed thread
 color index color61     default     ~v
 # Deleted email
