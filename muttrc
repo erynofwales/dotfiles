@@ -61,7 +61,20 @@ alternative_order text/plain text/enriched text/html
 
 unmailboxes "$record" "$postponed" "$trash"
 
+# Basically the default, but give a little more space to addresses since we are no longer in the 80s.
 set index_format="%4C %Z %{%b %d} %-20.20L (%?l?%4l&%4c?) %s"
+
+# Vim style first and last
+bind index gg       first-entry
+bind index G        last-entry
+
+bind index R        group-reply
+bind index <tab>    sync-mailbox
+bind index <space>  collapse-thread
+
+# First syncs everything, second syncs only INBOX.
+macro index O "<shell-escape>offlineimap<enter>"
+macro index o "<shell-escape>offlineimap -qf INBOX<enter>"
 
 # Some resources for colors:
 # http://www.strcat.de/dotfiles/mutt.color
