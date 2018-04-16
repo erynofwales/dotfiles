@@ -69,11 +69,13 @@ for module in ${(k)vimbundles}; do
     print -P "$spaces%F{$color}$result%f"
 done
 
-if [[ -d "$dfdir/vim/bundle/command-t/ruby/command-t" ]]; then
-    print -P "%BSetting up command-t%b"
-    cd "$dfdir/vim/bundle/command-t/ruby/command-t"
-    ruby extconf.rb
-    make
-fi
+vim +PluginInstall +qall
+
+#if [[ -d "$dfdir/vim/bundle/command-t/ruby/command-t" ]]; then
+#    print -P "%BSetting up command-t%b"
+#    cd "$dfdir/vim/bundle/command-t/ruby/command-t"
+#    ruby extconf.rb
+#    make
+#fi
 
 exit 0
