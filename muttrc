@@ -34,13 +34,15 @@ set charset=UTF8
 set sort=threads
 set sort_aux=last-date-received
 set sort_browser=alpha
-set tilde=yes
+set tilde
 set markers=no
+set wrap=80
 set smart_wrap
+set reflow_wrap
 
 # Sounds
-set beep=no
-set beep_new=yes
+set beep_new
+unset beep
 
 ignore *
 unignore Date: From: To: Cc: Subject:
