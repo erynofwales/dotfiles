@@ -10,7 +10,7 @@ unlists *
 unsubscribe *
 
 # Source my local mail settings
-source ~/.mutt/erynwells.me.rc
+source ~/.dotfiles/private/mail/erynwells.me.rc
 
 # IMAP settings
 set imap_check_subscribed
