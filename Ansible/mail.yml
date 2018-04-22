@@ -2,7 +2,7 @@
 - hosts: localhost
   vars:
     dotfiles: ~/.dotfiles
-    packages: [mutt, offlineimap, w3m]
+    packages: [mutt, offlineimap, urlview, w3m]
   tasks:
     - name: "Install packages: {{ packages|join(', ') }}"
       homebrew: name={{ packages }} state=present
