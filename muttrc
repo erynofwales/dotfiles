@@ -96,6 +96,8 @@ color index color236    default     ~D
 color index color236    default     "~D!~F"
 # Flagged email
 color index brightred   default     ~F
+# Tagged email
+color index yellow      default     ~T
 # Arrows under threaded messages in the index
 color tree  red         default
 # Tildes are visible but dark
