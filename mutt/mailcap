@@ -3,3 +3,4 @@ image/jpeg; ~/.mutt/view_attachment.sh %s jpg
 image/jpg; ~/.mutt/view_attachment.sh %s jpg
 image/pjepg; ~/.mutt/view_attachment.sh %s jpg
 image/gif; ~/.mutt/view_attachment.sh %s gif
+image/png; ~/.mutt/view_attachment.sh %s png
