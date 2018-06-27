@@ -190,7 +190,7 @@ set bg=dark
 let g:solarized_termtrans = 0           " transparent terminals
 let g:solarized_visibility = 'low'      " visibility of list chars
 try
-    colorscheme solarized
+    colorscheme tomorrow_night
 endtry
 
 " Empty snipmate options dictionary
