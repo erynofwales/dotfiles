@@ -15,3 +15,25 @@ snippet ifmain
 	
 	if __name__ == '__main__':
 		main()
+
+snippet script
+	#!/usr/bin/env python3
+	# Eryn Wells <eryn@erynwells.me
+
+	import argparse
+
+	def parse_args(args, progname=None):
+		parser = argparse.ArgumentParser(prog=progname)
+		# TODO: Configure arguments here.
+		args = parser.parse_args(args)
+		return args
+	
+	def main(argv):
+		args = parse_args(argv[1:], prog=argv[0])
+		${1:# TODO}
+		return 0
+	
+	if __name__ == '__main__':
+		import sys
+		result = main(sys.argv)
+		sys.exit(result)
