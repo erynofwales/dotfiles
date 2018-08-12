@@ -18,22 +18,25 @@ snippet ifmain
 
 snippet script
 	#!/usr/bin/env python3
-	# Eryn Wells <eryn@erynwells.me
+	# `g:snips_author`
+
+	'''
+	New script.
+	'''
 
 	import argparse
 
-	def parse_args(args, progname=None):
-		parser = argparse.ArgumentParser(prog=progname)
+	def parse_args(argv, *a, **kw):
+		parser = argparse.ArgumentParser(*a, **kw)
 		# TODO: Configure arguments here.
-		args = parser.parse_args(args)
+		args = parser.parse_args(argv)
 		return args
 	
 	def main(argv):
 		args = parse_args(argv[1:], prog=argv[0])
 		${1:# TODO}
-		return 0
 	
 	if __name__ == '__main__':
 		import sys
 		result = main(sys.argv)
-		sys.exit(result)
+		sys.exit(0 if not result else result)
