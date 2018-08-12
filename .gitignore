@@ -11,7 +11,7 @@ irssi/away.log
 
 mutt/cache/
 
-vim/.viminfo
+vim/.viminfo*
 vim/.nviminfo
 vim/view/
 vim/spelling*
