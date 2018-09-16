@@ -8,6 +8,9 @@ let $VIM = $HOME."/.vim"
 set nocompatible        " use enhanced vim features
 filetype off            " Needs to be off for Vundle to work (?)
 
+let g:python_host_prog=$HOME.'/.virtualenvs/neovim/bin/python'
+let g:python3_host_prog=$HOME.'/.virtualenvs/neovim/bin/python3'
+
 "
 " VUNDLE PLUGINS
 "
