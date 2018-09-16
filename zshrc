@@ -6,7 +6,7 @@
 # Eryn Wells <eryn@erynwells.me>
 
 PROMPT_THEME='loquacious'
-ZLE_MODE='vim'
+ZLE_MODE='emacs'
 
 
 # load bash/zsh/ksh agnostic configurations
