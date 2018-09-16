@@ -45,11 +45,11 @@ function g
 
 function vi
 {
-    if which nvim 1>/dev/null 2>&1; then
+    if whence -cp nvim 1>/dev/null 2>&1; then
         command nvim $@
-    elif which vim 1>/dev/null 2>&1; then
+    elif whence -cp vim 1>/dev/null 2>&1; then
         command vim $@
-    elif which vi 1>/dev/null 2>&1; then
+    elif whence -cp vi 1>/dev/null 2>&1; then
         command vi $@
     fi
 }
@@ -102,8 +102,8 @@ function configure_ls
 binary_exists nethack && export NETHACKOPTIONS="color"
 
 # Default ledger file
-[[ -e "$HOME/Documents/Financial/personal.ledger" ]] && \
-    LEDGER_FILE=$HOME/Documents/Financial/personal.ledger
+[[ -e "$HOME/Documents/Ledger/personal.ledger" ]] && \
+    LEDGER_FILE=$HOME/Documents/Ledger/personal.ledger
 
 if [[ -e "$HOME/.rc.$SYS" ]]; then
     print_info -l 2 "Sourcing $SYS interactive shell setup"
