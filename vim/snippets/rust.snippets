@@ -1,0 +1,32 @@
+# rust.snippets
+# vim: set ts=8 sw=8 sts=8 noet list:
+# Eryn Wells <eryn@erynwells.me>
+
+snippet head
+	/* ${1:`expand('%:t')`}
+	 * `g:snips_author`
+	 */
+	
+	${2:// TODO: The rest of this file. ;)}
+
+snippet display
+	impl fmt::Display for ${1:Foo} {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			${2:// TODO}
+		}
+	}
+
+snippet debug
+	impl fmt::Debug for ${1:Foo} {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			${2:// TODO}
+		}
+	}
+
+snippets tests
+	#[cfg(test)]
+	mod tests {
+		#[test]
+		fn it_works() {
+		}
+	}
