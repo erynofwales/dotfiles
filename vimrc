@@ -142,7 +142,7 @@ set copyindent          " copy previous indentation on autoindent
 set scrolloff=3         " scroll 3 lines ahead of point
 set sidescrolloff=5     " scroll 5 columns ahead of point
 
-set pastetoggle=<F1>    " toggle paste mode with F12
+set pastetoggle=<F1>    " toggle paste mode with this
 
 " completion menu
 set wildmenu
@@ -372,11 +372,6 @@ if has('autocmd')
     "    autocmd!
     "    autocmd BufWritePost *.snippets :call ReloadSnippets(expand('%:t:r'))
     "augroup END
-
-    augroup WrapAt80
-        autocmd!
-        autocmd FileType text setlocal tw=80
-    augroup END
 
     " Clean whitespace before saving: Python, C, HTML, and Objective-C
     augroup StripTrailingWhitespace
