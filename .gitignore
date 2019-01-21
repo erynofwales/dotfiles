@@ -1,8 +1,10 @@
 # OS X
 .DS_Store
 
-# Emacs backup files
+# Emacs
 \#*\#
+.\#emacs
+emacs.d
 
 # Binaries
 bin/mvim
