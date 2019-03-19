@@ -13,6 +13,8 @@ irssi/away.log
 
 mutt/cache/
 
+ssh/known_hosts
+
 vim/.viminfo*
 vim/.nviminfo
 vim/view/
