@@ -227,6 +227,9 @@ function configure_vcs_info #{{{
     # Export the current Git branch before every prompt.
     function export_gitbranch {
         vcs_info general
+        if [[ "$gitbranches[1]" != "${vcs_info_msg_0_}" ]]; then
+            export gitbranches=(${vcs_info_msg_0_} $gitbranches[1,4])
+        fi
         export gitbranch=${vcs_info_msg_0_}
     }
 
