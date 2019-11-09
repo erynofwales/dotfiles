@@ -41,6 +41,7 @@
     rbc = rebase --continue
     rba = rebase --abort
     rbs = rebase --skip
+    rbm = rebase origin/master master
 
     # Resets, moving HEAD
     r = reset
