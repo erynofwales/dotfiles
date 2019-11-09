@@ -24,22 +24,24 @@ unset SOUNDSDIR
 
 function darwin-icloud-drive-path
 {
-    return "$HOME/Library/Mobile\ Documents/com\~apple\~CloudDocs"
+    echo "$HOME/Library/Mobile\ Documents/com\~apple\~CloudDocs"
 }
 
-function init-macos
+function darwin-init
 {
     # Dim dock icons of apps that have been hidden.
+    print_info "Auto-hiding Dock"    
     defaults write com.apple.Dock showhidden -boolean yes
     killall Dock
 
-    # Put screenshots in Google Drive, in a directory according to hostname
+    # Put screenshots in iCloud Drive, in a directory according to hostname
     icloud=`darwin-icloud-drive-path`
     if [[ -d "$icloud" ]]; then
-	name=`hostname -s | tr A-Z a-z`
-	loc="$icloud/Screenshots/$name"
-	mkdir -p "$loc"
-	defaults write com.apple.screencapture location "$loc"
+        local name=`hostname -s | tr A-Z a-z`
+        local loc="`darwin-icloud-drive-path`/Screenshots/$name"
+        print_info "Setting screenshot directory: $loc"    
+        mkdir -p "$loc"
+        defaults write com.apple.screencapture location "$loc"
     else
 	echo "iCloud directory doesn't exist: $icloud"
     fi
