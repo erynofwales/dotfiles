@@ -12,6 +12,7 @@ bin/mvim
 irssi/away.log
 
 mutt/cache/
+mutt/certificates
 
 ssh/known_hosts
 
