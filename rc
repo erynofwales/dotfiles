@@ -13,7 +13,6 @@ alias du='du -h'
 alias e='emacs'
 
 binary_exists ledger && alias l='ledger'
-
 binary_exists gpg2 && alias gpg='gpg2'
 binary_exists keybase && alias keybase="keybase --gpg \"`which gpg2`\""
 

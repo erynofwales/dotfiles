@@ -35,7 +35,6 @@ function prompt_loquacious_setup
     add-zsh-hook precmd set_xterm_title
     add-zsh-hook precmd print_newline
     add-zsh-hook precmd set_prompt_info
-    add-zsh-hook precmd set_zle_mode_info
 
     add-zsh-hook preexec print_newline
 
