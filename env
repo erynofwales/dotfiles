@@ -11,6 +11,7 @@
 [[ -e "$HOME/.shell-functions" ]] && source "$HOME/.shell-functions"
 
 export SYS=`uname -s | tr A-Z a-z`
+
 # Set this to a non-zero integer to see startup messages
 export NOISY=0
 
