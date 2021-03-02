@@ -24,7 +24,7 @@ unset SOUNDSDIR
 
 function darwin-icloud-drive-path
 {
-    echo "$HOME/Library/Mobile\ Documents/com\~apple\~CloudDocs"
+    echo "$HOME/Library/Mobile Documents/com~apple~CloudDocs"
 }
 
 function darwin-init
@@ -38,7 +38,7 @@ function darwin-init
     icloud=`darwin-icloud-drive-path`
     if [[ -d "$icloud" ]]; then
         local name=`hostname -s | tr A-Z a-z`
-        local loc="`darwin-icloud-drive-path`/Screenshots/$name"
+        local loc="$(darwin-icloud-drive-path)/Screenshots/$name"
         print_info "Setting screenshot directory: $loc"    
         mkdir -p "$loc"
         defaults write com.apple.screencapture location "$loc"
