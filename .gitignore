@@ -14,7 +14,8 @@ irssi/away.log
 mutt/cache/
 mutt/certificates
 
-ssh/known_hosts
+ssh/*
+!ssh/config
 
 vim/.viminfo*
 vim/.nviminfo
