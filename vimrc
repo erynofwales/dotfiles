@@ -198,6 +198,7 @@ endtry
 
 " Empty snipmate options dictionary
 let g:snipMate = {}
+let g:snipMate.snippet_version = 1
 " tell SnipMate who I am
 let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 " Set up some snippet scope aliases
