@@ -13,6 +13,7 @@ irssi/away.log
 
 mutt/cache/
 mutt/certificates
+mutt/smime/
 
 ssh/*
 !ssh/config
