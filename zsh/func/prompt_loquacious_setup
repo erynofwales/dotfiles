@@ -46,7 +46,7 @@ function prompt_loquacious_setup
     zstyle ':vcs_info:git:loquacious_precmd:*' formats \
         '(%F{blue}%b%f)'
 
-    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_BRANCH}${PS1_ZLE_MODE}
+    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_BRANCH}${PS1_STATUS}${PS1_ZLE_MODE}
 $PS1_LINE'
 
     zle -N zle-keymap-select on_keymap_select
@@ -93,6 +93,7 @@ function set_prompt_info
     PS1_HISTORY="`prompt_colorize -b -f 'green' '%h'`"
     PS1_NAME="`prompt_colorize -f 'magenta' '%n'` "
     PS1_CWD="in `prompt_colorize -f 'green' '%~'` "
+    PS1_STATUS="%(?..`prompt_colorize -b -f 'red' '!'`) "
 
     if [[ -n "$SSH_CONNECTION" ]]; then
         PS1_HOST="at `prompt_colorize -f 'red' '%m'` "
@@ -104,7 +105,7 @@ function set_prompt_info
     # configuration details.
     vcs_info loquacious_precmd
     if [[ -n "$vcs_info_msg_0_" ]]; then
-        PS1_BRANCH="${vcs_info_msg_0_}"
+        PS1_BRANCH="${vcs_info_msg_0_} "
     else
         PS1_BRANCH=""
     fi
