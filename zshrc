@@ -3,15 +3,15 @@
 
 shell-log 'Initializing Interactive Environment'
 
-autoload init_app_environments
-autoload init_rc_aliases
-autoload init_rc_configure_completion
-autoload init_rc_configure_ls
-autoload init_rc_configure_prompt
-autoload init_rc_configure_zle
-autoload init_zsh_options
-autoload init_zsh_history
-autoload init_zsh_functions
+autoload +X init_app_environments
+autoload +X init_rc_aliases
+autoload +X init_rc_configure_completion
+autoload +X init_rc_configure_ls
+autoload +X init_rc_configure_prompt
+autoload +X init_rc_configure_zle
+autoload +X init_zsh_options
+autoload +X init_zsh_history
+autoload +X init_zsh_functions
 
 init_rc_aliases
 init_rc_configure_prompt loquacious
