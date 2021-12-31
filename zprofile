@@ -1,27 +1,15 @@
-# .zprofile
-# vim:ft=zsh
-#
-# Login shell setup
-#
+#!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-print_heading -l 1 'Initializing login shell'
+shell-log 'Initializing Login Environment'
 
-[ -e $HOME/.profile ] && source $HOME/.profile
+# Start SSH agent for password-less logins
+if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
+    print_info -l 1 'Starting ssh-agent'
+    eval `ssh-agent -s`
+    trap "kill $SSH_AGENT_PID" 0
+fi
 
-list_tmux_sessions()
-{
-    tmux_out=`tmux list-sessions 2>/dev/null`
-    [[ -z "$tmux_out" || -n "$TMUX" ]] && return
-
-    echo "You have the following active tmux sessions:"
-    for session in ${(f)tmux_out}; do
-        echo "    $session"
-    done
-    echo
-}
-
+autoload list_tmux_sessions
 list_tmux_sessions
 
-[ -e $HOME/.profile.$SYS ] && source $HOME/.profile.$SYS
-[ -e $HOME/.profile.local ] && source $HOME/.profile.local
