@@ -12,11 +12,19 @@ import os.path
 _LOGFILE = os.path.expanduser('~/.shell.log')
 _LOGGER = None
 
+LOG_LEVELS = {
+    'crit': logging.CRITICAL,
+    'error': logging.ERROR,
+    'warn': logging.WARNING,
+    'info': logging.INFO,
+    'debug': logging.DEBUG
+}
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-b', '--bold', action='store_true')
-    parser.add_argument('-f', '--file', default=LOGFILE)
-    parser.add_argument('-l', '--level', type=int, default=logging.INFO)
+    parser.add_argument('-f', '--file', default=_LOGFILE)
+    parser.add_argument('-l', '--level', default='info', choices=list(LOG_LEVELS.keys()))
     parser.add_argument('-n', '--noeol', action='store_true')
     parser.add_argument('msg')
     parser.add_argument('args', nargs=argparse.REMAINDER)
@@ -31,19 +39,23 @@ def logger(args):
     stdout_handler.setFormatter(formatter)
     logger.addHandler(stdout_handler)
 
+    # TODO: Add file handler
+
     return logger
 
 def main():
-    # Set up.
     args = parse_args()
     log = logger(args)
 
-    # Set the level from the shell.
-    level = int(os.environ.get('NOISY', logging.INFO))
+    level = os.environ.get('SHELL_LOG_LEVEL', logging.INFO)
     log.setLevel(level)
 
-    # Log it.
-    log.log(args.level, args.msg, *args.args)
+    try:
+        message_log_level = LOG_LEVELS[args.level] 
+    except KeyError:
+        message_log_level = logging.INFO
+
+    log.log(message_log_level, args.msg, *args.args)
 
 if __name__ == '__main__':
     main()

@@ -1,16 +1,24 @@
 # .zshenv
 # vim: ft=zsh
-#
-# Environment settings for zsh
-#
 # Eryn Wells <eryn@erynwells.me>
 
 # Don't read global startup. It messes things up...
 unsetopt GLOBAL_RCS
 
-[ -e $HOME/.env ] && source $HOME/.env
+export SYS=`uname -s | tr A-Z a-z`
 
-# System specific environment settings
-[ -e $HOME/.zshenv.$SYS ] && source $HOME/.zshenv.$SYS
-# Local environment settings
-[ -e $HOME/.zshenv.local ] && source $HOME/.zshenv.local
+fpath=("$HOME/.zsh/func" $fpath)
+autoload +X prepend_to_path
+autoload +X append_to_path
+autoload +X init_env
+autoload +X init_env_python
+autoload +X init_path
+
+init_path
+init_env
+init_env_python
+
+autoload +X init_env_$SYS
+if [[ $? ]]; then
+    init_env_$SYS
+fi

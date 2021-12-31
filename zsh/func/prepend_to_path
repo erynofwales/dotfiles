@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# vim:ft=zsh:
+# Eryn Wells <eryn@erynwells.me>
+
+function prepend_to_path
+{
+    if [[ -d "$1" ]]; then
+        path=("$1" $path)
+        export path
+    fi
+}
+
+prepend_to_path "$@"

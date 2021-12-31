@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# vim:ft=zsh:
+# Eryn Wells <eryn@erynwells.me>
+
+function append_to_path
+{
+    if [[ -d "$1" ]]; then
+        path+="$1"
+        export path
+    fi
+}
+
+append_to_path "$@"
