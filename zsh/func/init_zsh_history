@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init_zsh_history
+{
+    shell-log 'Setting up history'
+
+    setopt \
+        APPEND_HISTORY \
+        EXTENDED_HISTORY \
+        INC_APPEND_HISTORY \
+        HIST_FIND_NO_DUPS \
+        HIST_IGNORE_SPACE \
+        HIST_NO_STORE \
+        HIST_IGNORE_DUPS \
+        HIST_REDUCE_BLANKS
+
+    HISTSIZE=1000000
+    SAVEHIST=1000000
+    HISTFILE="$HOME/.zhistory"
+}
+
+init_zsh_history "$@"

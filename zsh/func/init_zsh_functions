@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+autoload load_module
+
+function init_zsh_functions
+{
+    local myfpath="$HOME/.zsh/func"
+
+    shell-log "Loading functions in $myfpath"
+    for func in $myfpath/*; do
+        [[ ! -e "$func" || -d "$func" ]] && continue
+
+        local functionName=`basename $func`
+        [[ "$functionName" =~ "prompt_*" ]] && continue
+        [[ "$functionName" =~ "init_*" ]] && continue
+
+        shell-log -l debug "Loading $functionName"
+        autoload +X $functionName
+    done
+
+    load_module makers
+}
+
+init_zsh_functions "$@"

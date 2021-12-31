@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function darwin_icloud_drive_path
+{
+    echo "$HOME/Library/Mobile Documents/com~apple~CloudDocs"
+}
+
+darwin_icloud_drive_path "$@"

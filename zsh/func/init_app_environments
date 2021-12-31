@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+autoload binary_exists
+
+function init_app_environments
+{
+    # NetHack options
+    # use color in the terminal
+    binary_exists nethack && export NETHACKOPTIONS="color"
+
+    # Default ledger file
+    local ledgerFile="$HOME/Documents/Ledger/personal.ledger"
+    [[ -e "$ledgerFile" ]] && LEDGER_FILE="$ledgerFile"
+}
+
+init_app_environments "$@"

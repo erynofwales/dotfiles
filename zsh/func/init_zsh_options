@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init_zsh_options
+{
+    shell-log 'Setting shell options'
+
+    # Report seconds since shell was invoked in milliseconds
+    typeset -F SECONDS
+
+    # See zshoptions(1)
+    setopt EXTENDED_GLOB \
+           MULTIOS \
+           AUTO_REMOVE_SLASH \
+           COMPLETE_IN_WORD
+}
+
+init_zsh_options "$@"

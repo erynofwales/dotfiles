@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function load_module
+{
+    local mod=$1
+
+    local modpath
+    for p in $fpath; do
+        modpath=$p/$mod
+        [[ -d $modpath ]] && break
+        modpath=''
+    done
+
+    if [[ -z "$modpath" ]]; then
+        shell-log -l error "Couldn't find path to module: $mod"
+        return 1
+    fi
+
+    fpath+=($modpath)
+
+    shell-log "Loading module: $mod"
+    for func in `ls $modpath`; do
+        shell-log "Loading function: $func"
+        autoload $func
+    done
+
+    return 0
+}
+
+load_module "$@"

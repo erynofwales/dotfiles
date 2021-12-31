@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function g
+{
+    if [[ $# -gt 0 ]]; then
+        git $@
+    else
+        git status --short --branch
+    fi
+    return $?
+}
+
+g "$@"

@@ -1,0 +1,10 @@
+# .zshrc
+# vim:ft=zsh:
+# Eryn Wells <eryn@erynwells.me>
+
+function binary_exists
+{
+    return $(hash $1 1>/dev/null 2>&1)
+}
+
+binary_exists "$@"
