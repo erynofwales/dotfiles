@@ -17,7 +17,7 @@ LOG_LEVELS = {
     'error': logging.ERROR,
     'warn': logging.WARNING,
     'info': logging.INFO,
-    'debug': logging.DEBUG
+    'debug': logging.DEBUG,
 }
 
 def parse_args():
@@ -47,11 +47,11 @@ def main():
     args = parse_args()
     log = logger(args)
 
-    level = os.environ.get('SHELL_LOG_LEVEL', logging.INFO)
+    level = LOG_LEVELS[os.environ.get('SHELL_LOG_LEVEL', 'info')]
     log.setLevel(level)
 
     try:
-        message_log_level = LOG_LEVELS[args.level] 
+        message_log_level = LOG_LEVELS[args.level]
     except KeyError:
         message_log_level = logging.INFO
 
