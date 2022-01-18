@@ -4,8 +4,6 @@
 
 function init_env
 {
-    shell-log 'Initializing basic environment'
-
     export PAGER="less"
     export MANPAGER=$PAGER
     export EDITOR="vim"

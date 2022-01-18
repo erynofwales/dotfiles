@@ -5,8 +5,6 @@ autoload binary_exists
 
 function init_rc_aliases
 {
-    shell-log -l 'debug' "Setting up shell aliases"
-
     alias j='jobs'
     alias h='history'
     alias df='df -h'
@@ -31,7 +29,6 @@ function init_rc_aliases
     binary_exists ledger && alias l='ledger'
     binary_exists gpg2 && alias gpg='gpg2'
 
-    shell-log -l debug 'Setting up suffix aliases'
     alias -s c='vim'
     alias -s tex='vim'
     alias -s txt='vim'
