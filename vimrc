@@ -22,7 +22,6 @@ Plugin 'gmarik/Vundle.vim'
 
 " Filetypes
 Plugin 'keith/swift.vim'
-Plugin 'elmcast/elm-vim'
 Plugin 'othree/html5.vim'
 
 " Editing helpers
@@ -33,11 +32,6 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-commentary'
 Plugin 'PeterRincker/vim-argumentative'
 
-" Documentation and completion
-Plugin 'rizzatti/funcoo.vim'    " Required for dash
-Plugin 'rizzatti/dash.vim'
-"Plugin 'valloric/YouCompleteMe'
-
 Plugin 'sjl/gundo.vim'          " Undo helper
 Plugin 'scrooloose/nerdtree'
 Plugin 'wincent/command-t'
@@ -47,7 +41,6 @@ Plugin 'apple-swift', {'pinned': 1}
 Plugin 'rust-lang/rust.vim'
 
 " Colors~
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
 
 " Snippets
@@ -189,16 +182,11 @@ endif
 " Dark backgrounds are the only way to travel
 set bg=dark
 
-" Try to use the solarized colorscheme if the terminal can support it
-let g:solarized_termtrans = 0           " transparent terminals
-let g:solarized_visibility = 'low'      " visibility of list chars
 try
     colorscheme tomorrow_night
 endtry
 
-" Empty snipmate options dictionary
-let g:snipMate = {}
-let g:snipMate.snippet_version = 1
+let g:snipMate = { 'snippet_version': 1 }
 " tell SnipMate who I am
 let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
 " Set up some snippet scope aliases
