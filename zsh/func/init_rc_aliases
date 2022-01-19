@@ -19,9 +19,6 @@ function init_rc_aliases
     alias today='date +%Y-%m-%d'
     alias addkey="ssh-agent ~/.ssh/id_rsa"
 
-    alias pprint="python -c 'import sys,pprint; pprint.pprint(eval(sys.stdin.read()))'"
-    alias pprint-json="python -c 'import sys,json;print json.dumps(json.load(sys.stdin), indent=2)'"
-
     alias gp='g p origin $gitbranch'
     alias gpf='g p -f origin $gitbranch'
     alias bx='bundle exec'
