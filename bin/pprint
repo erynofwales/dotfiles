@@ -12,14 +12,14 @@ import sys
 
 def parse_args(argv, *a, **kw):
     parser = argparse.ArgumentParser(*a, **kw)
-    parser.add_argument('--json', action='store_true')
-    parser.add_argument('--python', action='store_true')
+    parser.add_argument('-j', '--json', action='store_const', const='js', dest='type')
+    parser.add_argument('-p', '--python', action='store_const', const='py', dest='type')
     args = parser.parse_args(argv)
     return args
 
 def main(argv):
     args = parse_args(argv[1:], prog=argv[0])
-    if args.json:
+    if not args.type or args.type == 'js':
         print(json.dumps(json.load(sys.stdin), indent=2))
     else:
         pprint.pprint(eval(sys.stdin.read()))
