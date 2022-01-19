@@ -1,0 +1,7 @@
+stream:
+    --debug
+    --info
+    --style compact
+
+predicate:
+    shell 'subsystem == "me.erynwells.shell"'

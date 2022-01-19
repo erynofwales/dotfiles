@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+# Eryn Wells <eryn@erynwells.me>
+
+'''
+Pretty prints the JSON object from stdin.
+'''
+
+import argparse
+import json
+import pprint
+import sys
+
+def parse_args(argv, *a, **kw):
+    parser = argparse.ArgumentParser(*a, **kw)
+    parser.add_argument('--json', action='store_true')
+    parser.add_argument('--python', action='store_true')
+    args = parser.parse_args(argv)
+    return args
+
+def main(argv):
+    args = parse_args(argv[1:], prog=argv[0])
+    if args.json:
+        print(json.dumps(json.load(sys.stdin), indent=2))
+    else:
+        pprint.pprint(eval(sys.stdin.read()))
+
+if __name__ == '__main__':
+    import sys
+    result = main(sys.argv)
+    sys.exit(0 if not result else result)
