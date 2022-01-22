@@ -16,8 +16,6 @@ function init_zsh_functions
 
         autoload +X $functionName
     done
-
-    load_module makers
 }
 
 init_zsh_functions "$@"
