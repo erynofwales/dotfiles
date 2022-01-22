@@ -36,7 +36,9 @@ function prompt_loquacious_setup
 
     # Set up vcs_info
     zstyle ':vcs_info:git:loquacious_chpwd:*' formats '%F{cyan}%r%f'
+    zstyle ':vcs_info:git-svn:loquacious_chpwd:*' formats '[%F{red}svn%f]%F{cyan}%r%f'
     zstyle ':vcs_info:git:loquacious_precmd:*' formats '(%F{blue}%b%f)'
+    zstyle ':vcs_info:git-svn:loquacious_precmd:*' formats '(%F{blue}%b%f)'
 
     PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_BRANCH}${PS1_STATUS}${PS1_ZLE_MODE}
 $PS1_LINE'

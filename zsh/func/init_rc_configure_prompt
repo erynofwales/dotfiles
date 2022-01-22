@@ -12,6 +12,7 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:*' disable p4 bzr cdv darcs mtn svk tla cvs svn
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:general:*' formats '%b'
+zstyle ':vcs_info:git-svn:general:*' formats '%b'
 
 # Export the current Git branch before every prompt.
 function export_gitbranch {
