@@ -23,6 +23,7 @@ Plugin 'gmarik/Vundle.vim'
 " Filetypes
 Plugin 'keith/swift.vim'
 Plugin 'othree/html5.vim'
+Plugin 'pangloss/vim-javascript'
 
 " Editing helpers
 Plugin 'tpope/vim-repeat'
@@ -392,6 +393,11 @@ if has('autocmd')
     augroup XCodeProjectFileType
         autocmd!
         autocmd BufRead *.pbxproj setf xcodepbx
+    augroup END
+
+    augroup PListFileType
+        autocmd!
+        autocmd BufRead *.plist setf xml.plist
     augroup END
 endif
 " }}}
