@@ -13,15 +13,15 @@ function load_module
     done
 
     if [[ -z "$modpath" ]]; then
-        shell-log -l error "Couldn't find path to module: $mod"
+        ShellLog -l error "Couldn't find path to module: $mod"
         return 1
     fi
 
     fpath+=($modpath)
 
-    shell-log "Loading module: $mod"
+    ShellLog "Loading module: $mod"
     for func in `ls $modpath`; do
-        shell-log "Loading function: $func"
+        ShellLog "Loading function: $func"
         autoload $func
     done
 

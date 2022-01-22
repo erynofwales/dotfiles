@@ -5,7 +5,7 @@ autoload binary_exists
 
 function init_rc_darwin
 {
-    shell-log 'Initializing Interactive Environment for macOS'
+    ShellLog 'Initializing Interactive Environment for macOS'
 
     alias acls='command ls -le'
 

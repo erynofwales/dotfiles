@@ -3,7 +3,7 @@
 
 function init_rc_linux
 {
-    shell-log 'Initializing Interactive Environment for Linux'
+    ShellLog 'Initializing Interactive Environment for Linux'
 
     alias iptls='sudo iptables --line-numbers -nv -L'
     alias ip6tls='sudo ip6tables --line-numbers -nv -L'

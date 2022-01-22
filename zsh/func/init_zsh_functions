@@ -7,7 +7,7 @@ function init_zsh_functions
 {
     local myfpath="$HOME/.zsh/func"
 
-    shell-log "Loading functions in $myfpath"
+    ShellLog "Loading functions in $myfpath"
     for func in $myfpath/*; do
         [[ ! -e "$func" || -d "$func" ]] && continue
 
@@ -15,7 +15,7 @@ function init_zsh_functions
         [[ "$functionName" =~ "prompt_*" ]] && continue
         [[ "$functionName" =~ "init_*" ]] && continue
 
-        shell-log -l debug "Loading $functionName"
+        ShellLog -l debug "Loading $functionName"
         autoload +X $functionName
     done
 

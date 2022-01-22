@@ -4,7 +4,7 @@
 
 function init_env
 {
-    shell-log 'Initializing basic environment'
+    ShellLog 'Initializing basic environment'
 
     export PAGER="less"
     export MANPAGER=$PAGER

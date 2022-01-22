@@ -3,7 +3,7 @@
 
 function init_rc_configure_completion
 {
-    shell-log 'Initializing completion system'
+    ShellLog 'Initializing completion system'
 
     autoload -U compinit
     compinit
