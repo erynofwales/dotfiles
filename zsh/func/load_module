@@ -4,7 +4,12 @@
 function load_module
 {
     local mod=$1
+    if [[ -z "$mod" ]]; then
+        print "Missing argument: path to module to load." >&2
+        return -1
+    fi
 
+    # Make sure $mod isn't already in $fpath
     local modpath
     for p in $fpath; do
         modpath=$p/$mod
@@ -13,16 +18,19 @@ function load_module
     done
 
     if [[ -z "$modpath" ]]; then
-        ShellLog -l error "Couldn't find path to module: $mod"
         return 1
     fi
 
     fpath+=($modpath)
 
-    ShellLog "Loading module: $mod"
-    for func in `ls $modpath`; do
-        ShellLog "Loading function: $func"
-        autoload $func
+    for file in $modpath/*; do
+        if [[ -f "$file" ]]; then
+            autoload $func
+        fi
+
+        if [[ -d "$file" ]]; then
+            load_module "$file"
+        fi
     done
 
     return 0
