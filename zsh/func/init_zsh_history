@@ -3,6 +3,8 @@
 
 function init_zsh_history
 {
+    shell-log 'Setting up history'
+
     setopt \
         APPEND_HISTORY \
         EXTENDED_HISTORY \

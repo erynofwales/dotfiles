@@ -5,6 +5,8 @@ autoload binary_exists
 
 function init_rc_darwin
 {
+    shell-log 'Initializing Interactive Environment for macOS'
+
     alias acls='command ls -le'
 
     # These things might have been installed by Homebrew, and I like the GNU

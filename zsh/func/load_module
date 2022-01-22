@@ -19,7 +19,9 @@ function load_module
 
     fpath+=($modpath)
 
+    shell-log "Loading module: $mod"
     for func in `ls $modpath`; do
+        shell-log "Loading function: $func"
         autoload $func
     done
 

@@ -3,6 +3,8 @@
 
 function init_rc_configure_zle
 {
+    shell-log 'Configuring ZLE'
+
     local mode=$1
     if [[ -z "$mode" ]]; then
         mode=emacs
@@ -11,6 +13,7 @@ function init_rc_configure_zle
     function configure_zle_emacs { }
     function configure_zle_vim { }
 
+    shell-log -l debug "Using $mode command line editing mode"
     if [[ $mode == 'vim' ]]; then
         bindkey -v
         configure_zle_vim

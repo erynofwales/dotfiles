@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
+shell-log 'Initializing Interactive Environment'
+
 autoload +X init_app_environments
 autoload +X init_rc_aliases
 autoload +X init_rc_configure_completion

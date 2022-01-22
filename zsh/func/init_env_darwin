@@ -7,6 +7,8 @@ autoload prepend_to_path
 
 function init_env_darwin
 {
+    shell-log "Initializing Darwin environment"
+
     export OSBUILD=`sysctl -n kern.osversion`
     export OSVERSION=`sysctl -n kern.osproductversion`
     export HWMODEL=`sysctl -n hw.model`

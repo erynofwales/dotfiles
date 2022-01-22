@@ -3,6 +3,8 @@
 
 function init_zsh_options
 {
+    shell-log 'Setting shell options'
+
     # Report seconds since shell was invoked in milliseconds
     typeset -F SECONDS
 
