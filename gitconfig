@@ -8,12 +8,16 @@
 [color]
     ui = auto
 [alias]
+    amend = commit --amend --no-edit
+    edit = commit --amend --only
+
     # Commits
     c = commit
     cm = commit -m
     ca = commit -a
     cam = commit -am
     # Amended commits
+    ce = commit --amend --only
     cn = commit --amend
     cna = commit --amend -a
     cnam = commit --amend -am
@@ -76,3 +80,12 @@
     default = simple
 [rebase]
     autoStash = true
+[sendemail]
+	transferEncoding = base64
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[pull]
+	rebase = true
