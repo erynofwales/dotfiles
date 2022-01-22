@@ -7,14 +7,12 @@ function darwin_configure_screenshots_directory
 {
     icloud=`darwin_icloud_drive_path`
     if [[ ! -d "$icloud" ]]; then
-	ShellLog -l error "iCloud directory doesn't exist: $icloud"
 	return 1
     fi
 
     # Put screenshots in iCloud Drive, in a directory according to hostname
     local name=`hostname -s | tr A-Z a-z`
     local screenshots_dir="$icloud/Screenshots/$name"
-    ShellLog "Setting screenshot directory: $screenshots_dir"
     mkdir -p "$screenshots_dir"
     defaults write com.apple.screencapture screenshots_diration "$screenshots_dir"
 

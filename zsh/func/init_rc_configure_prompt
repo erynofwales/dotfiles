@@ -8,8 +8,6 @@ function init_rc_configure_prompt
         theme=loquacious
     fi
 
-    ShellLog -l debug 'Configuring vcs_info'
-
     autoload -U add-zsh-hook
     autoload -Uz vcs_info
 
@@ -28,7 +26,6 @@ function init_rc_configure_prompt
 
     add-zsh-hook precmd export_gitbranch
 
-    ShellLog "Configuring prompt with '$theme' theme"
     autoload -U promptinit
     promptinit
     prompt $theme

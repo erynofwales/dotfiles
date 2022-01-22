@@ -7,14 +7,12 @@ autoload darwin_configure_screenshots_directory
 function darwin_init_once
 {
     # Dim dock icons of apps that have been hidden.
-    ShellLog "Auto-hiding Dock"
     defaults write com.apple.Dock showhidden -boolean yes
     killall Dock
 
     darwin_configure_screenshots_directory
 
     # See https://techstuffer.com/this-app-is-damaged-error-macos-sierra/
-    ShellLog "Disabling overly restrictive Gatekeeper"
     sudo spctl --master-disable
 }
 

@@ -7,7 +7,6 @@ function init_configure_ls
     local ls_options
 
     if [[ ! -e "$1" ]]; then
-        ShellLog -l error 'Missing required path to ls binary'
         return
     fi
 
@@ -19,7 +18,6 @@ function init_configure_ls
         ls_options='-G'
     fi
 
-    ShellLog -l debug "Setting up aliases for $1"
     alias ls="$1 $ls_options"
     alias la="$1 -A $ls_options"
     alias ll="$1 -l $ls_options"
@@ -33,7 +31,6 @@ function init_configure_ls
             dircolors="$HOME/.dircolors/default.cfg"
         fi
 
-        ShellLog -l debug "Setting up dircolors: `basename $dircolors`"
         eval `$dircolors_bin $dircolors`
     fi
 }
