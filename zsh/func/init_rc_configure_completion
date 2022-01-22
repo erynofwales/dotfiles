@@ -8,7 +8,15 @@ compinit
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path ~/.zsh/cache
 
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+# Make ls show completion list in color.
+# See also: https://github.com/ohmyzsh/ohmyzsh/issues/6060
+if [[ -n "$LS_COLORS" ]]; then
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+else
+    zstyle ':completion:*:default' list-colors \
+	    'di=34' 'ln=35' 'so=32' 'pi=33' 'ex=31' 'bd=34;46' 'cd=34;43' 'su=30;41' \
+	    'sg=30;46' 'tw=30;42' 'ow=30;43'
+fi
 
 # For rm, cp, and mv don't complete if file is on the line already
 zstyle ':completion:*:rm:*' ignore-line yes
