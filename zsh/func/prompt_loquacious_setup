@@ -1,10 +1,5 @@
-#!/usr/bin/zsh
-# vim:sw=4:sts=4:
-#
-# A wordy prompt theme.
-#
+#!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
-
 
 function prompt_loquacious_help
 {
@@ -20,7 +15,6 @@ prompt will also show the current repository and branch using vcs_info if the
 current directory is in a repo.
 EOF
 }
-
 
 function prompt_loquacious_setup
 {
@@ -41,10 +35,8 @@ function prompt_loquacious_setup
     prompt_opts=(cr subst percent)
 
     # Set up vcs_info
-    zstyle ':vcs_info:git:loquacious_chpwd:*' formats \
-        '%F{cyan}%r%f'
-    zstyle ':vcs_info:git:loquacious_precmd:*' formats \
-        '(%F{blue}%b%f)'
+    zstyle ':vcs_info:git:loquacious_chpwd:*' formats '%F{cyan}%r%f'
+    zstyle ':vcs_info:git:loquacious_precmd:*' formats '(%F{blue}%b%f)'
 
     PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_BRANCH}${PS1_STATUS}${PS1_ZLE_MODE}
 $PS1_LINE'
@@ -52,12 +44,10 @@ $PS1_LINE'
     zle -N zle-keymap-select on_keymap_select
 }
 
-
 function prompt_loquacious_preview
 {
     # TODO: Implement prompt preview.
 }
-
 
 #
 # HELPER FUNCTIONS
@@ -76,7 +66,6 @@ function print_newline
     echo
 }
 
-
 function set_repo_name
 {
     vcs_info loquacious_chpwd
@@ -86,7 +75,6 @@ function set_repo_name
         PS1_REPO=""
     fi
 }
-
 
 function set_prompt_info
 {
@@ -121,7 +109,6 @@ function set_prompt_info
     PS1_LINE='%# '
 }
 
-
 function set_xterm_title
 {
     local title=''
@@ -141,7 +128,6 @@ function set_xterm_title
     fi
 }
 
-
 function set_zle_mode_info
 {
     if [[ -z "$1" || "$1" == 'viins' || "$1" == 'main' ]]; then
@@ -153,7 +139,6 @@ function set_zle_mode_info
     fi
 }
 
-
 function on_keymap_select
 {
     # Regenerate the prompt with the new mode
@@ -162,7 +147,6 @@ function on_keymap_select
     # Redraw the prompt
     zle reset-prompt
 }
-
 
 # Finally, run setup to get everything going
 prompt_loquacious_setup "$@"

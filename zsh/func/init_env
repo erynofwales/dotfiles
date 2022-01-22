@@ -1,19 +1,13 @@
 #!/usr/bin/env zsh
-# vim:ft=zsh:
 # Eryn Wells <eryn@erynwells.me>
 
-function init_env
-{
-    export PAGER="less"
-    export MANPAGER=$PAGER
-    export EDITOR="vim"
-    export VISUAL=$EDITOR
-    export LESSHISTFILE="-"
-    export GREP_OPTIONS="--color=auto"
-    export GREP_COLOR="1;32"
+export PAGER="less"
+export MANPAGER=$PAGER
+export EDITOR="vim"
+export VISUAL=$EDITOR
+export LESSHISTFILE="-"
+export GREP_OPTIONS="--color=auto"
+export GREP_COLOR="1;32"
 
-    # Make sure gpg2 knows what to do with the curses-based smartcard PIN prompt.
-    export GPG_TTY=`tty`
-}
-
-init_env "$@"
+# Make sure gpg2 knows what to do with the curses-based smartcard PIN prompt.
+export GPG_TTY=`tty`

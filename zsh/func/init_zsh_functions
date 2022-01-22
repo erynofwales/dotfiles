@@ -3,19 +3,14 @@
 
 autoload load_module
 
-function init_zsh_functions
-{
-    local myfpath="$HOME/.zsh/func"
+local myfpath="$HOME/.zsh/func"
 
-    for func in $myfpath/*; do
-        [[ ! -e "$func" || -d "$func" ]] && continue
+for func in $myfpath/*; do
+    [[ ! -e "$func" || -d "$func" ]] && continue
 
-        local functionName=`basename $func`
-        [[ "$functionName" =~ "prompt_*" ]] && continue
-        [[ "$functionName" =~ "init_*" ]] && continue
+    local functionName=`basename $func`
+    [[ "$functionName" =~ "prompt_*" ]] && continue
+    [[ "$functionName" =~ "init_*" ]] && continue
 
-        autoload +X $functionName
-    done
-}
-
-init_zsh_functions "$@"
+    autoload -Uz $functionName
+done

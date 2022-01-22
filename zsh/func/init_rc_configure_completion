@@ -1,41 +1,33 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-function init_rc_configure_completion
-{
-    autoload -U compinit
-    compinit
+autoload -U compinit
+compinit
 
-    # Cache completions
-    zstyle ':completion::complete:*' use-cache 1
-    zstyle ':completion::complete:*' cache-path ~/.zsh/cache
+# Cache completions
+zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion::complete:*' cache-path ~/.zsh/cache
 
-    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-    # For rm, cp, and mv don't complete if file is on the line already
-    zstyle ':completion:*:rm:*' ignore-line yes
-    zstyle ':completion:*:cp:*' ignore-line yes
-    zstyle ':completion:*:mv:*' ignore-line yes
+# For rm, cp, and mv don't complete if file is on the line already
+zstyle ':completion:*:rm:*' ignore-line yes
+zstyle ':completion:*:cp:*' ignore-line yes
+zstyle ':completion:*:mv:*' ignore-line yes
 
-    # Remove trailing slashes in directory arguments
-    zstyle ':completion:*' squeeze-slashes true
+# Remove trailing slashes in directory arguments
+zstyle ':completion:*' squeeze-slashes true
 
-    # Never select parent directory
-    zstyle ':completion:*:cd:*' ignore-parents parent pwd
+# Never select parent directory
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
-    # Expand partial paths
-    zstyle ':completion:*' expand 'yes'
+# Expand partial paths
+zstyle ':completion:*' expand 'yes'
 
-    # Show a pretty menu of killable processes
-    zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-    zstyle ':completion:*:*:kill:*' menu yes select
+# Show a pretty menu of killable processes
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:*:kill:*' menu yes select
 
-    # Complete man pages by section
-    zstyle ':completion:*:manuals' separate-sections true
-    zstyle ':completion:*:manuals.*' insert-sections true
-
-    # Use git completion for the g function
-    compdef g='git'
-}
-
-init_rc_configure_completion "$@"
+# Complete man pages by section
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.*' insert-sections true

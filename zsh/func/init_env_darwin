@@ -5,32 +5,27 @@
 autoload append_to_path
 autoload prepend_to_path
 
-function init_env_darwin
-{
-    export OSBUILD=`sysctl -n kern.osversion`
-    export OSVERSION=`sysctl -n kern.osproductversion`
-    export HWMODEL=`sysctl -n hw.model`
+export OSBUILD=`sysctl -n kern.osversion`
+export OSVERSION=`sysctl -n kern.osproductversion`
+export HWMODEL=`sysctl -n hw.model`
 
-    local pythonRoot
-    local python27SitePackages
+local pythonRoot
+local python27SitePackages
 
-    pythonRoot="$HOME/Library/Python"
-    if [[ -d "$pythonRoot" ]]; then
-        for f in `ls "$pythonRoot"`; do
-            prepend_to_path "$pythonRoot/$f/bin"
-        done
+pythonRoot="$HOME/Library/Python"
+if [[ -d "$pythonRoot" ]]; then
+    for f in `ls "$pythonRoot"`; do
+        prepend_to_path "$pythonRoot/$f/bin"
+    done
+fi
+
+python27SitePackages="$pythonroot/2.7/lib/python/site-packages"
+if [[ -d "$python27SitePackages" ]]; then
+    if [[ ! -z $PYTHONPATH ]]; then
+        PYTHONPATH=$python27SitePackages:$PYTHONPATH
+    else
+        PYTHONPATH=$python27SitePackages
     fi
+fi
 
-    python27SitePackages="$pythonroot/2.7/lib/python/site-packages"
-    if [[ -d "$python27SitePackages" ]]; then
-        if [[ ! -z $PYTHONPATH ]]; then
-            PYTHONPATH=$python27SitePackages:$PYTHONPATH
-        else
-            PYTHONPATH=$python27SitePackages
-        fi
-    fi
-
-    export PYTHONPATH
-}
-
-init_env_darwin "$@"
+export PYTHONPATH

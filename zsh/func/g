@@ -1,8 +1,7 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-function g
-{
+function g {
     if [[ $# -gt 0 ]]; then
         git $@
     else
@@ -10,5 +9,8 @@ function g
     fi
     return $?
 }
+
+# Use git completion for the g function
+compdef g='git'
 
 g "$@"

@@ -17,7 +17,6 @@ init_rc_configure_zle emacs
 init_rc_configure_completion
 init_zsh_options
 init_zsh_history
-init_zsh_functions
 init_app_environments
 
 autoload +X init_rc_$SYS
@@ -28,5 +27,8 @@ if ! alias ls 2>&1 1>/dev/null; then
     init_configure_ls `which ls`
 fi
 
-autoload g
-autoload vi
+autoload -Uz g
+autoload -Uz nethack
+autoload -Uz pw
+autoload -Uz up
+autoload -Uz vi

@@ -1,34 +1,26 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-function init_rc_configure_prompt
-{
-    local theme=$1
-    if [[ -z "$1" ]]; then
-        theme=loquacious
-    fi
+local theme=$1
+if [[ -z "$1" ]]; then
+    theme=loquacious
+fi
 
-    autoload -U add-zsh-hook
-    autoload -Uz vcs_info
+autoload -U add-zsh-hook
+autoload -Uz vcs_info
 
-    zstyle ':vcs_info:*' disable p4 bzr cdv darcs mtn svk tla cvs svn
-    zstyle ':vcs_info:*' enable git
-    zstyle ':vcs_info:git:general:*' formats '%b'
+zstyle ':vcs_info:*' disable p4 bzr cdv darcs mtn svk tla cvs svn
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:general:*' formats '%b'
 
-    # Export the current Git branch before every prompt.
-    function export_gitbranch {
-        vcs_info general
-        if [[ "$gitbranches[1]" != "${vcs_info_msg_0_}" ]]; then
-            export gitbranches=(${vcs_info_msg_0_} $gitbranches[1,4])
-        fi
-        export gitbranch=${vcs_info_msg_0_}
-    }
-
-    add-zsh-hook precmd export_gitbranch
-
-    autoload -U promptinit
-    promptinit
-    prompt $theme
+# Export the current Git branch before every prompt.
+function export_gitbranch {
+    vcs_info general
+    export gitbranch=${vcs_info_msg_0_}
 }
 
-init_rc_configure_prompt "$@"
+add-zsh-hook precmd export_gitbranch
+
+autoload -U promptinit
+promptinit
+prompt $theme

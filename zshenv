@@ -18,7 +18,6 @@ init_path
 init_env
 init_env_python
 
-autoload +X init_env_$SYS
-if [[ $? ]]; then
+if autoload +X init_env_$SYS; then
     init_env_$SYS
 fi
