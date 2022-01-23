@@ -9,6 +9,9 @@ export OSBUILD=`sysctl -n kern.osversion`
 export OSVERSION=`sysctl -n kern.osproductversion`
 export HWMODEL=`sysctl -n hw.model`
 
+export c="$HOME/Code"
+export dd="$HOME/Library/Developer/Xcode/DerivedData"
+
 local pythonRoot
 local python27SitePackages
 
