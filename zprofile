@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-
 # Start SSH agent for password-less logins
 if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
     if ! pgrep -u $USER ssh-agent 1>/dev/null; then
