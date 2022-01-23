@@ -16,6 +16,10 @@ binary_exists gls && init_rc_configure_ls `which gls`
 # ldd doesn't exist on OS X, but otool -L does the same thing.
 alias ldd='otool -L'
 
+# From macOS's system zshrc.
+# Disable the log builtin, so we don't conflict with /usr/bin/log
+disable log
+
 local sounds=/System/Library/Sounds
 alias glass="afplay $sounds/Glass.aiff"
 alias funk="afplay $sounds/Funk.aiff"
