@@ -8,6 +8,8 @@ autoload append_to_path
 function init_path
 {
     export path=()
+    append-to-path "/opt/brew/bin"
+    append-to-path "/opt/homebrew/bin"
     append_to_path "/usr/local/bin"
     append_to_path "/usr/bin"
     append_to_path "/bin"
