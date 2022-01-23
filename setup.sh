@@ -3,17 +3,18 @@
 dfdir=$(cd "$(dirname "$0")" && pwd)
 sys=`uname -s | tr A-Z a-z`
 
-skipitems=(setup.sh README.md py bin Colors LaunchAgents)
+skipitems=(setup.sh README.md py Colors LaunchAgents)
 
 typeset -A vimbundles
-vimbundles=(Vundle.vim  "https://github.com/gmarik/Vundle.vim.git")
+vimbundles=(Vundle.vim "https://github.com/gmarik/Vundle.vim.git")
 
-
-function link
-{
+function link {
+    local action
     local dest
-    if [[ "$2" == '' ]]; then
-        dest="$HOME/.$dotfile"
+
+    if [[ -z $2 ]]; then
+        local dotfile_basename=`basename "$1"`
+        dest="$HOME/.$dotfile_basename"
     else
         dest="$2"
     fi
@@ -24,26 +25,67 @@ function link
     else
         action='Skipping'
     fi
-    printf "  %8s: %s\n" $action $dest
+
+    printf "  %8s: %s\n" $action "$dest"
 }
 
+print -P "%B    Home:%b $HOME"
+print -P "%BDotfiles:%b $dfdir\n"
 
-print -P "%BSymlinking config files%b"
-for dotfile in `ls $dfdir`; do
-    [[ ${skipitems[(r)$dotfile]} == $dotfile ]] && continue
-    link "$dfdir/$dotfile"
+print -P "%BRemoving stray dotfile symlinks from $HOME%b"
+local link_dest
+local link_dirname
+local did_remove_at_least_one_symlink=0
+for file in ~/.?*; do
+    link_dest=`readlink "$file"`
+    if [[ $? -ne 0 ]]; then
+        # Not a symlink.
+        continue
+    fi
+
+    link_dirname=`dirname "$link_dest"`
+    if [[ "$link_dirname" != "$dfdir" ]]; then
+        continue
+    fi
+
+    if [[ -e "$link_dest" ]]; then
+        continue
+    fi
+
+    printf "  Removing: %s\n" "$file"
+    rm "$file"
+    did_remove_at_least_one_symlink=1
 done
 
-link "$dfdir/bin" "$HOME/bin"
+if [[ $did_remove_at_least_one_symlink -ne 1 ]]; then
+    print "  Nothing to remove"
+fi
 
-echo "touch $HOME/.hushlogin"
-touch "$HOME/.hushlogin"
+print -P "%BSymlinking config files%b"
+local dotfile
+local did_link_at_least_one_dotfile=0
+for dotfile in $dfdir/*; do
+    if [[ ${skipitems[(r)$dotfile]} == $dotfile ]]; then
+        continue
+    fi
+    link "$dotfile"
+    did_link_at_least_one_dotfile=1
+done
 
-# Initialize submodules
+if [[ -f "$HOME/.hushlogin" ]]; then
+    print "  touch $HOME/.hushlogin"
+    touch "$HOME/.hushlogin"
+    did_link_at_least_one_dotfile=1
+fi
+
+if [[ $did_link_at_least_one_dotfile -ne 1 ]]; then
+    print "  Nothing to link"
+fi
+
 print -P "%BFetching Vim modules%b"
 cd "$dfdir/vim/bundle"
 for module in ${(k)vimbundles}; do
-    echo -n "  $module"
+    print -n "  $module"
 
     if [[ -d $module ]]; then
     # result='skipped'
@@ -70,12 +112,5 @@ for module in ${(k)vimbundles}; do
 done
 
 vim +PluginInstall +qall
-
-#if [[ -d "$dfdir/vim/bundle/command-t/ruby/command-t" ]]; then
-#    print -P "%BSetting up command-t%b"
-#    cd "$dfdir/vim/bundle/command-t/ruby/command-t"
-#    ruby extconf.rb
-#    make
-#fi
 
 exit 0
