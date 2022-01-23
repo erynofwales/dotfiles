@@ -11,7 +11,7 @@ function darwin_configure_screenshots_directory
     fi
 
     # Put screenshots in iCloud Drive, in a directory according to hostname
-    local name=`hostname -s | tr A-Z a-z`
+    local name=`hostname -s | tr A-Z a-z | tr ' ' -`
     local screenshots_dir="$icloud/Screenshots/$name"
     mkdir -p "$screenshots_dir"
     defaults write com.apple.screencapture screenshots_diration "$screenshots_dir"
