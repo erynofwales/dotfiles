@@ -8,11 +8,11 @@ unsetopt GLOBAL_RCS
 export SYS=`uname -s | tr A-Z a-z`
 
 fpath=("$HOME/.zsh/func" $fpath)
-autoload +X prepend_to_path
-autoload +X append_to_path
-autoload +X init_env
-autoload +X init_env_python
-autoload +X init_path
+autoload -Uz +X prepend_to_path
+autoload -Uz append_to_path
+autoload -Uz init_env
+autoload -Uz init_env_python
+autoload -Uz init_path
 
 init_path
 init_env
