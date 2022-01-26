@@ -37,5 +37,14 @@ function finder {
     open -R "$1"
 }
 
+function open-xcode {
+    local selectedXcode=`xcode-select -p`
+    while [[ ! `basename $selectedXcode` =~ ".app$" ]]; do
+        selectedXcode=`dirname "$selectedXcode"`
+    done
+    open -a "$selectedXcode" $@
+}
+
 alias -s app='open'
-alias -s xcodeproj='open -a Xcode'
+alias -s xcodeproj='open-xcode'
+alias -s xcworkspace='open-xcode'
