@@ -40,6 +40,7 @@ Plugin 'wincent/command-t'
 "Plugin 'erynofwales/vim-fancyfolds'
 Plugin 'apple-swift', {'pinned': 1}
 Plugin 'rust-lang/rust.vim'
+Plugin 'tidalcycles/vim-tidal'
 
 " Colors~
 Plugin 'tomasr/molokai'
