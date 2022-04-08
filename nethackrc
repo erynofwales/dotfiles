@@ -7,6 +7,9 @@ OPTIONS=!news,!splash_screen
 # Color options
 OPTIONS=color,menucolors
 
+# Make alt work on macOS
+OPTIONS=altmeta
+
 # Show full window of 20 messages
 OPTIONS=msg_window:f
 OPTIONS=msghistory:20
@@ -17,18 +20,15 @@ OPTIONS=boulder:0
 
 OPTIONS=showexp,showscore,time
 
-# Show a hit point bar
-OPTIONS=hitpointbar
-
 # Look where you click the mouse
 OPTIONS=clicklook
 
 # Talk about walls when you run into them
 OPTIONS=mention_walls
 
-# auto-pickup scrolls, wands, and potions
+# Auto-pickup scrolls, wands, potions, and money
 OPTIONS=autopickup
-OPTIONS=pickup_types:?!/$
+OPTIONS=pickup_types:$?!/
 
 # Special fruit is a raspberry <3
 OPTIONS=fruit:Raspberry
@@ -36,8 +36,9 @@ OPTIONS=fruit:Raspberry
 # Don't bother with number pad
 OPTIONS=number_pad:0
 
-# Show HP in color, if properly patched
-#OPTIONS=hpmon
+# Show a hit point bar, and some extra attributes in the stat bar
+OPTIONS=hitpointbar
+OPTIONS=showexp,showscore,time
 
 # Always a female samurai named Eryn
 NAME=Eryn
@@ -45,7 +46,7 @@ CHARACTER=samurai
 #RACE=human
 OPTIONS=gender:female
 
-# Disclosures at the end of the game: always disclose inventory, prompt for
-# attributes and monsters killed (default yes), don't care about genocided
-# monsters and conduct.
-OPTIONS=disclose:+i ya yv -c -g
+# Disclosures at the end of the game: always disclose inventory and attributes,
+# prompt for monsters killed (default yes), don't care about genocided monsters
+# and conduct.
+OPTIONS=disclose:+i +a yv -c -g
