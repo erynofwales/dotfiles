@@ -1,9 +1,11 @@
 # Graphics options
 OPTIONS=fullscreen
-OPTIONS=color
 OPTIONS=DECgraphics
 
 OPTIONS=!news,!splash_screen
+
+# Color options
+OPTIONS=color,menucolors
 
 # Show full window of 20 messages
 OPTIONS=msg_window:f
@@ -15,12 +17,21 @@ OPTIONS=boulder:0
 
 OPTIONS=showexp,showscore,time
 
+# Show a hit point bar
+OPTIONS=hitpointbar
+
+# Look where you click the mouse
+OPTIONS=clicklook
+
+# Talk about walls when you run into them
+OPTIONS=mention_walls
+
 # auto-pickup scrolls, wands, and potions
 OPTIONS=autopickup
-OPTIONS=pickup_types:?!/
+OPTIONS=pickup_types:?!/$
 
 # Special fruit is a raspberry <3
-OPTIONS=fruit:raspberry
+OPTIONS=fruit:Raspberry
 
 # Don't bother with number pad
 OPTIONS=number_pad:0
