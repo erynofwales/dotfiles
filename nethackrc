@@ -18,8 +18,6 @@ OPTIONS=msghistory:20
 OPTIONS=hilite_pet,lit_corridor
 OPTIONS=boulder:0
 
-OPTIONS=showexp,showscore,time
-
 # Look where you click the mouse
 OPTIONS=clicklook
 
