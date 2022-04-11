@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-# vim: set ft=zsh:
 # Eryn Wells <eryn@erynwells.me>
 
 function nethack
@@ -17,14 +16,14 @@ function nethack
     done
 
     if (( $remote )) && binary_exists nethack; then
-        telnet nethack.alt.org
+        ssh nethack@alt.org
         return $?
     else
         if binary_exists nethack; then
             command nethack
             return $?
         else
-            telnet nethack.alt.org
+            ssh nethack@alt.org
             return $?
         fi
     fi
