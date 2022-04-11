@@ -1,12 +1,31 @@
-# Graphics options
-OPTIONS=fullscreen
-OPTIONS=DECgraphics
+# It me!
+OPTIONS=name:Eryn
+OPTIONS=character:samurai
+OPTIONS=race:human
+OPTIONS=gender:female
+OPTIONS=align:!c
+OPTIONS=catname:Mr. President
 
+# Turn off news and game splash screen
 OPTIONS=!news,!splash_screen
+# Disable bones
+OPTIONS=!bones
 
-# Color options
-OPTIONS=color,menucolors
+##
+## Interface Stuff
+##
 
+# Make alt work on macOS
+OPTIONS=windowtype:curses
+# Always show inventory
+OPTIONS=perm_invent
+# Enable colors
+OPTIONS=color,guicolor
+# Use a small popup window instead of the messages window for small messages
+OPTIONS=popup_dialog
+# Use dark gray color instead of blue for dark rooms
+# (I don't think this works with curses though)
+OPTIONS=use_darkgray
 # Make alt work on macOS
 OPTIONS=altmeta
 
@@ -14,19 +33,27 @@ OPTIONS=altmeta
 OPTIONS=msg_window:f
 OPTIONS=msghistory:20
 
-# Object representation
-OPTIONS=hilite_pet,lit_corridor
+# Highlight pets
+OPTIONS=hilite_pet
+# Bolder shape
 OPTIONS=boulder:0
+# Highlight piles of things
+OPTIONS=hilite_pile
+# Visually distinguish lit vs unlit corridors
+OPTIONS=lit_corridor
 
-# Look where you click the mouse
-OPTIONS=clicklook
+# Show a hit point bar over your name
+OPTIONS=hitpointbar
+# Show experience, score, and time (number of steps)
+OPTIONS=showexp,showscore,time
 
 # Talk about walls when you run into them
 OPTIONS=mention_walls
 
-# Auto-pickup scrolls, wands, potions, and money
-OPTIONS=autopickup
-OPTIONS=pickup_types:$?!/
+# Just show lists of items
+OPTIONS=menustyle:partial
+# Show object symbols in menus
+OPTIONS=menu_objsyms
 
 # Special fruit is a raspberry <3
 OPTIONS=fruit:Raspberry
@@ -34,17 +61,225 @@ OPTIONS=fruit:Raspberry
 # Don't bother with number pad
 OPTIONS=number_pad:0
 
-# Show a hit point bar, and some extra attributes in the stat bar
-OPTIONS=hitpointbar
-OPTIONS=showexp,showscore,time
+# Disclosures at the end of the game:
+# - always show inventory
+# - always show attributes
+# - ask to show monsters killed (default no)
+# - never show genocided
+# - never show conduct
+OPTIONS=disclose:+i +a nv -c -g
 
-# Always a female samurai named Eryn
-NAME=Eryn
-CHARACTER=samurai
-#RACE=human
-OPTIONS=gender:female
+##
+## Status Bar
+##
 
-# Disclosures at the end of the game: always disclose inventory and attributes,
-# prompt for monsters killed (default yes), don't care about genocided monsters
-# and conduct.
-OPTIONS=disclose:+i +a yv -c -g
+# Colorize the status bar
+OPTIONS=statushilites:10
+# Show gold as yellow
+OPTIONS=hilite_status:gold/always/yellow
+# Highlight hit points with these colors
+OPTIONS=hilite_status:hitpoints/100%/brightgreen
+OPTIONS=hilite_status:hitpoints/<100%/green
+OPTIONS=hilite_status:hitpoints/<60%/yellow
+OPTIONS=hilite_status:hitpoints/<40%/red
+OPTIONS=hilite_status:hitpoints-max/always/green&bold
+# Ability scores have similar highlights
+# Specify multiple cutoffs for all ability scores.
+OPTIONS=hilite_status:characteristics/<5/red
+OPTIONS=hilite_status:characteristics/>6/orange
+OPTIONS=hilite_status:characteristics/>8/brown
+OPTIONS=hilite_status:characteristics/>11/yellow
+OPTIONS=hilite_status:characteristics/>13/green
+OPTIONS=hilite_status:characteristics/>16/cyan
+OPTIONS=hilite_status:characteristics/>18/lightblue
+# Highlight experience changes
+OPTIONS=hilite_status:experience-level/changed/cyan&bold
+# Color all status conditions orange
+OPTIONS=hilite_status:condition/all/orange
+
+##
+## Autopickups
+##
+
+# Auto-pickup safe things
+OPTIONS=autopickup
+OPTIONS=pickup_types:$?!/="+%
+OPTIONS=pickup_burden:unencumbered
+OPTIONS=pickup_thrown
+# Always pick up these
+AUTOPICKUP_EXCEPTION="<Amulet of Yendor named"
+AUTOPICKUP_EXCEPTION="<magic lamp"
+AUTOPICKUP_EXCEPTION="<potion .* healing"
+AUTOPICKUP_EXCEPTION="<potion .* gain level"
+AUTOPICKUP_EXCEPTION="<^the "
+AUTOPICKUP_EXCEPTION="<wand of wishing"
+AUTOPICKUP_EXCEPTION="<wand of death"
+AUTOPICKUP_EXCEPTION="<wand of polymorph"
+# Never pick up these
+AUTOPICKUP_EXCEPTION=">Amulet of Yendor"
+AUTOPICKUP_EXCEPTION="> corpse"
+AUTOPICKUP_EXCEPTION=">flint stone"
+AUTOPICKUP_EXCEPTION=">load stone"
+AUTOPICKUP_EXCEPTION="> named empty"
+AUTOPICKUP_EXCEPTION="> nothing"
+AUTOPICKUP_EXCEPTION=">scroll .* scare monster"
+AUTOPICKUP_EXCEPTION=">:0)"
+AUTOPICKUP_EXCEPTION=">worthless piece of"
+
+##
+## Menu Colors
+## (heavily sourced from https://alt.org/nethack/userdata/E/Eidolos/Eidolos.nh343rc)
+##
+
+OPTIONS=menucolors
+
+# Beatitude
+MENUCOLOR=" ![Cc]"=red
+MENUCOLOR=" ![Bb]"=cyan
+#MENUCOLOR=" !UC"=none
+#MENUCOLOR=" uncursed| UC?($| )"=none
+# nethack doesn't display "uncursed" if charges are known
+#MENUCOLOR=" \([-0-9]+:[-0-9]+\)"=none
+#MENUCOLOR=" [+-][0-9]"=none
+MENUCOLOR=" blessed| B($| )"=cyan
+MENUCOLOR=" cursed| C($| )"=red&bold
+
+# Water
+MENUCOLOR=" holy water"=cyan&bold
+MENUCOLOR=" blessed clear potion"=cyan&bold
+MENUCOLOR=" blessed potions? called water"=cyan&bold
+MENUCOLOR=" clear potions? named (holy|blessed|B)($| )"=cyan&bold
+MENUCOLOR=" potions? of water named (holy|blessed|B)($| )"=cyan&bold
+MENUCOLOR=" potions? called water named (holy|blessed|B)($| )"=cyan&bold
+MENUCOLOR=" unholy water"=orange
+MENUCOLOR=" cursed clear potion"=orange
+MENUCOLOR=" cursed potions? called water"=orange
+MENUCOLOR=" potions? called water named (unholy|cursed|C)($| )"=orange
+
+# Food
+# vegan
+MENUCOLOR="ration|gunyoki"=green&bold
+MENUCOLOR="lembas wafer|melon|carrot|tins? .* spinach"=green&bold
+MENUCOLOR=" oranges?( named.*)?$"=green&bold
+MENUCOLOR=" pears?( named.*)?$"=green&bold
+MENUCOLOR=" (apple|banana|kelp|eucalyptus|garlic|wolfsbane)"=green&bold
+MENUCOLOR=" ([Rr]aspberry)"=green&bold
+MENUCOLOR="(tins? of )?(gelatinous cube|acid blob|quivering blob)( corpse)?"=green&bold
+MENUCOLOR="(tins? of )?(blue|spotted|ochre) jelly( corpse)?"=green&bold
+MENUCOLOR="(tins? of )?lichen|shrieker|violet fungus|(brown|yellow|green|red) mold( corpse)?"=green&bold
+# vegetarian
+MENUCOLOR="egg|pancake|fortune cookie|candy bar|royal jelly|cream pie|candle"=green
+MENUCOLOR="(tin of )?brown pudding|gray ooze( corpse)?"=green
+# pet food
+MENUCOLOR="tripe ration"=yellow
+
+# Goodies
+MENUCOLOR=" bag .* holding"=magenta
+MENUCOLOR=" luck(stone)?($| )"=magenta
+MENUCOLOR=" wand .* wish(ing)?($| )"=magenta
+MENUCOLOR=" wand .* tele(port(ation)?)?($| )"=magenta
+MENUCOLOR=" wand .* polymorph"=magenta
+MENUCOLOR=" wand .* death"=magenta
+MENUCOLOR=" gain level"=magenta
+MENUCOLOR=" full healing"=magenta
+MENUCOLOR=" magic marker"=magenta
+MENUCOLOR=" magic lamp|lamp .* magic"=magenta
+MENUCOLOR=" unicorn horn[^[]*$"=magenta
+MENUCOLOR=" tinning kit"=magenta
+MENUCOLOR=" ring .* regen(eration)?($| )"=magenta
+MENUCOLOR=" ring .* conflict"=magenta
+MENUCOLOR=" ring .* (FA|free action)($| )"=magenta
+MENUCOLOR=" ring .* (TC|teleport control)($| )"=magenta
+MENUCOLOR=" ring .* lev(itation)?($| )"=magenta
+MENUCOLOR=" scrolls? .* genocide($| )"=magenta
+MENUCOLOR=" scrolls? .* charging($| )"=magenta
+MENUCOLOR=" scrolls? .* identify($| )"=magenta
+MENUCOLOR=" amulet .* (life ?saving|LS)($| )"=magenta
+MENUCOLOR=" amulet .* ref(lection)?($| )"=magenta
+MENUCOLOR=" c(o|hi)ckatrice (corpse|egg)"=magenta
+MENUCOLOR=" egg .* cockatrice"=magenta
+MENUCOLOR=" stethoscope"=magenta
+# instruments
+MENUCOLOR="tooled horn|fire horn|frost horn|horn .* (tooled|fire|frost)"=magenta
+MENUCOLOR=" harp"=magenta
+MENUCOLOR=" bugle"=magenta
+MENUCOLOR=" flute"=magenta
+# unidentified magic armor
+MENUCOLOR="piece of cloth|opera cloak|ornamental cope|tattered cape"=magenta
+MENUCOLOR="plumed helmet|etched helmet|crested helmet|visored helmet"=magenta
+MENUCOLOR="(old|padded|riding|fencing) gloves"=magenta
+MENUCOLOR="(mud|buckled|riding|snow|hiking|combat|jungle) boots"=magenta
+
+# Artifacts
+# unaligned
+MENUCOLOR=" (Dragonbane|Fire Brand|Frost Brand|Ogresmasher|Trollsbane|Werebane)"=lightgreen
+# lawful normal, quest
+MENUCOLOR=" (Demonbane|Excalibur|Grayswandir|Snickersnee|Sunsword)"=lightgreen
+MENUCOLOR=" (Orb of Detection|Sceptre of Might|Magic Mirror of Merlin|Mitre of Holiness|Tsurugi of Muramasa)"=lightgreen
+# neutral normal, quest
+MENUCOLOR=" (Cleaver|Giantslayer|Magicbane|Mjollnir|Vorpal Blade)"=lightgreen
+MENUCOLOR=" (Heart of Ahriman|Staff of Aesculapius|Eyes of the Overworld|Platinum Yendorian Express Card|Orb of Fate|Eye of the Aethiopica)"=lightgreen
+# chaotic normal, quest
+MENUCOLOR=" (Grimtooth|Orcrist|Sting|Stormbringer)"=lightgreen
+MENUCOLOR=" (Longbow of Diana|Master Key of Thievery)"=lightgreen
+# invocation items
+MENUCOLOR=" (Bell of Opening|silver bell|Candelabrum of Invocation|candelabrum|Book of the Dead|papyrus spellbook)"=magenta&bold
+
+# Raison D'Etre
+MENUCOLOR=" Amulet of Yendor named"=lightmagenta&underline
+
+# Cursed Goodies
+MENUCOLOR=" cursed.* bag .* holding"=red&bold
+MENUCOLOR=" cursed.* luck(stone)?($| )"=red&bold
+MENUCOLOR=" cursed.* unicorn horn"=red&bold
+MENUCOLOR=" cursed.* (Bell of Opening|silver bell|Candelabrum of Invocation|candelabrum|Book of the Dead|papyrus spellbook)"=red&bold
+MENUCOLOR="cursed tins? .* spinach|tins? .* spinach .* (cursed|C($| ))"=red
+# loadstones :(
+MENUCOLOR=" load(stone)?($| )"=red&underline
+# watch out, Bag Of Holding!
+MENUCOLOR=" bag .* tricks"=blue&underline
+MENUCOLOR=" wand .*[^!]canc"=blue&underline
+MENUCOLOR=" wand .* vanish"=blue&underline
+
+# Shiny Things
+MENUCOLOR=" gold piece"=yellow
+MENUCOLOR=" valuable"=brown
+MENUCOLOR=" gems? .* hard"=yellow
+# soft gems
+MENUCOLOR=" ([0-9]+|an?|gems? .*) (uncursed |cursed |blessed )?(dilithium|opal|garnet|jasper|agate|jet|obsidian|jade|citrine|chrysoberyl|amber|amethyst|fluorite|turquoise)(e?s)?( stones?| gems?| crystals?)?( named .*)?$"=brown
+# hard gems
+MENUCOLOR=" ([0-9]+|an?|gems?.*) (uncursed |cursed |blessed )?(diamond|rub(y|ies)|jacinth|sapphire|black opal|emerald|topaz|aquamarine)(e?s)?( stones?| gems?)?( named .*)?$"=yellow
+
+# Spell Failure Rates
+MENUCOLOR=" 0%"=white
+MENUCOLOR=" [1-9]%"=cyan
+MENUCOLOR=" [12][0-9]%"=cyan
+MENUCOLOR=" [3-6][0-9]%"=yellow
+MENUCOLOR=" 7[0-5]%"=yellow
+MENUCOLOR=" 7[6-9]%"=orange
+MENUCOLOR=" 8[0-9]%"=orange
+MENUCOLOR=" 9[0-9]%"=red
+MENUCOLOR=" 100%"=red
+# Forgotten Spell
+MENUCOLOR="[a-zA-Z ]+ [0-9]\*   [a-z]+ +[0-9]+%"=magenta
+
+# Enhance
+MENUCOLOR="^ +[a-z -]+ +\[(Unskilled|Basic|Skilled|Expert|Master|Grand Master)\]$"=white
+MENUCOLOR="^ *[a-z] - +[a-z -]+ +\[(Unskilled|Basic|Skilled|Expert|Master|Grand Master)\]$"=white
+MENUCOLOR="^ +\* +[a-z -]+ +\[(Unskilled|Basic|Skilled|Expert|Master|Grand Master)\]$"=white
+MENUCOLOR="^ +# +[a-z -]+ +\[(Unskilled|Basic|Skilled|Expert|Master|Grand Master)\]$"=white
+
+# Ordinary Menu Stuff
+#MENUCOLOR=" is empty. Do what?"=none
+#MENUCOLOR="Put something into .*"=none
+#MENUCOLOR="Take something out of .*"=none
+#MENUCOLOR="unicorn horn.*(Unskilled|Basic|Skilled|Expert)"=none
+#MENUCOLOR="Info on what a given key does."=none
+#MENUCOLOR="Full list of keyboard commands."=none
+#MENUCOLOR="altkeyhandler"=none
+#MENUCOLOR="fruit.*\["=none
+
+##
+## Symbols
+##
+
