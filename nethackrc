@@ -15,8 +15,8 @@ OPTIONS=!bones
 ## Interface Stuff
 ##
 
-# Make alt work on macOS
-OPTIONS=windowtype:curses
+# Use the curses interface with DEC graphics.
+OPTIONS=windowtype:curses,symset:DECgraphics
 # Always show inventory
 OPTIONS=perm_invent
 # Enable colors
