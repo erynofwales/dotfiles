@@ -130,10 +130,6 @@ AUTOPICKUP_EXCEPTION=">worthless piece of"
 OPTIONS=menucolors
 
 # Beatitude
-MENUCOLOR=" ![Cc]"=red
-MENUCOLOR=" ![Bb]"=cyan
-#MENUCOLOR=" !UC"=none
-#MENUCOLOR=" uncursed| UC?($| )"=none
 # nethack doesn't display "uncursed" if charges are known
 #MENUCOLOR=" \([-0-9]+:[-0-9]+\)"=none
 #MENUCOLOR=" [+-][0-9]"=none
