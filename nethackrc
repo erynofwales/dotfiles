@@ -47,9 +47,6 @@ OPTIONS=hitpointbar
 # Show experience, score, and time (number of steps)
 OPTIONS=showexp,showscore,time
 
-# Talk about walls when you run into them
-OPTIONS=mention_walls
-
 # Just show lists of items
 OPTIONS=menustyle:partial
 # Show object symbols in menus
