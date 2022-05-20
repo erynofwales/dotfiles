@@ -19,11 +19,12 @@ init_zsh_options
 init_zsh_history
 init_app_environments
 
-autoload +X init_rc_$SYS
-init_rc_$SYS
+if autoload +X init_rc_$SYS &>-; then
+    init_rc_$SYS
+fi
 
 # Configure ls with the system ls if it hasn't been done already.
-if ! alias ls 2>&1 1>/dev/null; then
+if ! alias ls &>-; then
     init_configure_ls `which ls`
 fi
 
