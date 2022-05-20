@@ -1,6 +1,5 @@
 # It me!
 OPTIONS=name:Eryn
-OPTIONS=character:samurai
 OPTIONS=race:human
 OPTIONS=gender:female
 OPTIONS=align:!c
