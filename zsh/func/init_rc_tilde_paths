@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+for x in "$HOME/Code" "$HOME/Documents/Code"; do
+    if [[ ! -d "$x" ]]; then
+        continue
+    fi
+    export c="$x"
+    break
+done
+

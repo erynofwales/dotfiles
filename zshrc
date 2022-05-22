@@ -4,6 +4,7 @@
 autoload -Uz init_app_environments
 autoload -Uz init_configure_ls
 autoload -Uz init_rc_aliases
+autoload -Uz init_rc_tilde_paths
 autoload -Uz init_rc_configure_completion
 autoload -Uz init_rc_configure_prompt
 autoload -Uz init_rc_configure_zle
@@ -12,6 +13,7 @@ autoload -Uz init_zsh_history
 autoload -Uz init_zsh_functions
 
 init_rc_aliases
+init_rc_tilde_paths
 init_rc_configure_prompt loquacious
 init_rc_configure_zle emacs
 init_rc_configure_completion

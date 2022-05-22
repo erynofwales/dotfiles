@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-# vim:ft=zsh:
 # Eryn Wells <eryn@erynwells.me>
 
 autoload append_to_path
@@ -9,7 +8,6 @@ export OSBUILD=`sysctl -n kern.osversion`
 export OSVERSION=`sysctl -n kern.osproductversion`
 export HWMODEL=`sysctl -n hw.model`
 
-export c="$HOME/Code"
 export dd="$HOME/Library/Developer/Xcode/DerivedData"
 
 local pythonRoot
