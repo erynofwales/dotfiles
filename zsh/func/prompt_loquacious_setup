@@ -27,10 +27,12 @@ function prompt_loquacious_setup
 
     add-zsh-hook chpwd set_repo_name
     add-zsh-hook precmd set_xterm_title
+    add-zsh-hook precmd set_tmux_window_name
     add-zsh-hook precmd print_newline
     add-zsh-hook precmd set_prompt_info
 
     add-zsh-hook preexec print_newline
+    add-zsh-hook preexec set_tmux_window_name
 
     prompt_opts=(cr subst percent)
 
@@ -80,13 +82,13 @@ function set_repo_name
 
 function set_prompt_info
 {
-    PS1_HISTORY="`prompt_colorize -b -f 'green' '%h'`"
-    PS1_NAME="`prompt_colorize -f 'magenta' '%n'` "
-    PS1_CWD="in `prompt_colorize -f 'green' '%~'` "
-    PS1_STATUS="%(?..`prompt_colorize -b -f 'red' '!'`) "
+    PS1_HISTORY="%F{green}%H%f"
+    PS1_NAME="%F{magenta}%n%f "
+    PS1_CWD="in %F{green}%~%f "
+    PS1_STATUS="%(?..%F{red}!%f) "
 
-    if [[ -n "$SSH_CONNECTION" ]]; then
-        PS1_HOST="at `prompt_colorize -f 'red' '%m'` "
+    if [[ -n "$SSH_CONNECTION" && "$TERM_PROGRAM" -ne "tmux" ]]; then
+        PS1_HOST="at %F{red}%m%f "
     else
         PS1_HOST=''
     fi
@@ -106,27 +108,42 @@ function set_prompt_info
     fi
 
     # Show background job count if any exist.
-    RPS1="%(1j.[`prompt_colorize -f 'magenta' '%j'`].)"
+    RPS1="%(1j.[%F{magenta}%j%f].)"
 
-    PS1_LINE='%# '
+    PS1_LINE='%(!.%F{red}.%F{default})%#%f '
 }
 
 function set_xterm_title
 {
-    local title=''
-
+    local tmux_session_name=''
+    local title='%n@%m'
     if [[ -n "$TMUX" ]]; then
-        title+="`tmux display-message -p '#S'`: "
+        local tmux_session_name=`tmux display-message -p '#S'`
+        title+=" (${tmux_session_name})"
     fi
 
     # Set xterm and screen titles
     if [[ -n "$DISPLAY" || -n "$TERM_PROGRAM" ]]; then
-        print -Pn "\e]2;%n@%m\a"
+        print -Pn "\e]2;${title}\a"
     fi
 
     # For Apple Terminal.app, add a link to the current directory.
     if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]]; then
         print -Pn "\e]7;file://%d\a"
+    fi
+}
+
+function set_tmux_window_name
+{
+    if [[ -z "$TMUX" ]]; then
+        return
+    fi
+
+    local process="${${(z)1}[1]}"
+    if [[ -n "$process" ]]; then
+        tmux rename-window "$process"
+    else
+        tmux rename-window "`print -Pn "%2~"`"
     fi
 }
 
