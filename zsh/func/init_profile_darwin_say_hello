@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+if binary_exists sw_vers && [[ -n "$HWMODEL" && -n "$OSVERSION" ]]; then
+    cat_program=cat
+    if binary_exists lolcat; then
+        cat_program=lolcat
+    fi
+    print "It's `date +'%H:%M on %A, %B %d'`.\nThis machine is a $HWMODEL.\nYou're running macOS $OSVERSION.\n" | $cat_program
+    return 0
+fi
+
+return 1
