@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+for func in ${(P)${1}}; do
+    if autoload -Uz $func &>-; then
+        $func
+    fi
+done
