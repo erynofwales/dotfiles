@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+if ssh-add --apple-load-keychain; then
+    echo
+fi
+
