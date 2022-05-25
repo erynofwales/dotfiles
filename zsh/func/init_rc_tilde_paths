@@ -9,3 +9,4 @@ for x in "$HOME/Code" "$HOME/Documents/Code"; do
     break
 done
 
+export dd="$HOME/Library/Developer/Xcode/DerivedData"
