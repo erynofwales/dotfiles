@@ -8,16 +8,20 @@ unsetopt GLOBAL_RCS
 export SYS=`uname -s | tr A-Z a-z`
 
 fpath=("$HOME/.zsh/func" $fpath)
+
 autoload -Uz prepend_to_path
 autoload -Uz append_to_path
-autoload -Uz init_env
-autoload -Uz init_env_python
-autoload -Uz init_path
+autoload -Uz do_init_functions
 
-init_path
-init_env
-init_env_python
+typeset -a zsh_init_env_functions=( \
+    init_env \
+    init_env_python \
+    init_path \
+    init_env_$SYS \
+)
 
-if autoload +X init_env_$SYS &>-; then
-    init_env_$SYS
+do_init_functions zsh_init_env_functions
+
+if [[ -e "$HOME/.zshenv.local" ]]; then
+    source "$HOME/.zshenv.local"
 fi
