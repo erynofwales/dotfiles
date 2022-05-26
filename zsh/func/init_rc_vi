@@ -1,8 +1,10 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-if whence -cp nvim &>-; then
+# Prefer nvim and vim, in that order, over standard vi, which is insufferable.
+
+if whence -cp nvim &> -; then
     alias vi=nvim
-elif whence -cp vim &>-; then
+elif whence -cp vim &> -; then
     alias vi=vim
 fi
