@@ -1,12 +1,30 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-if binary_exists sw_vers && [[ -n "$HWMODEL" && -n "$OSVERSION" ]]; then
+autoload -Uz binary_exists
+
+if binary_exists sw_vers && [[ -n "$HWMODEL" && -n "$OSVERSION" && -n "$OSBUILD" ]]; then
     cat_program=cat
     if binary_exists lolcat; then
         cat_program=lolcat
     fi
-    print "It's `date +'%H:%M on %A, %B %d'`.\nThis machine is a $HWMODEL.\nYou're running macOS $OSVERSION.\n" | $cat_program
+
+    local hello_message="It's `date +'%H:%M on %A, %B %d'`."
+
+    if [[ -n "$HWMODEL" ]]; then
+        hello_message+="\nThis machine is a $HWMODEL."
+    fi
+
+    if [[ -n "$OSVERSION" ]]; then
+        if [[ -n "$OSBUILD" ]]; then
+            hello_message+="\nYou're running macOS $OSVERSION ($OSBUILD)."
+        else
+            hello_message+="\nYou're running macOS $OSVERSION."
+        fi
+    fi
+
+    print "$hello_message\n" | $cat_program
+
     return 0
 fi
 
