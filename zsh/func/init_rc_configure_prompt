@@ -1,10 +1,7 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-local theme=$1
-if [[ -z "$1" ]]; then
-    theme=loquacious
-fi
+local theme=loquacious
 
 autoload -U add-zsh-hook
 autoload -Uz vcs_info

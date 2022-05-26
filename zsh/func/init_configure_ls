@@ -1,14 +1,11 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
+local system_ls=`which ls`
 local has_gnu_ls
 local ls_options
 
-if [[ ! -e "$1" ]]; then
-    return
-fi
-
-if $1 --version 2>&1 | grep GNU 1>/dev/null; then
+if $system_ls --version 2>&1 | grep GNU 1>/dev/null; then
     has_gnu_ls=1
     ls_options='--color=auto'
 else
@@ -16,10 +13,10 @@ else
     ls_options='-G'
 fi
 
-alias ls="$1 $ls_options"
-alias la="$1 -A $ls_options"
-alias ll="$1 -l $ls_options"
-alias l.="$1 -d $ls_options .*"
+alias ls="$system_ls $ls_options"
+alias la="$system_ls -A $ls_options"
+alias ll="$system_ls -l $ls_options"
+alias l.="$system_ls -d $ls_options .*"
 
 local dircolors_bin=`whence -p dircolors || whence -p gdircolors`
 if [[ $has_gnu_ls -eq 1 && -n "$dircolors_bin" ]]; then

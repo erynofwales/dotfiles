@@ -1,24 +1,20 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-function init_rc_configure_zle
-{
-    local mode=$1
-    if [[ -z "$mode" ]]; then
-        mode=emacs
-    fi
+local mode=emacs
 
-    function configure_zle_emacs { }
-    function configure_zle_vim { }
+if [[ -z "$mode" ]]; then
+    mode=emacs
+fi
 
-    if [[ $mode == 'vim' ]]; then
-        bindkey -v
-        configure_zle_vim
-        zle -A .backward-delete-char vi-backward-delete-char
-    elif [[ $mode == 'emacs' ]]; then
-        bindkey -e
-        configure_zle_emacs
-    fi
-}
+function configure_zle_emacs { }
+function configure_zle_vim { }
 
-init_rc_configure_zle "$@"
+if [[ $mode == 'vim' ]]; then
+    bindkey -v
+    configure_zle_vim
+    zle -A .backward-delete-char vi-backward-delete-char
+elif [[ $mode == 'emacs' ]]; then
+    bindkey -e
+    configure_zle_emacs
+fi
