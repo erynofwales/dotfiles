@@ -5,6 +5,10 @@
 
 if whence -cp nvim &> -; then
     alias vi=nvim
+    export EDITOR=nvim
 elif whence -cp vim &> -; then
     alias vi=vim
+    export EDITOR=vim
 fi
+
+export editor=vi

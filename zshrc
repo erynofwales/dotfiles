@@ -3,7 +3,6 @@
 
 zsh_init_rc_functions=( \
     init_rc_aliases \
-    init_rc_vi \
     init_configure_ls \
     init_rc_tilde_paths \
     init_rc_configure_prompt \

@@ -3,7 +3,6 @@
 
 export PAGER="less"
 export MANPAGER=$PAGER
-export EDITOR="vim"
 export VISUAL=$EDITOR
 export LESSHISTFILE="-"
 export GREP_OPTIONS="--color=auto"

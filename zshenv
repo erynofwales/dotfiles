@@ -9,14 +9,13 @@ export SYS=`uname -s | tr A-Z a-z`
 
 fpath=("$HOME/.zsh/func" $fpath)
 
-autoload -Uz prepend_to_path
-autoload -Uz append_to_path
 autoload -Uz do_init_functions
 
 typeset -a zsh_init_env_functions=( \
+    init_path \
     init_env \
     init_env_python \
-    init_path \
+    init_env_vi \
     init_env_$SYS \
 )
 
