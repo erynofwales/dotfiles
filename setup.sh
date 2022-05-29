@@ -29,8 +29,9 @@ function link {
     printf "  %8s: %s\n" $action "$dest"
 }
 
-print -P "%B    Home:%b $HOME"
-print -P "%BDotfiles:%b $dfdir\n"
+print -P "      %BHome:%b $HOME"
+print -P "  %BDotfiles:%b $dfdir"
+print -P "%BSkip Items:%b $skipitems\n"
 
 print -P "%BRemoving stray dotfile symlinks from $HOME%b"
 local link_dest
@@ -68,7 +69,16 @@ for dotfile in $dfdir/*; do
     if [[ ${skipitems[(r)$dotfile]} == $dotfile ]]; then
         continue
     fi
-    link "$dotfile"
+    if [[ "`basename $dotfile`" == "config" ]]; then
+        # Recurse into config and link each item individually
+        mkdir -p "$HOME/.config"
+        for config_dotfile in $dfdir/config/*; do
+            config_dotfile_basename=`basename "$config_dotfile"`
+            link "$config_dotfile" "$HOME/.config/$config_dotfile_basename"
+        done
+    else
+        link "$dotfile"
+    fi
     did_link_at_least_one_dotfile=1
 done
 
@@ -87,30 +97,20 @@ cd "$dfdir/vim/bundle"
 for module in ${(k)vimbundles}; do
     print -n "  $module"
 
-    if [[ -d $module ]]; then
-    # result='skipped'
-    else
-        git clone ${vimbundles[$module]} $module 1>/dev/null 2>&1
+    if [[ ! -d $module ]]; then
+        git clone ${vimbundles[$module]} $module >& -
         if [[ $? -eq 0 ]]; then
             result='done'
         else
             result='failed'
         fi
     fi
-
-    spaces=''
-    filler=$(($COLUMNS - ${#module} - ${#result} - 4))
-    for (( i=0; $i < $filler; i++ )); do spaces="$spaces "; done
-    if [[ $result == 'skipped' ]]; then
-        color='yellow'
-    elif [[ $result == 'failed' ]]; then
-        color='red'
-    elif [[ $result == 'done' ]]; then
-        color='green'
-    fi
-    print -P "$spaces%F{$color}$result%f"
 done
 
-vim +PluginInstall +qall
+VIM=nvim
+if ! whence -cp nvim >& -; then
+    VIM=vim
+fi
+$VIM +PluginInstall +qall
 
 exit 0
