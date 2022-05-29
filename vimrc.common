@@ -385,8 +385,3 @@ if has('autocmd')
 endif
 " }}}
 
-if has('unix')
-    if filereadable($HOME."/.vimrc.local")
-        source $HOME/.vimrc.local
-    endif
-endif
