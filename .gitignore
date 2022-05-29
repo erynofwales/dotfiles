@@ -1,6 +1,7 @@
 # OS X
 .DS_Store
 
+*~
 *.orig
 
 # Emacs
@@ -21,10 +22,12 @@ ssh/*
 !ssh/config
 
 vim/.viminfo*
+vim/vim_shared_data
 vim/.nviminfo
 vim/view/
 vim/spelling*
 vim/init.vim
+vim/backup/
 
 zsh/cache/
 
