@@ -3,20 +3,19 @@
 
 autoload darwin_icloud_drive_path
 
-function darwin_configure_screenshots_directory
-{
-    icloud=`darwin_icloud_drive_path`
-    if [[ ! -d "$icloud" ]]; then
-	return 1
-    fi
+icloud=`darwin_icloud_drive_path`
+if [[ ! -d "$icloud" ]]; then
+    return 1
+fi
 
-    # Put screenshots in iCloud Drive, in a directory according to hostname
-    local name=`hostname -s | tr A-Z a-z | tr ' ' -`
-    local screenshots_dir="$icloud/Screenshots/$name"
-    mkdir -p "$screenshots_dir"
-    defaults write com.apple.screencapture screenshots_diration "$screenshots_dir"
+# Put screenshots in iCloud Drive, in a directory according to hostname
+local name=`hostname -s | tr A-Z a-z | tr ' ' -`
+local screenshots_dir="$icloud/Screenshots/$name"
+mkdir -p "$screenshots_dir"
 
-    return 0
-}
+echo "$screenshots_dir"
+defaults write com.apple.screencapture screenshots_diration "$screenshots_dir"
 
-darwin_configure_screenshots_directory "$@"
+killall Dock
+
+return 0
