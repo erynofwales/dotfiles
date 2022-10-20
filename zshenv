@@ -14,6 +14,7 @@ autoload -Uz do_init_functions
 typeset -a zsh_init_env_functions=( \
     init_path \
     init_env \
+    init_env_aliases \
     init_env_python \
     init_env_vi \
     init_env_$SYS \
