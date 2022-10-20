@@ -3,18 +3,11 @@
 
 " This file holds settings common to nvim and vim.
 
-" Set the location of my vim directory.
-let $VIM = $HOME."/.vim"
-
-" This will be enabled eventually, but it needs to be off for Vundle to work,
-" apparently?
-filetype off
-
 "
 " VUNDLE PLUGINS
 "
 
-set runtimepath+=$VIM/bundle/Vundle.vim
+set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
@@ -289,14 +282,11 @@ nnoremap <leader>fa :%s/\v
 
 nnoremap <leader>f :call SelectaCommand("find * -type f", "", ":e")<cr>
 
-nnoremap <silent> <leader>cl :setlocal invcursorline<CR>
-nnoremap <silent> <leader>cc :setlocal invcursorcolumn<CR>
-
 " Text bubbling (these depend on tpope's unimpaired plugin)
 nnoremap <C-Up> [e
 nnoremap <C-Down> ]e
-vnoremap <C-Up> [egv
-vnoremap <C-Down> ]egv
+vnoremap <C-k> [egv
+vnoremap <C-j> ]egv
 
 " Select last edited text after cut and paste
 nnoremap gV `[v`]
