@@ -42,7 +42,7 @@ function prompt_loquacious_setup
     zstyle ':vcs_info:git:loquacious_precmd:*' formats '(%F{blue}%b%f)'
     zstyle ':vcs_info:git-svn:loquacious_precmd:*' formats '(%F{blue}%b%f)'
 
-    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_BRANCH}${PS1_STATUS}${PS1_ZLE_MODE}
+    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_BRANCH}${PS1_TIME}${PS1_STATUS}${PS1_ZLE_MODE}
 $PS1_LINE'
 
     zle -N zle-keymap-select on_keymap_select
@@ -82,10 +82,11 @@ function set_repo_name
 
 function set_prompt_info
 {
+    PS1_TIME="at %*"
     PS1_HISTORY="%F{green}%H%f"
     PS1_NAME="%F{magenta}%n%f "
     PS1_CWD="in %F{green}%~%f "
-    PS1_STATUS="%(?..%F{red}!%f) "
+    PS1_STATUS=" %(?..%F{red}!%f)"
 
     if [[ -n "$SSH_CONNECTION" && "$TERM_PROGRAM" -ne "tmux" ]]; then
         PS1_HOST="at %F{red}%m%f "
