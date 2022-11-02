@@ -60,6 +60,7 @@
     pf = push -uf
     f = fetch
     sup = submodule update --recursive
+    really-clean = clean -fd
 [ui]
     color = true
 [diff]
