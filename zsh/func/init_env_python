@@ -22,7 +22,7 @@ fi
 
 export PYTHONPATH
 
-if which virtualenvwrapper.sh 1>/dev/null 2>&1; then
+if which virtualenvwrapper.sh &> /dev/null; then
     export WORKON_HOME="$HOME/src/py/.envs"
     source `which virtualenvwrapper.sh`
 fi
