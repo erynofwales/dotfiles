@@ -88,7 +88,7 @@ function set_prompt_info
     PS1_CWD="in %F{green}%~%f "
     PS1_STATUS=" %(?..%F{red}!%f)"
 
-    if [[ -n "$SSH_CONNECTION" && "$TERM_PROGRAM" -ne "tmux" ]]; then
+    if [[ -n "$SSH_CONNECTION" && "$TERM_PROGRAM" != "tmux" ]]; then
         PS1_HOST="at %F{red}%m%f "
     else
         PS1_HOST=''
