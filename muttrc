@@ -59,7 +59,7 @@ set include=yes
 # HTML email :(
 set mailcap_path="~/.mutt/mailcap"
 auto_view text/html
-alternative_order text/plain text/enriched text/html
+alternative_order text/html text/plain text/enriched
 
 unmailboxes "$record" "$postponed" "$trash"
 
