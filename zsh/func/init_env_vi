@@ -3,10 +3,10 @@
 
 # Prefer nvim and vim, in that order, over standard vi, which is insufferable.
 
-if whence -cp nvim >& -; then
+if whence -cp nvim &> /dev/null; then
     alias vi=nvim
     export EDITOR=nvim
-elif whence -cp vim >& -; then
+elif whence -cp vim &> /dev/null; then
     alias vi=vim
     export EDITOR=vim
 fi
