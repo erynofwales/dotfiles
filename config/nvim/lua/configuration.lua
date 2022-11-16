@@ -72,10 +72,12 @@ opt.laststatus = 2
 opt.background = "dark"
 
 -- Save all this metadata while editing.
-opt.swapfile = true
 opt.backup = true
-opt.undofile = true
 opt.backupdir = {vim.fn.stdpath("data") .. "/backup//", "."}
+opt.swapfile = true
+opt.directory = {vim.fn.stdpath("data") .. "/swap//", "."}
+opt.undofile = true
+opt.undodir = {vim.fn.stdpath("data") .. "/undo//", "."}
 
 -- Fields to save in the Shada file. Parameters as follows: (see :help shada)
 --   %   number of buffers to save and restore when no file argument is given
