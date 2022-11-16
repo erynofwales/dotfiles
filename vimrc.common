@@ -27,7 +27,6 @@ Plugin 'PeterRincker/vim-argumentative'
 
 Plugin 'sjl/gundo.vim'          " Undo helper
 Plugin 'scrooloose/nerdtree'
-Plugin 'wincent/command-t'
 
 "Plugin 'erynofwales/vim-fancyfolds'
 Plugin 'apple-swift', {'pinned': 1}
