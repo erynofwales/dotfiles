@@ -2,7 +2,7 @@
     name = Eryn Wells
     email = eryn@erynwells.me
 [core]
-    editor = vim
+    editor = nvim
     quotepath = false
     excludesfile = ~/.gitignore
 [color]
