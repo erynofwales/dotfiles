@@ -5,6 +5,7 @@ vim.cmd [[ source ~/.vimrc.common ]]
 
 require 'configuration'
 require 'keys'
+require 'os'
 
 vim.cmd [[ source ~/.vim/plugins.vim ]]
 
@@ -16,9 +17,9 @@ function ensure_metadata_directories_exist()
     }
 
     for _, opt in ipairs(paths) do
-        local first_path = opt[1]
-        if string.find(first_path, "//$") then
-            os.execute("mkdir -p " .. first_path)
+        local firstPath = opt[1]
+        if string.find(firstPath, "//$") then
+            os.execute("mkdir", "-p", firstPath)
         end
     end
 end
