@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+open-xcode() {
+    local selectedXcode=`xcode-select -p`
+    while [[ ! `basename $selectedXcode` =~ ".app$" ]]; do
+        selectedXcode=`dirname "$selectedXcode"`
+    done
+    open -a "$selectedXcode" $@
+}
+
+open-xcode "$@"
