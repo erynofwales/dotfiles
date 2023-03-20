@@ -109,31 +109,40 @@ if [[ $did_link_at_least_one_dotfile -ne 1 ]]; then
     print "  Nothing to link"
 fi
 
-local install_vim_modules=1
+local configure_vim=1
 while getopts "v" arg $@; do
     case $arg in
-        "v") install_vim_modules=1 ;;
-        "+v") install_vim_modules=0 ;;
+        "v") configure_vim=1 ;;
+        "+v") configure_vim=0 ;;
         *)
             echo "Usage: setup.sh [+v|-v]"
-            echo "  +v|-v    Install Vim modules"
+            echo "  +v|-v    Configure (Neo)vim. Default yes; +v skips."
             ;;
     esac
 done
 
-print -P "%BFetching Vim modules%b"
-if (( $install_vim_modules )); then
-    curl -fLo --create-dirs \
-        "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim" \
-        "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+if (( $configure_vim )); then
+    print -P "%BConfiguring Vim%b"
 
     VIM=nvim
     if ! whence -cp nvim >& -; then
         VIM=vim
     fi
+
+    if [[ $VIM = "nvim" ]]; then
+        print -P "  Downloading vim-plug from Github"
+        curl --create-dirs -fL \
+            -o "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim" \
+            "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" \
+            1>/dev/null
+
+        if whence -cp python3 >& -; then
+            print -P "  Installing pynvim"
+            python3 -m pip install --user --upgrade pynvim 1>/dev/null
+        fi
+    fi
+
     $VIM +PlugInstall +qall
-else
-    print "  Nothing to do"
 fi
 
 exit 0
