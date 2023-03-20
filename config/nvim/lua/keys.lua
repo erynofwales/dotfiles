@@ -18,5 +18,5 @@ map('n', '<C-n>', ':bn<CR>', options)
 map('n', '<C-p>', ':bp<CR>', options)
 
 map('n', '<leader><space>', function()
-    vim.exec [[ setlocal invhlsearch ]]
+    vim.cmd [[ setlocal invhlsearch ]]
 end, options)
