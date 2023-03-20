@@ -1,5 +1,6 @@
 ; .emacs
 ; Eryn Wells <eryn@erynwells.me>
+; vim: ft=lisp:
 
 ; Show point position in the status bar
 
