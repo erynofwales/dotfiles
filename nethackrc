@@ -1,13 +1,13 @@
 # It me!
 OPTIONS=name:Eryn
-OPTIONS=race:human
 OPTIONS=gender:female
-OPTIONS=align:!c
 OPTIONS=catname:Mr. President
+OPTIONS=dogname:Guinness
+OPTIONS=horsename:Josie
+OPTIONS=fruit:Raspberry
 
 # Turn off news and game splash screen
 OPTIONS=!news,!splash_screen
-# Disable bones
 OPTIONS=!bones
 
 ##
@@ -51,19 +51,19 @@ OPTIONS=menustyle:partial
 # Show object symbols in menus
 OPTIONS=menu_objsyms
 
-# Special fruit is a raspberry <3
-OPTIONS=fruit:Raspberry
-
 # Don't bother with number pad
 OPTIONS=number_pad:0
+
+# Automatically dig if I can
+OPTIONS=autodig
 
 # Disclosures at the end of the game:
 # - always show inventory
 # - always show attributes
 # - ask to show monsters killed (default no)
 # - never show genocided
-# - never show conduct
-OPTIONS=disclose:+i +a nv -c -g
+# - always show conduct
+OPTIONS=disclose:+i +a nv +c -g
 
 ##
 ## Status Bar
