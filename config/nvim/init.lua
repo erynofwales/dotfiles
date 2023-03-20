@@ -1,16 +1,19 @@
 -- Eryn Wells <eryn@erynwells.me>
 
 vim.opt.runtimepath:prepend "~/.vim"
-vim.cmd [[ source ~/.vimrc.common ]]
+
+vim.cmd [[
+    source ~/.vimrc.common
+    source ~/.vim/plugins.vim 
+]]
 
 require 'configuration'
+require 'colors'
 require 'keys'
 require 'os'
 
-vim.cmd [[ source ~/.vim/plugins.vim ]]
-
-function ensure_metadata_directories_exist()
-    paths = {
+function ensureMetadataDirectoriesExist()
+    local paths = {
         vim.opt.backupdir:get(),
         vim.opt.directory:get(),
         vim.opt.undodir:get()
@@ -24,4 +27,4 @@ function ensure_metadata_directories_exist()
     end
 end
 
-ensure_metadata_directories_exist()
+ensureMetadataDirectoriesExist()
