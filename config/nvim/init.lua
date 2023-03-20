@@ -6,7 +6,9 @@ vim.cmd [[ source ~/.vimrc.common ]]
 require 'configuration'
 require 'keys'
 
-function ensureMetadataDirectoriesExist()
+vim.cmd [[ source ~/.vim/plugins.vim ]]
+
+function ensure_metadata_directories_exist()
     paths = {
         vim.opt.backupdir:get(),
         vim.opt.directory:get(),
@@ -21,4 +23,4 @@ function ensureMetadataDirectoriesExist()
     end
 end
 
-ensureMetadataDirectoriesExist()
+ensure_metadata_directories_exist()

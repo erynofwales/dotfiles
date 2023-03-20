@@ -123,25 +123,15 @@ done
 
 print -P "%BFetching Vim modules%b"
 if (( $install_vim_modules )); then
-    cd "$dotfiles_dir/vim/bundle"
-    for module in ${(k)vimbundles}; do
-        print -n "  $module"
-
-        if [[ ! -d $module ]]; then
-            git clone ${vimbundles[$module]} $module >& -
-            if [[ $? -eq 0 ]]; then
-                result='done'
-            else
-                result='failed'
-            fi
-        fi
-    done
+    curl -fLo --create-dirs \
+        "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim" \
+        "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
     VIM=nvim
     if ! whence -cp nvim >& -; then
         VIM=vim
     fi
-    $VIM +PluginInstall +qall
+    $VIM +PlugInstall +qall
 else
     print "  Nothing to do"
 fi
