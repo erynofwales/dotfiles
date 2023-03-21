@@ -16,7 +16,8 @@ function ensureMetadataDirectoriesExist()
     local paths = {
         vim.opt.backupdir:get(),
         vim.opt.directory:get(),
-        vim.opt.undodir:get()
+        vim.opt.undodir:get(),
+        vim.fs.dirname(vim.opt.shadafile:get()),
     }
 
     for _, opt in ipairs(paths) do

@@ -1,5 +1,10 @@
 -- Eryn Wells <eryn@erynwells.me>
 
+<<<<<<< HEAD
+=======
+require 'os'
+
+>>>>>>> 298c137 ([nvim] Fix the editor metadata settings, again, for hopefully the last time)
 -- [[ Editor Confguration ]]
 local opt = vim.opt
 
@@ -73,11 +78,11 @@ opt.background = "dark"
 
 -- Save all this metadata while editing.
 opt.backup = true
-opt.backupdir = {vim.fn.stdpath("data") .. "/backup//", "."}
-opt.swapfile = true
-opt.directory = {vim.fn.stdpath("data") .. "/swap//", "."}
 opt.undofile = true
-opt.undodir = {vim.fn.stdpath("data") .. "/undo//", "."}
+
+opt.backupdir = {vim.fn.stdpath("state") .. "/backup//"}
+opt.directory = {vim.fn.stdpath("state") .. "/swap//", "."}
+opt.undodir = {vim.fn.stdpath("state") .. "/undo//"}
 
 -- Fields to save in the Shada file. Parameters as follows: (see :help shada)
 --   %   number of buffers to save and restore when no file argument is given
@@ -88,6 +93,7 @@ opt.undodir = {vim.fn.stdpath("data") .. "/undo//", "."}
 --   :   maximum number of lines of command history to save
 --   s   shada entries over 100 KiB are skipped
 opt.shada = {"%100", "'1000", "h", "<1000", ":1000", "s100"}
+opt.shadafile = vim.fn.stdpath("state") .. "/shada/default.shada"
 
 -- Scroll ahead of the point a bit in each direction
 opt.scrolloff = 3
