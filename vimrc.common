@@ -114,13 +114,6 @@ if &t_Co > 2 || has('gui_running')
     syntax on           " turn on syntax highlighting
 endif
 
-" Dark backgrounds are the only way to travel
-set bg=dark
-
-try
-    colorscheme tomorrow_night
-endtry
-
 let g:snipMate = { 'snippet_version': 1 }
 " tell SnipMate who I am
 let g:snips_author = 'Eryn Wells <eryn@erynwells.me>'
@@ -257,14 +250,14 @@ nnoremap gV `[v`]
 "nnoremap <silent> <leader>gg :ToggleGitGutter<CR>
 
 " Don't underline folded lines
-highlight Folded cterm=bold term=bold ctermfg=NONE ctermbg=NONE
+"highlight Folded cterm=bold term=bold ctermfg=NONE ctermbg=NONE
 
 " Line numbers are a touch darker...
 "highlight LineNr ctermfg=8 ctermbg=0
 
 " Don't underline the CursorLine in color terminals; use dark black.
-highlight CursorLine term=underline cterm=NONE ctermbg=0
-highlight CursorLineNr term=underline cterm=NONE ctermfg=7 ctermbg=0
+"highlight CursorLine term=underline cterm=NONE ctermbg=0
+"highlight CursorLineNr term=underline cterm=NONE ctermfg=7 ctermbg=0
 
 " Autocommands {{{
 if has('autocmd')
