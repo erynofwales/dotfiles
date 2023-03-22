@@ -1,10 +1,5 @@
 -- Eryn Wells <eryn@erynwells.me>
 
-<<<<<<< HEAD
-=======
-require 'os'
-
->>>>>>> 298c137 ([nvim] Fix the editor metadata settings, again, for hopefully the last time)
 -- [[ Editor Confguration ]]
 local opt = vim.opt
 
