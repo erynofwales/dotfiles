@@ -6,6 +6,7 @@ function nethack
     local remote
     while getopts 'lr' opt; do
         case $opt in
+            h) echo "Usage: $0 [-l][-r]";;
             l) remote=0;;
             r) remote=1;;
             *)
@@ -15,17 +16,15 @@ function nethack
         esac
     done
 
-    if (( $remote )) && binary_exists nethack; then
+    if (( $remote )); then
         ssh nethack@alt.org
         return $?
+    elif binary_exists nethack; then
+        command nethack "$@[$OPTIND,-1]"
+        return $?
     else
-        if binary_exists nethack; then
-            command nethack
-            return $?
-        else
-            ssh nethack@alt.org
-            return $?
-        fi
+        ssh nethack@alt.org
+        return $?
     fi
 }
 
