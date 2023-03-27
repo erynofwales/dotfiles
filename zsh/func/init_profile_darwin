@@ -1,9 +1,6 @@
-#!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-if ssh-add --apple-load-keychain; then
-    echo
-fi
+( ssh-add --apple-load-keychain & ) 1>/dev/null 2>&1
 
 autoload -Uz init_profile_darwin_say_hello
 init_profile_darwin_say_hello
