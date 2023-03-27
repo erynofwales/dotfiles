@@ -1,4 +1,9 @@
-# Check if ZSH thinks the binary exists
 # Eryn Wells <eryn@erynwells.me>
+# vim: set ft=zsh:
 
-hash $1 1>/dev/null 2>&1
+binary_exists() {
+    hash $1 1>/dev/null 2>&1
+    return $?
+}
+
+binary_exists "$@"
