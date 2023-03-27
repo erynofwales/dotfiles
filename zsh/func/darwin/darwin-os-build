@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+darwin-os-build() {
+    if [[ -z "$darwin_os_build" ]]; then
+        darwin_os_build=`sysctl -n kern.osversion`
+    fi
+    echo "$darwin_os_build"
+}
+
+darwin-os-build "$@"

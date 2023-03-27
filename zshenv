@@ -6,13 +6,13 @@ unsetopt GLOBAL_RCS
 export SYS=`uname -s | tr A-Z a-z`
 
 init_env_fpath() {
-    local USER_FPATH=( "$HOME/.zsh/func" )
+    local user_fpath=("$HOME/.zsh/func")
 
     if [[ "$SYS" == "darwin" ]]; then
-        USER_FPATH=($USER_FPATH "$HOME/.zsh/func/darwin")
+        user_fpath=($user_fpath "$HOME/.zsh/func/darwin")
     fi
 
-    fpath=($USER_FPATH $fpath)
+    fpath=($user_fpath $fpath)
 }
 
 init_env_fpath

@@ -4,10 +4,6 @@
 autoload append_to_path
 autoload prepend_to_path
 
-export OSBUILD=`sysctl -n kern.osversion`
-export OSVERSION=`sysctl -n kern.osproductversion`
-export HWMODEL=`sysctl -n hw.model`
-
 export XCODE_LIBRARY="$HOME/Library/Developer/Xcode"
 export XCODE_DERIVED_DATA="$XCODE_LIBRARY/DerivedData"
 export XCODE_INSTALLS="$XCODE_LIBRARY/Installs"

@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+darwin-os-version() {
+    if [[ -z "$darwin_os_version" ]]; then
+        darwin_os_version=`sysctl -n kern.osproductversion`
+    fi
+    echo "$darwin_os_version"
+}
+
+darwin-os-version "$@"
