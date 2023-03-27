@@ -13,25 +13,26 @@ FORMATS = {
     'hex': 16,
 }
 
-def handle_number(n):
+def convert_number_to_all_bases(n):
     try:
-        base = 10
         n = n.lower()
         if n.startswith('0x'):
             base = 16
-        if n.startswith('0o'):
+        elif n.startswith('0o'):
             base = 8
-        if n.startswith('0b'):
+        elif n.startswith('0b'):
             base = 2
+        else:
+            base = 10
         num = int(n, base=base)
     except ValueError:
-        print('Error: cannot parse string as int: {}'.format(n))
+        print(f'Error: cannot parse string as int: {n}', file=sys.stderr)
     else:
         return {
             'bin': str(bin(num)[2:]),
             'oct': str(oct(num)[2:]),
             'dec': str(num),
-            'hex': str(hex(num)[2:]),
+            'hex': str(hex(num)[2:]).upper(),
         }
 
 def parse_args(argv, *a, **kw):
@@ -49,9 +50,9 @@ def main(argv):
     for n in args.numbers:
         if args.ascii:
             for c in n:
-                output.setdefault(c, handle_number(str(ord(c))))
+                output.setdefault(c, convert_number_to_all_bases(str(ord(c))))
         else:
-            output.setdefault(n, handle_number(n))
+            output.setdefault(n, convert_number_to_all_bases(n))
 
     json.dump(output, sys.stdout, indent=2)
     print('\n')
