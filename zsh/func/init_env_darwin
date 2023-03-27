@@ -8,25 +8,7 @@ export OSBUILD=`sysctl -n kern.osversion`
 export OSVERSION=`sysctl -n kern.osproductversion`
 export HWMODEL=`sysctl -n hw.model`
 
-export dd="$HOME/Library/Developer/Xcode/DerivedData"
-
-local pythonRoot
-local python27SitePackages
-
-pythonRoot="$HOME/Library/Python"
-if [[ -d "$pythonRoot" ]]; then
-    for f in `ls "$pythonRoot"`; do
-        prepend_to_path "$pythonRoot/$f/bin"
-    done
-fi
-
-python27SitePackages="$pythonroot/2.7/lib/python/site-packages"
-if [[ -d "$python27SitePackages" ]]; then
-    if [[ ! -z $PYTHONPATH ]]; then
-        PYTHONPATH=$python27SitePackages:$PYTHONPATH
-    else
-        PYTHONPATH=$python27SitePackages
-    fi
-fi
-
-export PYTHONPATH
+export XCODE_LIBRARY="$HOME/Library/Developer/Xcode"
+export XCODE_DERIVED_DATA="$XCODE_LIBRARY/DerivedData"
+export XCODE_INSTALLS="$XCODE_LIBRARY/Installs"
+export dd="$XCODE_DERIVED_DATA"
