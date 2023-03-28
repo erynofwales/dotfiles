@@ -1,6 +1,7 @@
 # Eryn Wells <eryn@erynwells.me>
 
-( ssh-add --apple-load-keychain & ) 1>/dev/null 2>&1
+init_profile_darwin() {
+    ( ssh-add --apple-load-keychain & ) 1>/dev/null 2>&1
+}
 
-autoload -Uz init_profile_darwin_say_hello
-init_profile_darwin_say_hello
+init_profile_darwin "$@"
