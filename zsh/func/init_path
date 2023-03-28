@@ -1,25 +1,47 @@
-#!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
+# vim:ft=zsh:
 
 autoload -Uz prepend_to_path
 autoload -Uz append_to_path
 
-export path=()
-append_to_path "/opt/brew/bin"
-append_to_path "/opt/homebrew/bin"
-append_to_path "/usr/local/bin"
-append_to_path "/usr/bin"
-append_to_path "/bin"
-append_to_path "/usr/local/sbin"
-append_to_path "/usr/sbin"
-append_to_path "/sbin"
-prepend_to_path "/usr/X11/bin"
-prepend_to_path "/opt/local/bin"
-prepend_to_path "$HOME/.local/bin"
-prepend_to_path "$HOME/.cargo/bin"
-prepend_to_path "$HOME/.gem/ruby/2.2.0/bin"
-prepend_to_path "$HOME/.ghcup/bin"
-prepend_to_path "$HOME/.vim/bundle/vim-tidal/bin"
-prepend_to_path "$HOME/bin"
+init_path() {
+    local should_be_verbose=1
 
-rehash
+    while getopts "v" opt; do
+        case $opt in
+            "v") should_be_verbose=1;;
+            "+v") should_be_verbose=0;;
+            *) >&2 echo "$0: unknown option '$opt'" ;;
+        esac
+    done
+
+    export path=()
+
+    for p in \
+        "$HOME/bin" \
+        "$HOME/.local/bin" \
+        "$HOME/.cargo/bin" \
+        "$HOME/.ghcup/bin" \
+        "$HOME/.gem/ruby/2.2.0/bin" \
+        "$HOME/.vim/bundle/vim-tidal/bin" \
+        "/opt/local/bin" \
+        "/usr/X11/bin" \
+        "/opt/brew/bin" \
+        "/opt/homebrew/bin" \
+        "/usr/local/bin" \
+        "/usr/bin" \
+        "/bin" \
+        "/usr/local/sbin" \
+        "/usr/sbin" \
+        "/sbin"
+    do
+        append_to_path +e "$p"
+        if (( $? && $should_be_verbose )); then
+            echo $p
+        fi
+    done
+
+    export path
+
+    rehash
+}
