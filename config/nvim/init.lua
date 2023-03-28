@@ -12,7 +12,7 @@ require 'colors'
 require 'keys'
 
 function ensureMetadataDirectoriesExist()
-    local options = {
+    local paths = {
         vim.opt.backupdir:get(),
         vim.opt.directory:get(),
         vim.opt.undodir:get(),
@@ -22,9 +22,9 @@ function ensureMetadataDirectoriesExist()
         os.execute("mkdir", "-p", path)
     end
 
-    for _, opt in ipairs(options) do
-        for _, path in ipairs(opt) do
-            if string.find(path, "//$") then
+    for _, opt in ipairs(paths) do
+        for _, value in ipairs(opt) do
+            if string.find(value, "//$") then
                 makeDirectory(path)
             end
         end
@@ -32,10 +32,9 @@ function ensureMetadataDirectoriesExist()
 
     -- The shadafile option is a single option but get() returns a table, so
     -- iterate it just to be safe.
-    local shadaFile = vim.opt.shadafile:get()
-    for _, path in ipairs(shadaFile) do
-        local shadaFileDirectory = vim.fs.dirname(path)
-        makeDirectory(shadaFileDirectory)
+    for _, opt in ipairs(vim.opt.shadafile:get()) do
+        local shadaDirectory = vim.fs.dirname(opt)
+        makeDirectory(shadaDirectory)
     end
 end
 
