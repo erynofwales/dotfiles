@@ -1,31 +1,34 @@
-#!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
 autoload -Uz binary_exists
+autoload -Uz darwin-os-version
+autoload -Uz darwin-os-build
+autoload -Uz darwin-hardware-model
 
-if binary_exists sw_vers && [[ -n "$HWMODEL" && -n "$OSVERSION" && -n "$OSBUILD" ]]; then
-    cat_program=cat
+init_profile_darwin_say_hello() {
+    local cat_program=cat
     if binary_exists lolcat; then
         cat_program=lolcat
     fi
 
     local hello_message="It's `date +'%H:%M on %A, %B %d'`."
 
-    if [[ -n "$HWMODEL" ]]; then
-        hello_message+="\nThis machine is a $HWMODEL."
+    local hardware_model=`darwin-hardware-model`
+    if [[ -n "$hardware_model" ]]; then
+        hello_message+="\nThis machine is a $hardware_model."
     fi
 
-    if [[ -n "$OSVERSION" ]]; then
-        if [[ -n "$OSBUILD" ]]; then
-            hello_message+="\nYou're running macOS $OSVERSION ($OSBUILD)."
+    local os_version=`darwin-os-version`
+    if [[ -n "$os_version" ]]; then
+        local os_build=`darwin-os-build`
+        if [[ -n "$os_build" ]]; then
+            hello_message+="\nYou're running macOS $os_version ($os_build)."
         else
-            hello_message+="\nYou're running macOS $OSVERSION."
+            hello_message+="\nYou're running macOS $os_version."
         fi
     fi
 
     print "$hello_message\n" | $cat_program
+}
 
-    return 0
-fi
-
-return 1
+init_profile_darwin_say_hello "$@"
