@@ -1,4 +1,3 @@
-#!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
 zsh_init_rc_functions=( \
