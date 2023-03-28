@@ -1,13 +1,29 @@
-#!/usr/bin/env zsh
-# vim:ft=zsh:
 # Eryn Wells <eryn@erynwells.me>
+# vim:ft=zsh:
 
-function append_to_path
-{
-    if [[ -d "$1" ]]; then
-        path+="$1"
-        export path
+append_to_path() {
+    local should_export_path=1
+
+    while getopts "e" opt; do
+        case $opt in
+            "e") should_export_path=1;;
+            "+e") should_export_path=0;;
+            *) >&2 echo "$0: unknown option '$opt'"
+        esac
+    done
+
+    local path_to_add=$@[$OPTIND]
+    if [[ -d "$path_to_add" ]]; then
+        path+="$path_to_add"
+
+        if (( $should_export_path )); then
+            export path
+        fi
+
+        return 1
     fi
+
+    return 0
 }
 
 append_to_path "$@"
