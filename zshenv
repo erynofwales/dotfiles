@@ -13,6 +13,7 @@ init_env_fpath() {
     fi
 
     fpath=($user_fpath $fpath)
+    export FPATH
 }
 
 init_env_fpath
