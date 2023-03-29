@@ -4,7 +4,7 @@ darwin-hardware-model() {
     if [[ -z "$darwin_hardware_model" ]]; then
         darwin_hardware_model=`sysctl -n hw.model`
     fi
-    return "$darwin_hardware_model"
+    echo "$darwin_hardware_model"
 }
 
 darwin-hardware-model "$@"
