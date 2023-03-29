@@ -1,4 +1,3 @@
-#!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
 export PAGER="less"
