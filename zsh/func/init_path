@@ -1,11 +1,9 @@
 # Eryn Wells <eryn@erynwells.me>
-# vim:ft=zsh:
 
-autoload -Uz prepend_to_path
 autoload -Uz append_to_path
 
 init_path() {
-    local should_be_verbose=1
+    local should_be_verbose=0
 
     while getopts "v" opt; do
         case $opt in
@@ -15,7 +13,10 @@ init_path() {
         esac
     done
 
-    export path=()
+    local verbose_flag
+    if (( $should_be_verbose )); then
+        verbose_flag='-v'
+    fi
 
     for p in \
         "$HOME/bin" \
@@ -35,13 +36,12 @@ init_path() {
         "/usr/sbin" \
         "/sbin"
     do
-        append_to_path +e "$p"
-        if (( $? && $should_be_verbose )); then
-            echo $p
-        fi
+        append_to_path +e $verbose_flag "$p"
     done
 
     export path
 
     rehash
 }
+
+init_path "$@"

@@ -1,29 +1,38 @@
 # Eryn Wells <eryn@erynwells.me>
-# vim:ft=zsh:
 
 prepend_to_path() {
     local should_export_path=1
+    local should_be_verbose=0
 
-    while getopts "e" opt; do
+    while getopts "ve" opt; do
         case $opt in
             "e") should_export_path=1;;
             "+e") should_export_path=0;;
-            *) >&2 echo "$0: unknown option '$opt'"
+            "v") should_be_verbose=1;;
+            *) ;;
         esac
     done
 
+    local result=1
     local path_to_add=$@[$OPTIND]
+
     if [[ -d "$path_to_add" ]]; then
-        path=("$path_to_add" $path)
-
-        if (( $should_export_path )); then
-            export path
+        if (( $verbose )); then
+            echo "Prepending $path_to_add to \$path"
         fi
-
-        return 0
+        path=("$path_to_add" $path)
+    else
+        if (( $verbose )); then
+            echo "$path_to_add doesn't exist"
+        fi
+        result=0
     fi
 
-    return 1
+    if (( $should_export_path )); then
+        export path
+    fi
+
+    return $result
 }
 
 prepend_to_path "$@"
