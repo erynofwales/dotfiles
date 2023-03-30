@@ -17,12 +17,12 @@ prepend_to_path() {
     local path_to_add=$@[$OPTIND]
 
     if [[ -d "$path_to_add" ]]; then
-        if (( $verbose )); then
+        if (( $should_be_verbose )); then
             echo "Prepending $path_to_add to \$path"
         fi
         path=("$path_to_add" $path)
     else
-        if (( $verbose )); then
+        if (( $should_be_verbose  )); then
             echo "$path_to_add doesn't exist"
         fi
         result=0

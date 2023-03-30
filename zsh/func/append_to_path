@@ -3,13 +3,13 @@
 
 append_to_path() {
     local should_export_path=1
-    local verbose=0
+    local should_be_verbose=0
 
     while getopts "ve" opt; do
         case $opt in
             "e") should_export_path=1;;
             "+e") should_export_path=0;;
-            "v") verbose=1;;
+            "v") should_be_verbose=1;;
             *) ;;
         esac
     done
@@ -18,12 +18,12 @@ append_to_path() {
     local path_to_add=$@[$OPTIND]
 
     if [[ -d "$path_to_add" ]]; then
-        if (( $verbose )); then
+        if (( $should_be_verbose )); then
             echo "Appending $path_to_add to \$path"
         fi
         path+="$path_to_add"
     else
-        if (( $verbose )); then
+        if (( $should_be_verbose )); then
             echo "$path_to_add doesn't exist"
         fi
         result=0

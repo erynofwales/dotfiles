@@ -9,11 +9,11 @@ init_path() {
         case $opt in
             "v") should_be_verbose=1;;
             "+v") should_be_verbose=0;;
-            *) >&2 echo "$0: unknown option '$opt'" ;;
+            *) ;;
         esac
     done
 
-    local verbose_flag
+    local verbose_flag=''
     if (( $should_be_verbose )); then
         verbose_flag='-v'
     fi
