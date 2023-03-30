@@ -1,28 +1,30 @@
-#!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-local pythonRoot
-local python27SitePackages
+autoload -Uz prepend_to_path
 
-pythonRoot="$HOME/Library/Python"
-if [[ -d "$pythonRoot" ]]; then
-    for f in `ls "$pythonRoot"`; do
-        prepend_to_path "$pythonRoot/$f/bin"
-    done
-fi
-
-python27SitePackages="$pythonroot/2.7/lib/python/site-packages"
-if [[ -d "$python27SitePackages" ]]; then
-    if [[ ! -z $PYTHONPATH ]]; then
-        PYTHONPATH=$python27SitePackages:$PYTHONPATH
-    else
-        PYTHONPATH=$python27SitePackages
+init_env_python() {
+    local pythonRoot="$HOME/Library/Python"
+    if [[ -d "$pythonRoot" ]]; then
+        for f in "$pythonRoot/*"; do
+            prepend_to_path "$f/bin"
+        done
     fi
-fi
 
-export PYTHONPATH
+    local python27SitePackages="$pythonroot/2.7/lib/python/site-packages"
+    if [[ -d "$python27SitePackages" ]]; then
+        if [[ ! -z $PYTHONPATH ]]; then
+            PYTHONPATH=$python27SitePackages:$PYTHONPATH
+        else
+            PYTHONPATH=$python27SitePackages
+        fi
+    fi
 
-if which virtualenvwrapper.sh &> /dev/null; then
-    export WORKON_HOME="$HOME/src/py/.envs"
-    source `which virtualenvwrapper.sh`
-fi
+    export PYTHONPATH
+
+    if which virtualenvwrapper.sh &> /dev/null; then
+        export WORKON_HOME="$HOME/src/py/.envs"
+        source `which virtualenvwrapper.sh`
+    fi
+}
+
+init_env_python "$@"
