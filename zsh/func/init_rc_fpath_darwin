@@ -1,0 +1,17 @@
+# Eryn Wells <eryn@erynwells.me>
+
+autoload -Uz binary_exists
+
+function init_rc_fpath_darwin
+{
+    if binary_exists brew; then
+        local brew_fpath="$(brew --prefix)/share/zsh/site-functions"
+        if [[ -d "$brew_fpath" ]]; then
+            fpath+=($brew_fpath)
+        fi
+
+        export FPATH
+    fi
+}
+
+init_rc_fpath_darwin "$@"

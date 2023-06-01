@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-autoload -U compinit
+autoload -Uz compinit
 compinit
 
 # Cache completions

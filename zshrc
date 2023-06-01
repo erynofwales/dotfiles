@@ -1,6 +1,7 @@
 # Eryn Wells <eryn@erynwells.me>
 
 zsh_init_rc_functions=( \
+    init_rc_fpath_darwin \
     init_rc_aliases \
     init_configure_ls \
     init_rc_tilde_paths \
