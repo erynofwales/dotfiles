@@ -1,24 +1,29 @@
 -- Eryn Wells <eryn@erynwells.me>
 
--- Allow using GUI style colors (#RRGGBB hex codes) in color terminals. This is
--- required for most modern color themes.
-vim.g.termguicolors = true
-
 function reloadColorscheme(colorschemeName)
-    vim.cmd {
-        cmd = "colorscheme",
-        args = {colorschemeName},
-    }
-
-    if vim.env.TERM_PROGRAM == "Apple_Terminal" then
-        -- Add a correction for Apple's Terminal.app, which doesn't support
-        -- 24-bit colors and needs some adjustment to cope.
+    if colorschemeName == nil then
         vim.cmd [[
-            highlight default Folded cterm=bold term=bold ctermfg=NONE ctermbg=NONE
-            highlight default CursorLine term=underline cterm=NONE ctermbg=0
-            highlight default CursorLineNr term=underline cterm=NONE ctermfg=7 ctermbg=0
+            highlight clear
         ]]
+    else
+        vim.cmd {
+            cmd = "colorscheme",
+            args = {colorschemeName},
+        }
     end
+
+    -- Make some bespoke adjustments for my cursor and line length highlights
+    vim.cmd [[
+        highlight ColorColumn cterm=NONE ctermbg=Black
+        highlight CursorColumn cterm=NONE ctermbg=Black
+        highlight CursorLine cterm=NONE ctermbg=Black
+        highlight CursorLineNr cterm=bold ctermfg=White ctermbg=Black
+        highlight LineNr ctermfg=DarkGray
+    ]]
+
+    -- Allow using GUI style colors (#RRGGBB hex codes) in color terminals if we
+    -- know it can do it. This is required for most modern color themes.
+    vim.g.termguicolors = vim.env.TERM_PROGRAM == "Apple_Terminal"
 
     if vim.g.colors_name == "witchhazel" then
         vim.cmd [[
@@ -32,4 +37,4 @@ function reloadColorscheme(colorschemeName)
     end
 end
 
-reloadColorscheme("dracula")
+reloadColorscheme(nil)
