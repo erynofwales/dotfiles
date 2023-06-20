@@ -1,0 +1,30 @@
+#!/usr/bin/env zsh
+
+
+print -n 'Normal: '
+for (( i = 1; i <= 8; i += 1 )); do
+    formattedi=`printf "%3d" $i`
+    print -Pn "%K{$i}${formattedi}%k"
+done
+print
+
+print -n 'Bright: '
+for (( i = 9; i <= 16; i += 1 )); do
+    formattedi=`printf "%3d" $i`
+    print -Pn "%K{$i}${formattedi}$k"
+done
+print
+
+SUPPORTED_COLORS=`echotc Co`
+COLORS_PER_LINE=16
+
+print
+print "Color Table ($SUPPORTED_COLORS supported colors)"
+
+for (( base = 0; base < $SUPPORTED_COLORS ; base += $COLORS_PER_LINE )); do
+    for (( i = base; i < base + $COLORS_PER_LINE && i < $SUPPORTED_COLORS; i += 1 )); do
+        formattedi=`printf "%4d" $i`
+        print -Pn "%K{$i}${formattedi}%k"
+    done
+    print
+done
