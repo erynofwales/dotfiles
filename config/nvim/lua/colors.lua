@@ -37,4 +37,8 @@ function reloadColorscheme(colorschemeName)
     end
 end
 
-reloadColorscheme(nil)
+if vim.env.TERM_PROGRAM == "Apple_Terminal" then
+    reloadColorscheme(nil)
+else
+    reloadColorscheme("dracula")
+end
