@@ -3,6 +3,7 @@
 
 autoload darwin_icloud_drive_path
 autoload darwin_configure_screenshots_directory
+autoload init_xcode
 
 function darwin_init_once
 {
@@ -14,6 +15,8 @@ function darwin_init_once
 
     # See https://techstuffer.com/this-app-is-damaged-error-macos-sierra/
     sudo spctl --master-disable
+
+    init_xcode
 }
 
 darwin_init_once "$@"

@@ -1,0 +1,13 @@
+# Eryn Wells <eryn@erynwells.me>
+# vim: ft=zsh:
+
+function init_xcode
+{
+    if [[ -d "~df/Xcode/IDETemplateMacros.plist" ]]; then
+        echo "Copying IDETemplateMacros.plist"
+        mkdir -p ~/Library/Developer/Xcode/UserData
+        cp ~df/Xcode/IDETemplateMacros.plist ~/Library/Developer/Xcode/UserData
+    fi
+}
+
+init_xcode "%@"
