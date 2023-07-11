@@ -5,7 +5,7 @@ autoload -Uz prepend_to_path
 init_env_python() {
     local pythonRoot="$HOME/Library/Python"
     if [[ -d "$pythonRoot" ]]; then
-        for f in "$pythonRoot/*"; do
+        for f in $pythonRoot/*; do
             prepend_to_path "$f/bin"
         done
     fi
