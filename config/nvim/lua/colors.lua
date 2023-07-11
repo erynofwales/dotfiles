@@ -22,8 +22,10 @@ function reloadColorscheme(colorschemeName)
     ]]
 
     -- Allow using GUI style colors (#RRGGBB hex codes) in color terminals if we
-    -- know it can do it. This is required for most modern color themes.
-    vim.g.termguicolors = vim.env.TERM_PROGRAM == "Apple_Terminal"
+    -- know it can do it. This is required for most modern color themes. Apple's
+    -- Terminal.app doesn't have True Color support though, so make sure it's
+    -- off for that.
+    vim.g.termguicolors = not vim.env.TERM_PROGRAM == "Apple_Terminal"
 
     if vim.g.colors_name == "witchhazel" then
         vim.cmd [[
