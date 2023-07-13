@@ -10,6 +10,7 @@ Plug 'keith/swift.vim'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
+Plug 'fatih/vim-go', { 'tag': 'v1.28' }
 
 " Editing helpers
 Plug 'tpope/vim-repeat'
