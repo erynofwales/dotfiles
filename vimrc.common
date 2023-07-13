@@ -244,6 +244,7 @@ if has('autocmd')
         autocmd FileType python call <SID>strip_trailing_whitespace()
         autocmd FileType c,cpp,objc,objcpp call <SID>strip_trailing_whitespace()
         autocmd FileType html,css call <SID>strip_trailing_whitespace()
+        autocmd FileType lua call <SID>strip_trailing_whitespace()
     augroup END
 
     " Indent wrapped long lines of code to leading indent
