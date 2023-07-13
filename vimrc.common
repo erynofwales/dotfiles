@@ -218,7 +218,7 @@ nnoremap gV `[v`]
 
 " Autocommands {{{
 if has('autocmd')
-    filetype plugin indent on
+    "filetype plugin indent on
 
     " Jump to last known cursor position unless it's the first line, or past the
     " end of the file
