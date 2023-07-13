@@ -182,11 +182,6 @@ endfunction
 " Key Mappings {{{
 let mapleader=','
 
-" hide search terms
-nnoremap <silent> <leader><space> :setlocal invhlsearch<CR>
-" find all
-nnoremap <leader>fa :%s/\v
-
 " strip all trailing whitespace in the current file
 nnoremap <silent> <leader>W :call <SID>strip_trailing_whitespace()<CR>
 
@@ -220,16 +215,6 @@ nnoremap gV `[v`]
 "let g:gitgutter_enabled = 0
 "highlight clear SignColumn
 "nnoremap <silent> <leader>gg :ToggleGitGutter<CR>
-
-" Don't underline folded lines
-"highlight Folded cterm=bold term=bold ctermfg=NONE ctermbg=NONE
-
-" Line numbers are a touch darker...
-"highlight LineNr ctermfg=8 ctermbg=0
-
-" Don't underline the CursorLine in color terminals; use dark black.
-"highlight CursorLine term=underline cterm=NONE ctermbg=0
-"highlight CursorLineNr term=underline cterm=NONE ctermfg=7 ctermbg=0
 
 " Autocommands {{{
 if has('autocmd')
