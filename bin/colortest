@@ -1,17 +1,31 @@
 #!/usr/bin/env zsh
 
+function print_color
+{
+    #local formatted=`printf "%4d " $1`
+    local formatted="     "
+    print -Pn "%K{$1}${formatted}%k"
+}
 
+print -n '        '
+for (( i = 0; i < 8; i += 1 )); do
+    printf "%4d " $i
+done
+print
 print -n 'Normal: '
-for (( i = 1; i <= 8; i += 1 )); do
-    formattedi=`printf "%3d" $i`
-    print -Pn "%K{$i}${formattedi}%k"
+for (( i = 0; i < 8; i += 1 )); do
+    print_color $i
 done
 print
 
+print -n '        '
+for (( i = 8; i < 16; i += 1 )); do
+    printf "%4d " $i
+done
+print
 print -n 'Bright: '
-for (( i = 9; i <= 16; i += 1 )); do
-    formattedi=`printf "%3d" $i`
-    print -Pn "%K{$i}${formattedi}$k"
+for (( i = 8; i < 16; i += 1 )); do
+    print_color $i
 done
 print
 
@@ -23,8 +37,13 @@ print "Color Table ($SUPPORTED_COLORS supported colors)"
 
 for (( base = 0; base < $SUPPORTED_COLORS ; base += $COLORS_PER_LINE )); do
     for (( i = base; i < base + $COLORS_PER_LINE && i < $SUPPORTED_COLORS; i += 1 )); do
-        formattedi=`printf "%4d" $i`
-        print -Pn "%K{$i}${formattedi}%k"
+        printf "%4d " $i
+    done
+
+    print
+
+    for (( i = base; i < base + $COLORS_PER_LINE && i < $SUPPORTED_COLORS; i += 1 )); do
+        print_color $i
     done
     print
 done
