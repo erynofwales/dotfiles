@@ -7,11 +7,12 @@ vim.cmd [[
 
 require 'os'
 
-require 'configuration'
-require 'colors'
-require 'keys'
+require "configuration"
+require "colors"
+require "keys"
+require "lsp"
 
-function ensureMetadataDirectoriesExist()
+function ErynEnsureMetadataDirectoriesExist()
     local paths = {
         vim.opt.backupdir:get(),
         vim.opt.directory:get(),
@@ -19,13 +20,13 @@ function ensureMetadataDirectoriesExist()
     }
 
     local function makeDirectory(path)
-        os.execute("mkdir", "-p", path)
+        os.execute("mkdir -p " .. path)
     end
 
     for _, opt in ipairs(paths) do
         for _, value in ipairs(opt) do
             if string.find(value, "//$") then
-                makeDirectory(path)
+                makeDirectory(value)
             end
         end
     end
@@ -38,4 +39,4 @@ function ensureMetadataDirectoriesExist()
     end
 end
 
-ensureMetadataDirectoriesExist()
+ErynEnsureMetadataDirectoriesExist()
