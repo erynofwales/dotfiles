@@ -21,7 +21,7 @@ Plug 'PeterRincker/vim-argumentative'
 
 " Environment niceties
 Plug 'scrooloose/nerdtree'
-Plug 'theacodes/witchhazel'
+
 if has('nvim')
     Plug 'Mofiqul/dracula.nvim'
 endif
