@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+autoload -Uz binary_exists
+
+neovim_init_once()
+{
+    if binary_exists npm; then
+        npm install -g \
+           @tailwindcss/language-server \
+           eslint \
+           typescript-language-server \
+           typescript \
+           vscode-langservers-extracted
+    else
+        print "Cannot find npm binary" >&2
+        return -1
+    fi
+
+    return 0
+}
+
+neovim_init_once "$@"
