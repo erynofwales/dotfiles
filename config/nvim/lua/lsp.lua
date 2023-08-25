@@ -31,6 +31,16 @@ local on_attach = function(client, buffer_number)
     vim.api.nvim_buf_set_option(buffer_number, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
 
+lspconfig.eslint.setup {
+    on_attach = on_attach,
+    capabilities = cmp_capabilities,
+}
+
+lspconfig.html.setup {
+    on_attach = on_attach,
+    capabilities = cmp_capabilities,
+}
+
 lspconfig.lua_ls.setup {
     on_attach = on_attach,
     capabilities = cmp_capabilities,
@@ -45,11 +55,6 @@ lspconfig.lua_ls.setup {
             },
         },
     },
-}
-
-lspconfig.html.setup {
-    on_attach = on_attach,
-    capabilities = cmp_capabilities,
 }
 
 lspconfig.tailwindcss.setup {
