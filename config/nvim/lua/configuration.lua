@@ -16,6 +16,7 @@ opt.splitbelow = true
 
 -- Show line numbers
 opt.number = true
+opt.relativenumber = true
 
 -- Customize the status bar a bit. Show the ruler, mode, and the command as the
 -- last line of the screen.
