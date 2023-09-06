@@ -9,6 +9,7 @@ neovim_init_once()
         npm install -g \
            @tailwindcss/language-server \
            eslint \
+           pyright \
            typescript-language-server \
            typescript \
            vscode-langservers-extracted
