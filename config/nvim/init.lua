@@ -1,11 +1,59 @@
 -- Eryn Wells <eryn@erynwells.me>
 
+require "os"
+
+function gitTopLevelDirectory()
+    local handle = io.popen("git rev-parse --show-toplevel")
+    local gitRepoTopLevelDirectoryPath = vim.fn.trim(handle:read("*a"))
+    handle:close()
+    return gitRepoTopLevelDirectoryPath
+end
+
+local function _addPathToRuntimePath(path, options)
+    if string.len(path) == 0 then
+        return
+    end
+
+    if vim.fn.isdirectory(path) == 1 then
+        if options.prepend then
+            vim.opt.runtimepath:prepend(path)
+        else
+            vim.opt.runtimepath:append(path)
+        end
+    end
+end
+
+function addGitTopLevelDirectoryToRuntimePath()
+    local gitTopLevelPath = gitTopLevelDirectory()
+    if string.len(gitTopLevelPath) == 0 then
+        return
+    end
+
+    local repoVimPath = gitTopLevelPath .. "/.vim"
+    if vim.fn.isdirectory(repoVimPath) == 1 then
+        vim.opt.runtimepath:prepend(repoVimPath)
+    end
+    local repoNvimPath = gitTopLevelPath .. "/.nvim"
+    if vim.fn.isdirectory(repoNvimPath) == 1 then
+        vim.opt.runtimepath:prepend(repoNvimPath)
+    end
+
+    local repoVimAfterPath = gitTopLevelPath .. "/.nvim/after"
+    if vim.fn.isdirectory(repoVimAfterPath) == 1 then
+        vim.opt.runtimepath:append(repoVimAfterPath)
+    end
+    local repoNvimAfterPath = gitTopLevelPath .. "/.vim/after"
+    if vim.fn.isdirectory(repoNvimAfterPath) == 1 then
+        vim.opt.runtimepath:append(repoNvimAfterPath)
+    end
+end
+
+addGitTopLevelDirectoryToRuntimePath()
+
 vim.cmd [[
     source ~/.vimrc.common
-    source ~/.vim/plugins.vim 
+    source ~/.vim/plugins.vim
 ]]
-
-require 'os'
 
 require "configuration"
 require "colors"
