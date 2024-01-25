@@ -10,6 +10,7 @@ function init_rc_aliases
     alias df='df -h'
     alias du='du -h'
     alias e='emacs'
+    alias v='vi'
 
     alias chux='chmod u+x'
     alias chuw='chmod u+w'
