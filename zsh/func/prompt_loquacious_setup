@@ -109,7 +109,7 @@ function set_prompt_info
     fi
 
     # Show background job count if any exist.
-    RPS1="%(1j.[%F{magenta}%j%f].)"
+    RPS1="[%!%(1j.,%F{magenta}%j%f.)]"
 
     PS1_LINE='%(!.%F{red}.%F{default})%#%f '
 }
