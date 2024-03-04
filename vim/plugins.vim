@@ -13,11 +13,13 @@ Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go', { 'tag': 'v1.28' }
 
 " Editing helpers
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
 Plug 'PeterRincker/vim-argumentative'
 
 " Environment niceties
