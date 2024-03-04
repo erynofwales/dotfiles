@@ -21,4 +21,4 @@ autoload -Uz nethack
 autoload -Uz pw
 autoload -Uz up
 autoload -Uz vi
-autoload -Uz open-xcode
+autoload -Uz homebrew-prefix

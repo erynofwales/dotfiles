@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+autoload binary_exists
+
+function homebrew-prefix
+{
+    if [[ -e "$SYSTEM_PARAMETERS_FILE" ]] && binary_exists jq; then
+        jq .parameters.homebrew_prefix.value "$SYSTEM_PARAMETERS_FILE"
+        return
+    fi
+
+    if ! binary_exists brew; then
+        return
+    fi
+
+    brew --prefix
+}
+
+homebrew-prefix "$@"
