@@ -22,6 +22,7 @@ autoload -Uz do_init_functions
 
 typeset -a zsh_init_env_functions=( \
     init_path \
+    init_system_parameters \
     init_env \
     init_env_aliases \
     init_env_python \

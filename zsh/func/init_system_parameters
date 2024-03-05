@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init_system_parameters
+{
+    local PARAMETERS_FILE="$HOME/.config/eryn/system_parameters"
+
+    if [[ ! -e "$PARAMETERS_FILE" ]]; then
+        return
+    fi
+
+    export SYSTEM_PARAMETERS_FILE="$PARAMETERS_FILE"
+}
+
+init_system_parameters "$@"
