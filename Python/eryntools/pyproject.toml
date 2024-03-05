@@ -1,0 +1,9 @@
+[project]
+name = "eryntools"
+version = "0.0.1"
+authors = [
+    { name="Eryn Wells", email="eryn@erynwells.me" }
+]
+description = "A collection of utilities and tools by and for Eryn Wells."
+readme = "README.md"
+requires-python = ">=3.9"
