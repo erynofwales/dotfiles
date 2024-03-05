@@ -3,7 +3,7 @@
 dotfiles_dir=$(cd "$(dirname "$0")" && pwd)
 sys=`uname -s | tr A-Z a-z`
 
-skipitems=(setup.sh README.md py bin Alfred Colors Dotfiles LaunchAgents '.*\.orig' '.*~')
+skipitems=(setup.sh README.md py bin Alfred Colors Dotfiles LaunchAgents Python '.*\.orig' '.*~')
 
 typeset -A vimbundles
 vimbundles=(Vundle.vim "https://github.com/gmarik/Vundle.vim.git")
@@ -120,6 +120,8 @@ while getopts "v" arg $@; do
             ;;
     esac
 done
+
+python3 -m pip install --user "$dotfiles_dir/Python/eryntools"
 
 if (( $configure_vim )); then
     print -P "%BConfiguring Vim%b"
