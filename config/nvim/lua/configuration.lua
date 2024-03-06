@@ -18,6 +18,9 @@ opt.splitbelow = true
 opt.number = true
 opt.relativenumber = true
 
+-- Start with ~all folds open.
+opt.foldlevel = 99
+
 -- Customize the status bar a bit. Show the ruler, mode, and the command as the
 -- last line of the screen.
 opt.ruler = true
