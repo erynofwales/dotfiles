@@ -97,6 +97,24 @@ lspconfig.pyright.setup {
     capabilities = cmp_capabilities,
 }
 
+lspconfig.rust_analyzer.setup {
+    on_attach = function(client, buffer_number)
+        print("rust-analyzer on attach")
+        on_attach(client, buffer_number)
+        vim.lsp.inlay_hint.enable(buffer_number)
+    end,
+    capabilities = cmp_capabilities,
+    settings = {
+        ["rust-analyzer"] = {
+            cargo = {
+                buildScripts = {
+                    enable = true,
+                },
+            },
+        },
+    },
+}
+
 lspconfig.tailwindcss.setup {
     on_attach = on_attach,
     capabilities = cmp_capabilities,
