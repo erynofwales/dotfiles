@@ -1,0 +1,26 @@
+{
+    "sets": [
+        {
+            "name": "git",
+            "files": [
+                { "path": "gitconfig" },
+                { "path": "gitignore" }
+            ]
+        },
+        {
+            "name": "vim",
+            "files": [
+                { "path": "vimrc" }
+            ]
+        },
+        {
+            "name": "zsh",
+            "files": [
+                { "path": "zshrc" },
+                { "path": "zshenv" },
+                { "path": "zprofile" },
+                { "path": "zsh" }
+            ]
+        }
+    ]
+}
