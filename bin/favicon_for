@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+curl -IL $1/favicon.ico
