@@ -56,6 +56,7 @@ vim.cmd [[
 ]]
 
 require "configuration"
+require 'diagnostics'
 require "lsp"
 
 local colors = require 'colors'
