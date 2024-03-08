@@ -60,9 +60,10 @@ vim.cmd [[
     source ~/.vim/plugins.vim
 ]]
 
-require "configuration"
+require 'autocommands'
+require 'configuration'
 require 'diagnostics'
-require "lsp"
+require 'lsp'
 
 local colors = require 'colors'
 colors.init()
