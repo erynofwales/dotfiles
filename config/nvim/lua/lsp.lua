@@ -53,8 +53,10 @@ local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- local protocol = require('vim.lsp.protocol')
 
-local on_attach = function(client, buffer_number)
+local function on_attach(client, buffer_number)
     vim.api.nvim_buf_set_option(buffer_number, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    vim.wo.signcolumn = "yes"
+
     keys.init_lsp_key_mappings(buffer_number)
 end
 
@@ -103,9 +105,7 @@ lspconfig.pyright.setup {
 
 lspconfig.rust_analyzer.setup {
     on_attach = function(client, buffer_number)
-        print("rust-analyzer on attach")
         on_attach(client, buffer_number)
-        vim.lsp.inlay_hint.enable(buffer_number)
     end,
     capabilities = cmp_capabilities,
     settings = {
