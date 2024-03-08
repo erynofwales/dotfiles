@@ -4,8 +4,13 @@ require "os"
 
 function gitTopLevelDirectory()
     local handle = io.popen("git rev-parse --show-toplevel")
+    if handle == nil then
+        return nil
+    end
+
     local gitRepoTopLevelDirectoryPath = vim.fn.trim(handle:read("*a"))
     handle:close()
+
     return gitRepoTopLevelDirectoryPath
 end
 
