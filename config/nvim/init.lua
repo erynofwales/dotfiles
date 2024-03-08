@@ -56,11 +56,15 @@ vim.cmd [[
 ]]
 
 require "configuration"
-require "keys"
 require "lsp"
 
-local colors = require "colors"
+local colors = require 'colors'
 colors.init()
+
+local keys = require 'keys'
+keys.init_key_opts()
+keys.init_window_key_mappings()
+keys.init_diagnostic_key_mappings()
 
 function ErynEnsureMetadataDirectoriesExist()
     local paths = {

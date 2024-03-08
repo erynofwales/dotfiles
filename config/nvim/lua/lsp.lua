@@ -1,7 +1,11 @@
+-- Eryn Wells <eryn@erynwells.me>
+
+
 local clangd_extensions = require 'clangd_extensions'
 local cmp = require 'cmp'
-local keys = require 'keys'
 local lspconfig = require 'lspconfig'
+
+local keys = require 'keys'
 
 cmp.setup {
     snippet = {
@@ -51,7 +55,7 @@ local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local on_attach = function(client, buffer_number)
     vim.api.nvim_buf_set_option(buffer_number, "omnifunc", "v:lua.vim.lsp.omnifunc")
-    keys.set_up_local_lsp_mappings(buffer_number)
+    keys.init_lsp_key_mappings(buffer_number)
 end
 
 lspconfig.clangd.setup {
