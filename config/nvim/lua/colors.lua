@@ -1,6 +1,6 @@
 -- Eryn Wells <eryn@erynwells.me>
 
-function reloadColorscheme(colorschemeName)
+local function reloadColorscheme(colorschemeName)
     if colorschemeName == nil then
         vim.cmd [[
             highlight clear
@@ -39,8 +39,15 @@ function reloadColorscheme(colorschemeName)
     end
 end
 
-if vim.env.TERM_PROGRAM == "Apple_Terminal" then
-    reloadColorscheme(nil)
-else
-    reloadColorscheme("dracula")
+local function init()
+    if vim.env.TERM_PROGRAM == "Apple_Terminal" then
+        reloadColorscheme(nil)
+    else
+        reloadColorscheme("dracula")
+    end
 end
+
+return {
+    init = init,
+    reloadColorscheme = reloadColorscheme
+}
