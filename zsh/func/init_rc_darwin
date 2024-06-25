@@ -25,7 +25,7 @@ alias glass="afplay $sounds/Glass.aiff"
 alias funk="afplay $sounds/Funk.aiff"
 
 autoload -Uz darwin_init_once
-autoload -Uz darwin_icloud_drive_path
+autoload -Uz darwin-icloud-drive-path
 autoload -Uz darwin_configure_screenshots_directory
 
 # Open a file or folder in Finder.
