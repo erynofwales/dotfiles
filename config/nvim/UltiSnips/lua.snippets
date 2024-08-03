@@ -1,0 +1,22 @@
+# lua.snippets
+# vim: set ts=8 sw=8 sts=8 noet list:
+# Eryn Wells <eryn@erynwells.me>
+
+
+snippet pd
+local pd <const> = playdate
+endsnippet
+
+snippet gfx
+local gfx <const> = playdate.graphics
+endsnippet
+
+snippet sprite
+class("${1:Sprite}").extends(gfx.sprite)
+
+function $1:init()
+end
+
+function $1:update()
+end
+endsnippet
