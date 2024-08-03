@@ -14,6 +14,12 @@ zsh_init_rc_functions=( \
     init_rc_$SYS \
 )
 
+if [[ -o LOGIN ]]; then
+    zsh_init_rc_functions+=(
+        list_tmux_sessions \
+    )
+fi
+
 do_init_functions zsh_init_rc_functions
 
 autoload -Uz g
