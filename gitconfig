@@ -65,6 +65,7 @@
     color = true
 [diff]
     tool = KS
+    algorithm = histogram
 [difftool]
     prompt = false
 [difftool "KS"]
