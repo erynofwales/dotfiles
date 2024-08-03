@@ -109,10 +109,26 @@ lspconfig.rust_analyzer.setup {
     end,
     capabilities = cmp_capabilities,
     settings = {
-        ["rust-analyzer"] = {
+        ['rust-analyzer'] = {
             cargo = {
                 buildScripts = {
                     enable = true,
+                },
+            },
+            checkOnSave = {
+                command = 'clippy',
+                extraArgs = {
+                    "--",
+                    "--no-deps",
+                    "-Dclippy::correctness",
+                    "-Dclippy::complexity",
+                    "-Wclippy::perf",
+                    "-Wclippy::pedantic",
+                },
+            },
+            imports = {
+                granularity = {
+                    group = "crate",
                 },
             },
         },
