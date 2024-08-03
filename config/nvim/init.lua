@@ -1,14 +1,14 @@
 -- Eryn Wells <eryn@erynwells.me>
 
-require "os"
+require 'os'
 
 function gitTopLevelDirectory()
-    local handle = io.popen("git rev-parse --show-toplevel")
+    local handle = io.popen('git rev-parse --show-toplevel')
     if handle == nil then
         return nil
     end
 
-    local gitRepoTopLevelDirectoryPath = vim.fn.trim(handle:read("*a"))
+    local gitRepoTopLevelDirectoryPath = vim.fn.trim(handle:read('*a'))
     handle:close()
 
     return gitRepoTopLevelDirectoryPath
@@ -30,7 +30,7 @@ end
 
 function addGitTopLevelDirectoryToRuntimePath()
     local gitTopLevelPath = gitTopLevelDirectory()
-    if string.len(gitTopLevelPath) == 0 then
+    if gitTopLevelPath == nil or string.len(gitTopLevelPath) == 0 then
         return
     end
 
