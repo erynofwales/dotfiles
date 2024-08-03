@@ -73,6 +73,9 @@ keys.init_key_opts()
 keys.init_window_key_mappings()
 keys.init_diagnostic_key_mappings()
 
+local gui = require 'gui'
+gui.init()
+
 function ErynEnsureMetadataDirectoriesExist()
     local paths = {
         vim.opt.backupdir:get(),
