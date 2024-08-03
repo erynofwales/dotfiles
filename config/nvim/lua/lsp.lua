@@ -30,7 +30,7 @@ cmp.setup {
         comparators = {
             cmp.config.compare.offset,
             cmp.config.compare.exact,
-            cmp.config.compare.recently_used,
+            -- cmp.config.compare.recently_used,
             clangd_extensions.cmp_scores,
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
