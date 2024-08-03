@@ -33,6 +33,8 @@ endif
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+Plug 'dracula/vim', {'as': 'dracula'}
+
 if has('nvim')
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/cmp-nvim-lsp'

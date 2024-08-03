@@ -27,12 +27,17 @@ local function reloadColorscheme(colorschemeName)
     -- off for that.
     vim.g.termguicolors = not vim.env.TERM_PROGRAM == "Apple_Terminal"
 
-    if vim.g.colors_name == "witchhazel" then
+    local themeName = vim.g.colors_name
+    if themeName == nil then
+        vim.cmd [[
+            highlight! NormalFloat ctermbg=8
+        ]]
+    elseif themeName == "witchhazel" then
         vim.cmd [[
             highlight! default link LineNr CursorLineNr
             highlight! default link CursorLineNr CursorLine
         ]]
-    elseif vim.g.colors_name == "dracula" then
+    elseif themeName == "dracula" then
         vim.cmd [[
             highlight CursorLineNr guibg=#44475a
         ]]
