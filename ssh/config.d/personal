@@ -1,4 +1,5 @@
 # Eryn Wells <eryn@erynwells.me>
+# vim: set ft=sshconfig sw=2 sts=2:
 
 Host nutmeg.erynwells.me nutmeg
     HostName nutmeg.erynwells.me
