@@ -1,0 +1,5 @@
+# Eryn Wells <eryn@erynwells.me>
+# vim: set ft=sshconfig sw=2 sts=2:
+
+Host *
+  Include config.d/*
