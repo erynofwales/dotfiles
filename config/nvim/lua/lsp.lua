@@ -134,13 +134,3 @@ lspconfig.rust_analyzer.setup {
         },
     },
 }
-
-lspconfig.tailwindcss.setup {
-    on_attach = on_attach,
-    capabilities = cmp_capabilities,
-}
-
-lspconfig.tsserver.setup {
-    on_attach = on_attach,
-    capabilities = cmp_capabilities,
-}
