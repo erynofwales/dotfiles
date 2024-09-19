@@ -1,0 +1,46 @@
+#!/bin/zsh
+# Eryn Wells <eryn@erynwells.me>
+
+MOTD_FILE=/etc/motd
+
+binary_exists() {
+    hash $1 1>/dev/null 2>&1
+    return $?
+}
+
+if [[ ! -w "$MOTD_FILE" ]]; then
+    echo "$MOTD_FILE is not wrtiable by $USER" >&2
+    exit 1
+fi
+
+# If lolcat is installed, dump a colorful message to the MOTD file. :)
+local cat_program=cat
+local cat_args=''
+if binary_exists lolcat; then
+    echo "Enabling rainbows"
+    cat_program=lolcat
+    cat_args=-f
+fi
+
+local hello_message="\nThis machine is called `hostname`.\n"
+
+local hardware_model=`sysctl -n hw.model`
+
+if [[ -n "$hardware_model" ]]; then
+    hello_message+="It’s a $hardware_model "
+fi
+
+local os_version=`sysctl -n kern.osproductversion`
+local product_name=`sw_vers --productName`
+local os_build=`sw_vers --buildVersion`
+
+if [[ -n "$os_version" && -n "$os_build" ]]; then
+    hello_message+="running $product_name $os_version ($os_build)."
+elif [[ -n "$os_version" ]]; then
+    hello_message+="running $product_name $os_version."
+fi
+
+hello_message+="\n"
+
+echo "Writing MOTD"
+print -P $hello_message | $cat_program $cat_args > $MOTD_FILE
