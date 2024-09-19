@@ -1,58 +1,51 @@
 -- Eryn Wells <eryn@erynwells.me>
 
-local function reloadColorscheme(colorschemeName)
-    if colorschemeName == nil then
+-- Allow using GUI style colors (#RRGGBB hex codes) in color terminals if we
+-- know it can do it. This is required for most modern color themes. Apple's
+-- Terminal.app doesn't have True Color support though, so make sure it's
+-- off for that.
+vim.g.termguicolors = not vim.env.TERM_PROGRAM == "Apple_Terminal"
+
+local colorscheme_group = vim.api.nvim_create_augroup("ColorSchemeOverrides", { clear = true })
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
         vim.cmd [[
-            highlight clear
+            hi! ColorColumn cterm=NONE ctermbg=233
+            hi! CursorColumn cterm=NONE ctermbg=233
+            hi! CursorLine cterm=NONE ctermbg=233
+            hi! CursorLineNr cterm=bold ctermfg=White ctermbg=233
+            hi! LineNr ctermfg=DarkGray ctermbg=233
         ]]
-    else
-        vim.cmd {
-            cmd = "colorscheme",
-            args = {colorschemeName},
-        }
-    end
+    end,
+    group = colorscheme_group,
+})
 
-    -- Make some bespoke adjustments for my cursor and line length highlights
-    vim.cmd [[
-        highlight ColorColumn cterm=NONE ctermbg=Black
-        highlight CursorColumn cterm=NONE ctermbg=Black
-        highlight CursorLine cterm=NONE ctermbg=Black
-        highlight CursorLineNr cterm=bold ctermfg=White ctermbg=Black
-        highlight LineNr ctermfg=DarkGray
-    ]]
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "default",
+    callback = function()
+        vim.cmd [[ hi! NormalFloat ctermfg=8 ]]
+    end,
+    group = colorscheme_group,
+})
 
-    -- Allow using GUI style colors (#RRGGBB hex codes) in color terminals if we
-    -- know it can do it. This is required for most modern color themes. Apple's
-    -- Terminal.app doesn't have True Color support though, so make sure it's
-    -- off for that.
-    vim.g.termguicolors = not vim.env.TERM_PROGRAM == "Apple_Terminal"
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "dracula",
+    callback = function()
+        vim.cmd [[ highlight CursorLineNr guibg=#44475a ]]
+    end,
+    group = colorscheme_group,
+})
 
-    local themeName = vim.g.colors_name
-    if themeName == nil then
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "witchhazel",
+    callback = function()
         vim.cmd [[
-            highlight! NormalFloat ctermbg=8
+            hi! default link LineNr CursorLineNr
+            hi! default link CursorLineNr CursorLine
         ]]
-    elseif themeName == "witchhazel" then
-        vim.cmd [[
-            highlight! default link LineNr CursorLineNr
-            highlight! default link CursorLineNr CursorLine
-        ]]
-    elseif themeName == "dracula" then
-        vim.cmd [[
-            highlight CursorLineNr guibg=#44475a
-        ]]
-    end
-end
+    end,
+    group = colorscheme_group,
+})
 
-local function init()
-    if vim.env.TERM_PROGRAM == "Apple_Terminal" then
-        reloadColorscheme(nil)
-    else
-        reloadColorscheme("dracula")
-    end
-end
-
-return {
-    init = init,
-    reloadColorscheme = reloadColorscheme
-}
+vim.cmd [[ color zaibatsu ]]

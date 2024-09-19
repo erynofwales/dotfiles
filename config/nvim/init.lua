@@ -61,12 +61,11 @@ vim.cmd [[
 ]]
 
 require 'autocommands'
+require 'colors'
 require 'configuration'
 require 'diagnostics'
+require 'treesitter'
 require 'lsp'
-
-local colors = require 'colors'
-colors.init()
 
 local keys = require 'keys'
 keys.init_key_opts()
