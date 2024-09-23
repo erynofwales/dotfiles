@@ -1,0 +1,58 @@
+
+function update-path
+{
+    zmodload zsh/zutil
+
+    local -a o_export o_prepend o_remove o_verbose
+    zparseopts -a args -D -E -F - \
+        {e,-export,-no-export}=o_export \
+        {p,-prepend}=o_prepend \
+        {r,-remove}=o_remove \
+        {v,-verbose}=o_verbose \
+        || return -1
+
+    local paths_skipped=0
+    local did_update_path=0
+
+    for candidate in $@; do
+        local candidate_index=$path[(Ie)$candidate]
+
+        if ! (( $#o_remove )); then
+            if (( $candidate_index )); then
+                (( $#o_verbose )) && print "Skipping $candidate"
+                (( paths_skipped++ ))
+                continue
+            fi
+
+            (( $#o_verbose )) && print "Adding $candidate"
+
+            did_update_path=1
+            if (( $#o_prepend )); then
+                path=($candidate $path)
+            else
+                path+=$candidate
+            fi
+        else
+            if ! (( $candidate_index )); then
+                (( $#o_verbose )) && print "Skipping $candidate"
+                (( paths_skipped++ ))
+                continue
+            fi
+
+            (( $#o_verbose )) && print "Removing $candidate"
+
+            did_update_path=1
+            path[$candidate_index]=()
+        fi
+    done
+
+    if (( $did_update_path && !$o_export[(I)--no-export] )); then
+        (( $#o_verbose )) && print "Exporting path"
+        export path
+        rehash
+    fi
+
+    return $paths_skipped
+}
+
+update-path "$@"
