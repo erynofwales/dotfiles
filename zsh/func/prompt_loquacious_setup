@@ -42,7 +42,7 @@ function prompt_loquacious_setup
     zstyle ':vcs_info:git:loquacious_precmd:*' formats '(%F{blue}%b%f)'
     zstyle ':vcs_info:git-svn:loquacious_precmd:*' formats '(%F{blue}%b%f)'
 
-    PS1='${PS1_NAME}${PS1_HOST}${PS1_CWD}${PS1_REPO}${PS1_BRANCH}${PS1_HISTORY}${PS1_STATUS}${PS1_TIME}${PS1_ZLE_MODE}
+    PS1='$PS1_PLACE, $PS1_TIME $PS1_ZLE_MODE
 $PS1_LINE'
 
     zle -N zle-keymap-select on_keymap_select
@@ -82,25 +82,28 @@ function set_repo_name
 
 function set_prompt_info
 {
-    PS1_TIME="at %*"
-    PS1_NAME="%F{magenta}%n%f "
-    PS1_CWD="in %F{green}%~%f "
-    PS1_STATUS="%(?..%F{red}!%f) "
+    PS1_TIMESTAMP="%*"
+    PS1_STATUS="%(?..%F{red}[$?]%f)"
     PS1_HISTORY="№%F{blue}%!%f"
+    PS1_TIME="$PS1_HISTORY$PS1_STATUS at $PS1_TIMESTAMP"
 
+    PS1_NAME="%F{magenta}%n%f"
+    PS1_HOST="%F{red}%m%f"
+    PS1_CWD="%F{green}%~%f"
+
+    PS1_PLACE="$PS1_NAME"
     if [[ -n "$SSH_CONNECTION" && "$TERM_PROGRAM" != "tmux" ]]; then
-        PS1_HOST="at %F{red}%m%f "
-    else
-        PS1_HOST=''
+        PS1_PLACE="$PS1_PLACE at $PS1_HOST"
     fi
+    PS1_PLACE="$PS1_PLACE in $PS1_CWD"
+
 
     # Get git repo information, if it exists. See setup function for
     # configuration details.
     vcs_info loquacious_precmd
+    PS1_BRANCH="${vcs_info_msg_0_}"
     if [[ -n "$vcs_info_msg_0_" ]]; then
-        PS1_BRANCH="${vcs_info_msg_0_} "
-    else
-        PS1_BRANCH=""
+        PS1_PLACE="$PS1_PLACE $PS1_REPO$PS1_BRANCH"
     fi
 
     # Show background jobs, if any.
@@ -151,9 +154,9 @@ function set_tmux_window_name
 function set_zle_mode_info
 {
     if [[ -z "$1" || "$1" == 'viins' || "$1" == 'main' ]]; then
-        PS1_ZLE_MODE=`prompt_colorize -f 'black' '<INS>'`
+        PS1_ZLE_MODE="%F{black}<INS>%f"
     elif [[ "$1" == 'vicmd' ]]; then
-        PS1_ZLE_MODE=`prompt_colorize -f 'black' '<CMD>'`
+        PS1_ZLE_MODE="%F{black}<CMD>%f"
     else
         PS1_ZLE_MODE=''
     fi
