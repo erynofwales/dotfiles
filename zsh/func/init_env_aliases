@@ -1,5 +1,0 @@
-#!/usr/bin/env zsh
-# Eryn Wells <eryn@erynwells.me>
-
-alias local-array="local -a"
-alias local-map="local -A"

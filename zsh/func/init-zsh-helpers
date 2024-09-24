@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init-zsh-helpers
+{
+    alias local-array="local -a"
+    alias local-map="local -A"
+}
+
+init-zsh-helpers "$@"

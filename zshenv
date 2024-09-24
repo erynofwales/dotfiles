@@ -24,7 +24,7 @@ typeset -a zsh_init_env_functions=( \
     init-path \
     init_system_parameters \
     init-unix-env \
-    init_env_aliases \
+    init-zsh-helpers \
     init_env_python \
     init_env_playdate \
     init_env_vi \
