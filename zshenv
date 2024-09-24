@@ -5,18 +5,20 @@ unsetopt GLOBAL_RCS
 
 export SYS=`uname -s | tr A-Z a-z`
 
-init_env_fpath() {
+function init-env-fpath
+{
     local user_fpath=("$HOME/.zsh/func")
 
-    if [[ "$SYS" == "darwin" ]]; then
-        user_fpath=($user_fpath "$HOME/.zsh/func/darwin")
+    local sys_fpath="$HOME/.zsh/func/$SYS"
+    if [[ -d "$sys_fpath" ]]; then
+        user_fpath+=($sys_fpath)
     fi
 
     fpath=($user_fpath $fpath)
     export FPATH
 }
 
-init_env_fpath
+init-env-fpath
 
 autoload -Uz do_init_functions
 
