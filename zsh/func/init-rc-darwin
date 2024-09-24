@@ -1,0 +1,39 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+autoload -Uz binary_exists
+
+function init-rc-darwin
+{
+    alias acls='command ls -le'
+
+    # These things might have been installed by Homebrew, and I like the GNU
+    # versions better.
+    binary_exists gdircolors && alias dircolors='gdircolors'
+    binary_exists gfind      && alias find='gfind'
+    binary_exists gnuindent  && alias indent='gnuindent'
+
+    binary_exists gls && init_rc_configure_ls `which gls`
+
+    # ldd doesn't exist on OS X, but otool -L does the same thing.
+    alias ldd='otool -L'
+
+    # From macOS's system zshrc.
+    # Disable the log builtin, so we don't conflict with /usr/bin/log
+    disable log
+
+    local sounds=/System/Library/Sounds
+    alias glass="afplay $sounds/Glass.aiff"
+    alias funk="afplay $sounds/Funk.aiff"
+
+    autoload -Uz darwin_init_once
+    autoload -Uz darwin-icloud-drive-path
+    autoload -Uz darwin_configure_screenshots_directory
+    autoload -Uz finder
+
+    alias -s app='open'
+    alias -s xcodeproj='open-xcode'
+    alias -s xcworkspace='open-xcode'
+}
+
+init-rc-darwin "$@"

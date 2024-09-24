@@ -11,7 +11,7 @@ zsh_init_rc_functions=( \
     init_zsh_options \
     init_zsh_history \
     init_app_environments \
-    init_rc_$SYS \
+    init-rc-$SYS \
 )
 
 if [[ -o LOGIN ]]; then
