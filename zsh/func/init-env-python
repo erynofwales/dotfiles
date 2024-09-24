@@ -1,0 +1,15 @@
+# Eryn Wells <eryn@erynwells.me>
+
+autoload -Uz prepend_to_path
+
+function init-env-python
+{
+    local -r user_python_root="$HOME/Library/Python"
+    if [[ -d "$pythonRoot" ]]; then
+        for f in $pythonRoot/*; do
+            prepend_to_path "$f/bin"
+        done
+    fi
+}
+
+init-env-python "$@"

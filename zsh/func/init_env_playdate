@@ -1,8 +1,0 @@
-#!/usr/bin/env zsh
-# Eryn Wells <eryn@erynwells.me>
-
-autoload prepend_to_path
-
-export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
-
-prepend_to_path "$PLAYDATE_SDK_PATH/bin"

@@ -31,8 +31,8 @@ typeset -a zsh_init_env_functions=( \
     init-path \
     init-unix-env \
     init-zsh-helpers \
-    init_env_python \
-    init_env_playdate \
+    init-env-python \
+    init-env-playdate \
     init-vi \
     init_env_$SYS \
 )

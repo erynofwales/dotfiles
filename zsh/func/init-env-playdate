@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+autoload -Uz prepend_to_path
+
+function init-env-playdate
+{
+    local -r sdk_path="$HOME/Developer/PlaydateSDK"
+    if [[ -d "$sdk_date" ]]; then
+        export PLAYDATE_SDK_PATH="$sdk_path"
+        prepend_to_path "$PLAYDATE_SDK_PATH/bin"
+    fi
+}
+
+init-env-playdate "$@"
