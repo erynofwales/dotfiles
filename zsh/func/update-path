@@ -1,26 +1,78 @@
 
+function _update-path-usage
+{
+    local -r function_name=$1
+
+    print -P <<EOF
+Usage: $function_name <args> [<dirs> ...]
+
+Modify the target path-like variable by adding or removing paths provided as
+positional arguments. Before adding, check that the target path variable doesn't
+already contain the path and that the directory exists.
+
+This function returns the number of paths that were skipped in the input. If all
+paths were processed, it returns 0. It returns 255 if an error occurred while
+processing arguments.
+
+Arguments
+---------
+
+%B-e%b | %B--export%b | %B--no-export%b
+    Export the variable after modification.
+
+%B-h%b | %B--help%b
+    Print this message.
+
+%B-p%b | %B--prepend%b
+    Prepend paths to the target path variable, instead of appending.
+
+%B-P%b | %B--path%b <path_variable_name>
+    The name of a path-like variable to modify. The default is '\$path'.
+
+%B-r%b | %B--remove%b
+    Remove paths instead of adding. -p has no meaning when this switch is given.
+
+%B-v%b | %B--verbose%b
+    Print some extra information while processing paths.
+EOF
+}
+
 function update-path
 {
     zmodload zsh/zutil
 
-    local -a o_export o_prepend o_remove o_verbose
+    local -a o_export o_help o_prepend o_remove o_verbose o_pathvar
     zparseopts -a args -D -E -F - \
         {e,-export,-no-export}=o_export \
+        {h,-help}=o_help \
         {p,-prepend}=o_prepend \
+        {P,-path}:=o_pathvar \
         {r,-remove}=o_remove \
         {v,-verbose}=o_verbose \
-        || return -1
+        || return 255
 
-    local paths_skipped=0
+    if (( $#o_help )); then
+        _update-path-usage $0
+        return 0
+    fi
+
+    if ! (( $#o_pathvar )); then
+        o_pathvar=(-p path)
+    fi
+
+    local -r path_variable_name=$o_pathvar[-1]
+    (( $#verbose )) && print "Modifying $path_variable_name"
+
+    local candidates_skipped=0
     local did_update_path=0
 
     for candidate in $@; do
-        local candidate_index=$path[(Ie)$candidate]
+        local candidate_index=${(P)path_variable_name}[(Ie)$candidate]
 
         if ! (( $#o_remove )); then
-            if (( $candidate_index )); then
+            if (( candidate_index )); then
                 (( $#o_verbose )) && print "Skipping $candidate"
-                (( paths_skipped++ ))
+                (( candidates_skipped++ ))
                 continue
             fi
 
@@ -28,31 +80,36 @@ function update-path
 
             did_update_path=1
             if (( $#o_prepend )); then
-                path=($candidate $path)
+                eval $path_variable_name=($candidate $path)
             else
-                path+=$candidate
+                eval $path_variable_name+=$candidate
             fi
         else
-            if ! (( $candidate_index )); then
+            if (( ! candidate_index )); then
                 (( $#o_verbose )) && print "Skipping $candidate"
-                (( paths_skipped++ ))
+                (( candidates_skipped++ ))
                 continue
             fi
 
             (( $#o_verbose )) && print "Removing $candidate"
 
             did_update_path=1
-            path[$candidate_index]=()
+            eval $path_variable_name[$candidate_index]=()
         fi
     done
 
-    if (( $did_update_path && !$o_export[(I)--no-export] )); then
-        (( $#o_verbose )) && print "Exporting path"
-        export path
-        rehash
+    if (( did_update_path && ! $o_export[(I)--no-export] )); then
+        if [[ $path_variable_name == "path" ]]; then
+            # No need to export $path because it's marked autoexport.
+            # See the -x argument to typeset.
+            rehash
+        else
+            (( $#o_verbose )) && print "Exporting $path_variable_name"
+            export ${(P)path_variable_name}
+        fi
     fi
 
-    return $paths_skipped
+    return $candidates_skipped
 }
 
 update-path "$@"
