@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init-env-darwin
+{
+    local -r xcode_library="$HOME/Library/Developer/Xcode"
+    if [[ -d "$xcode_library" ]]; then
+        export XCODE_LIBRARY="$xcode_library"
+        export XCODE_DERIVED_DATA="$XCODE_LIBRARY/DerivedData"
+        export XCODE_INSTALLS="$XCODE_LIBRARY/Installs"
+        export dd="$XCODE_DERIVED_DATA"
+    fi
+
+    export df=~/.dotfiles
+}
+
+init-env-darwin "$@"

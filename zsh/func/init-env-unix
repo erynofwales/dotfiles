@@ -2,7 +2,7 @@
 
 autoload -Uz binary_exists
 
-function init-unix-env
+function init-env-unix
 {
     export PAGER="less"
     export MANPAGER=$PAGER
@@ -17,4 +17,4 @@ function init-unix-env
     fi
 }
 
-init-unix-env "$@"
+init-env-unix "$@"

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-function init-vi
+function init-env-vi
 {
     # Prefer nvim and vim, in that order, over standard vi, which is insufferable.
     if whence -cp nvim &> /dev/null; then
@@ -15,4 +15,4 @@ function init-vi
     fi
 }
 
-init-vi "$@"
+init-env-vi "$@"

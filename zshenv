@@ -28,13 +28,13 @@ init-env-fpath
 autoload -Uz do_init_functions
 
 typeset -a zsh_init_env_functions=( \
-    init-path \
-    init-unix-env \
-    init-zsh-helpers \
+    init-env-path \
+    init-env-unix \
+    init-env-zsh-helpers \
     init-env-python \
     init-env-playdate \
-    init-vi \
-    init_env_$SYS \
+    init-env-vi \
+    init-env-$SYS \
 )
 
 do_init_functions zsh_init_env_functions

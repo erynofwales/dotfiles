@@ -2,7 +2,7 @@
 
 autoload -Uz update-path
 
-function init-path
+function init-env-path
 {
     update-path \
         "$HOME/bin" \
@@ -23,4 +23,4 @@ function init-path
         /sbin
 }
 
-init-path "$@"
+init-env-path "$@"
