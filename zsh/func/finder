@@ -1,0 +1,13 @@
+# vim: set ft=zsh:
+
+# Open a file or folder in Finder.
+function finder
+{
+    if [[ -z "$1" ]]; then
+        open -R .
+    fi
+
+    open -R "$1"
+}
+
+finder "$@"
