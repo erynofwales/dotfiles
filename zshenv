@@ -26,7 +26,7 @@ typeset -a zsh_init_env_functions=( \
     init-zsh-helpers \
     init_env_python \
     init_env_playdate \
-    init_env_vi \
+    init-vi \
     init_env_$SYS \
 )
 

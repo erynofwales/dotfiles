@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init-vi
+{
+    # Prefer nvim and vim, in that order, over standard vi, which is insufferable.
+    if whence -cp nvim &> /dev/null; then
+        alias vi=nvim
+        export EDITOR=nvim
+    elif whence -cp vim &> /dev/null; then
+        alias vi=vim
+        export EDITOR=vim
+    else
+        export EDITOR=vi
+    fi
+}
+
+init-vi "$@"
