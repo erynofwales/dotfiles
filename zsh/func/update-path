@@ -1,10 +1,12 @@
+# Eryn Wells <eryn@erynwells.me>
+# vim: set ft=zsh:
 
 function _update-path-usage
 {
     local -r function_name=$1
 
     local usage_string=$(cat <<EOF
-Usage: $function_name <arguments> [<dirs> ...]
+Usage: $function_name <arguments> [<path>...]
 
 Modify the target path-like variable by adding or removing paths provided as
 positional arguments. Before adding, check that the target path variable doesn't
@@ -20,20 +22,27 @@ Arguments
 %B-e%b | %B--export%b | %B--no-export%b
     Export the variable after modification.
 
+%B-f%b | %B--force%b
+    Unconditionally add the path, even if it doesn't exist.
+
 %B-h%b | %B--help%b
     Print this message.
 
 %B-p%b | %B--prepend%b
-    Prepend paths to the target path variable, instead of appending.
+    Prepend paths to the target path variable, instead of appending. When
+    prepending, directories will be added in reverse order so their precedence
+    is preserved. That is, the first directory in the list will be at the start
+    of the path.
 
 %B-P%b | %B--path%b <path_variable_name>
     The name of a path-like variable to modify. The default is 'path'.
 
 %B-r%b | %B--remove%b
-    Remove paths instead of adding. -p has no meaning when this switch is given.
+    Remove paths instead of adding. -p and -f are ignored when removing
+    directories from the path.
 
 %B-v%b | %B--verbose%b
-    Print some extra information while processing paths.
+    Print extra information while processing directories.
 EOF
 )
 
@@ -44,9 +53,10 @@ function update-path
 {
     zmodload zsh/zutil
 
-    local -a o_args o_export o_help o_prepend o_remove o_verbose o_pathvar
+    local -a o_args o_export o_force o_help o_prepend o_remove o_verbose o_pathvar
     zparseopts -a o_args -D -E -F - \
         {e,-export,-no-export}=o_export \
+        {f,-force}=o_force \
         {h,-help}=o_help \
         {p,-prepend}=o_prepend \
         {P,-path}:=o_pathvar \
@@ -77,7 +87,13 @@ function update-path
     local -i candidates_skipped=0
     local did_update_path
 
-    for candidate in $@; do
+    local -a candidates=($@)
+    if [[ $#o_prepend -ne 0 ]]; then
+        # If prepending, reverse the list so paths are added in the right order.
+        candidates=(${(Oa)@})
+    fi
+
+    for candidate in $candidates; do
         local candidate_index=${${(P)path_variable_name}[(Ie)$candidate]}
 
         # An empty $o_remove means we're adding to the array.
@@ -88,9 +104,15 @@ function update-path
                 continue
             fi
 
-            [[ $verbose -ne 0 ]] && print "Adding $candidate"
+            if [[ $#force -eq 0 && ! -d "$candidate" ]]; then
+                [[ $verbose -ne 0 ]] && print "$candidate doesn't exist"
+                (( candidates_skipped++ ))
+                continue
+            fi
 
             did_update_path=yes
+
+            [[ $verbose -ne 0 ]] && print "Adding $candidate"
             if [[ $#o_prepend -ne 0 ]]; then
                 eval "${path_variable_name}=(${candidate} ${path})"
             else
