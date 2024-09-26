@@ -4,6 +4,7 @@ autoload -Uz update-path
 
 function init-env-path
 {
+    path=()
     update-path \
         "$HOME/bin" \
         "$HOME/.local/bin" \
