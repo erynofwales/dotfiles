@@ -1,0 +1,23 @@
+# Eryn Wells <eryn@erynwells.me>
+
+autoload -Uz binary_exists
+
+function init-env
+{
+    export PAGER=less
+    export VISUAL=$EDITOR
+    export LESSHISTFILE="-"
+    export GREP_OPTIONS="--color=auto"
+    export GREP_COLOR="1;32"
+
+    if binary_exists gpg2; then
+        # Make sure gpg2 knows what to do with the curses-based smartcard PIN prompt.
+        export GPG_TTY=`tty`
+    fi
+
+    # Some helpful aliases for scripting
+    alias local-array="local -a"
+    alias local-map="local -A"
+}
+
+init-env "$@"
