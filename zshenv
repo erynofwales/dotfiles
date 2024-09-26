@@ -30,7 +30,6 @@ autoload -Uz do_init_functions
 typeset -a zsh_init_env_functions=( \
     init-env \
     init-env-path \
-    init-env-unix \
     init-env-python \
     init-env-playdate \
     init-env-vi \
