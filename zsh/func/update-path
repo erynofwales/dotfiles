@@ -3,8 +3,8 @@ function _update-path-usage
 {
     local -r function_name=$1
 
-    print -P <<EOF
-Usage: $function_name <args> [<dirs> ...]
+    local usage_string=$(cat <<EOF
+Usage: $function_name <arguments> [<dirs> ...]
 
 Modify the target path-like variable by adding or removing paths provided as
 positional arguments. Before adding, check that the target path variable doesn't
@@ -27,7 +27,7 @@ Arguments
     Prepend paths to the target path variable, instead of appending.
 
 %B-P%b | %B--path%b <path_variable_name>
-    The name of a path-like variable to modify. The default is '\$path'.
+    The name of a path-like variable to modify. The default is 'path'.
 
 %B-r%b | %B--remove%b
     Remove paths instead of adding. -p has no meaning when this switch is given.
@@ -35,77 +35,86 @@ Arguments
 %B-v%b | %B--verbose%b
     Print some extra information while processing paths.
 EOF
+)
+
+    print -P $usage_string
 }
 
 function update-path
 {
     zmodload zsh/zutil
 
-    local -a o_export o_help o_prepend o_remove o_verbose o_pathvar
-    zparseopts -a args -D -E -F - \
+    local -a o_args o_export o_help o_prepend o_remove o_verbose o_pathvar
+    zparseopts -a o_args -D -E -F - \
         {e,-export,-no-export}=o_export \
         {h,-help}=o_help \
         {p,-prepend}=o_prepend \
         {P,-path}:=o_pathvar \
         {r,-remove}=o_remove \
-        {v,-verbose}=o_verbose \
-        || return 255
+        {v,-verbose}=o_verbose
 
-    if (( $#o_help )); then
+    local -ri parse_status=$?
+    if (( parse_status )); then
+        _update-path-usage $0
+        return 255
+    fi
+
+    if [[ $#o_help -ne 0 ]]; then
         _update-path-usage $0
         return 0
     fi
 
-    if ! (( $#o_pathvar )); then
-        o_pathvar=(-p path)
+    local -r verbose=$#o_verbose
+    local -r path_variable_name=${o_pathvar[-1]:-path}
+
+    if ! typeset -p $path_variable_name &> /dev/null; then
+        print "Invalid path variable: \$$path_variable_name" 1>&2
+        return 255
     fi
 
-    local -r path_variable_name=$o_pathvar[-1]
-    (( $#verbose )) && print "Modifying $path_variable_name"
+    [[ $verbose -ne 0 ]] && print "Modifying $path_variable_name"
 
-    local candidates_skipped=0
-    local did_update_path=0
+    local -i candidates_skipped=0
+    local did_update_path
 
     for candidate in $@; do
-        local candidate_index=${(P)path_variable_name}[(Ie)$candidate]
+        local candidate_index=${${(P)path_variable_name}[(Ie)$candidate]}
 
-        if ! (( $#o_remove )); then
-            if (( candidate_index )); then
-                (( $#o_verbose )) && print "Skipping $candidate"
+        # An empty $o_remove means we're adding to the array.
+        if [[ $#o_remove -eq 0 ]]; then
+            if [[ $candidate_index -ne 0 ]]; then
+                [[ $verbose -ne 0 ]] && print "Skipping $candidate"
                 (( candidates_skipped++ ))
                 continue
             fi
 
-            (( $#o_verbose )) && print "Adding $candidate"
+            [[ $verbose -ne 0 ]] && print "Adding $candidate"
 
-            did_update_path=1
-            if (( $#o_prepend )); then
-                eval $path_variable_name=($candidate $path)
+            did_update_path=yes
+            if [[ $#o_prepend -ne 0 ]]; then
+                eval "${path_variable_name}=(${candidate} ${path})"
             else
-                eval $path_variable_name+=$candidate
+                eval "${path_variable_name}+=${candidate}"
             fi
         else
-            if (( ! candidate_index )); then
-                (( $#o_verbose )) && print "Skipping $candidate"
+            if [[ $candidate_index -eq 0 ]]; then
+                [[ $verbose -ne 0 ]] && print "Skipping $candidate"
                 (( candidates_skipped++ ))
                 continue
             fi
 
-            (( $#o_verbose )) && print "Removing $candidate"
+            [[ $verbose -ne 0 ]] && print "Removing $candidate"
 
-            did_update_path=1
-            eval $path_variable_name[$candidate_index]=()
+            did_update_path=yes
+            eval "${path_variable_name}[${candidate_index}]=()"
         fi
     done
 
-    if (( did_update_path && ! $o_export[(I)--no-export] )); then
-        if [[ $path_variable_name == "path" ]]; then
-            # No need to export $path because it's marked autoexport.
-            # See the -x argument to typeset.
+    if [[ -n $did_update_path && $o_export[(I)--no-export] -ne 0 ]]; then
+        [[ $verbose -ne 0 ]] && print "Exporting $path_variable_name"
+        export $path_variable_name
+        if [[ "$path_variable_name" == "path" ]]; then
             rehash
-        else
-            (( $#o_verbose )) && print "Exporting $path_variable_name"
-            export ${(P)path_variable_name}
         fi
     fi
 
