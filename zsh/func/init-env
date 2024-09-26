@@ -5,8 +5,6 @@ autoload -Uz binary_exists
 function init-env
 {
     export PAGER=less
-    export VISUAL=$EDITOR
-    export LESSHISTFILE="-"
     export GREP_OPTIONS="--color=auto"
     export GREP_COLOR="1;32"
 

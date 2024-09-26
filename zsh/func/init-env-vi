@@ -13,6 +13,8 @@ function init-env-vi
     else
         export EDITOR=vi
     fi
+
+    export VISUAL=$EDITOR
 }
 
 init-env-vi "$@"
