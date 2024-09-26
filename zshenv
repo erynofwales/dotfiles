@@ -7,15 +7,20 @@ export SYS=`uname -s | tr A-Z a-z`
 
 function init-env-fpath
 {
-    local user_fpath=("$HOME/.zsh/func")
+    local -r fpath_candidates=( \
+        "$HOME/.zsh/${SYS}-functions" \
+        "$HOME/.zsh/func" \
+    )
 
-    local sys_fpath="$HOME/.zsh/func/$SYS"
-    if [[ -d "$sys_fpath" ]]; then
-        user_fpath+=($sys_fpath)
-    fi
-
-    fpath=($user_fpath $fpath)
-    export FPATH
+    # Process the array in reverse order (`Oa` means "descending index order",
+    # in other worse "reverse order"; see PARAMETER EXPANSION section of the man
+    # pages) so the paths are prepended in the correct order.
+    for candidate in ${(Oa)fpath_candidates}; do
+        if [[ ! -d "$candidate" ]]; then
+            continue
+        fi
+        fpath=($candidate $fpath)
+    done
 }
 
 init-env-fpath
