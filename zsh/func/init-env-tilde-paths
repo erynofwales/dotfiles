@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init-env-tilde-paths
+{
+    for candidate_code_path in \
+        "$HOME/Code" \
+        "$HOME/Developer" \
+        "$HOME/Documents/Code"
+    do
+        if [[ ! -d "$candidate_code_path" ]]; then
+            continue
+        fi
+
+        c="$candidate_code_path"
+        break
+    done
+}
+
+init-env-tilde-paths "$@"
