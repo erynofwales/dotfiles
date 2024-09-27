@@ -11,35 +11,39 @@ def parse_args():
 endsnippet
 
 snippet ifmain
-def main():
+def main(argv):
 	${1:pass}
 
+
 if __name__ == '__main__':
-	main()
+	import sys
+	sys.exit(main(sys.argv))
 endsnippet
 
 snippet script
-	#!/usr/bin/env python3
-	# Eryn Wells <eryn@erynwells.me>
+#!/usr/bin/env python3
+# Eryn Wells <eryn@erynwells.me>
 
-	'''
-	New script.
-	'''
+'''
+New script.
+'''
 
-	import argparse
+import argparse
 
-	def parse_args(argv, *a, **kw):
-		parser = argparse.ArgumentParser(*a, **kw)
-		# TODO: Configure arguments here.
-		args = parser.parse_args(argv)
-		return args
-	
-	def main(argv):
-		args = parse_args(argv[1:], prog=argv[0])
-		${1:# TODO}
-	
-	if __name__ == '__main__':
-		import sys
-		result = main(sys.argv)
-		sys.exit(0 if not result else result)
+
+def parse_args(argv, *a, **kw):
+	parser = argparse.ArgumentParser(*a, **kw)
+	# TODO: Configure arguments here.
+	args = parser.parse_args(argv)
+	return args
+
+
+def main(argv):
+	args = parse_args(argv[1:], prog=argv[0])
+	${1:# TODO}
+
+
+if __name__ == '__main__':
+	import sys
+	sys.exit(main(sys.argv))
 endsnippet
