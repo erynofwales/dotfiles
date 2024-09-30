@@ -15,6 +15,8 @@ function init-env-tilde-paths
         c="$candidate_code_path"
         break
     done
+
+    export df=~/.dotfiles
 }
 
 init-env-tilde-paths "$@"
