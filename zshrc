@@ -2,15 +2,14 @@
 
 zsh_init_rc_functions=( \
     init_rc_fpath_darwin \
-    init_rc_aliases \
-    init_configure_ls \
-    init_rc_tilde_paths \
-    init_rc_configure_prompt \
-    init_rc_configure_zle \
-    init_rc_configure_completion \
-    init_zsh_options \
-    init_zsh_history \
-    init_app_environments \
+    init-rc-aliases \
+    init-rc-ls \
+    init-rc-prompt \
+    init-rc-zle \
+    init-rc-completion \
+    init-rc-zsh-options \
+    init-rc-zsh-history \
+    init-rc-app-environments \
     init-rc-$SYS \
 )
 

@@ -1,0 +1,46 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init-rc-completion
+{
+    autoload -Uz compinit
+    compinit
+
+    # Cache completions
+    zstyle ':completion::complete:*' use-cache 1
+    zstyle ':completion::complete:*' cache-path ~/.zsh/cache
+
+    # Make ls show completion list in color.
+    # See also: https://github.com/ohmyzsh/ohmyzsh/issues/6060
+    if [[ -n "$LS_COLORS" ]]; then
+        zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+    else
+        zstyle ':completion:*:default' list-colors \
+                'di=34' 'ln=35' 'so=32' 'pi=33' 'ex=31' 'bd=34;46' 'cd=34;43' 'su=30;41' \
+                'sg=30;46' 'tw=30;42' 'ow=30;43'
+    fi
+
+    # For rm, cp, and mv don't complete if file is on the line already
+    zstyle ':completion:*:rm:*' ignore-line yes
+    zstyle ':completion:*:cp:*' ignore-line yes
+    zstyle ':completion:*:mv:*' ignore-line yes
+
+    # Remove trailing slashes in directory arguments
+    zstyle ':completion:*' squeeze-slashes true
+
+    # Never select parent directory
+    zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+    # Expand partial paths
+    zstyle ':completion:*' expand 'yes'
+
+    # Show a pretty menu of killable processes
+    zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+    zstyle ':completion:*:*:kill:*' menu yes select
+
+    # Complete man pages by section
+    zstyle ':completion:*:manuals' separate-sections true
+    zstyle ':completion:*:manuals.*' insert-sections true
+}
+
+init-rc-completion "$@"

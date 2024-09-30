@@ -3,7 +3,7 @@
 
 autoload binary_exists
 
-function init_rc_aliases
+function init-rc-aliases
 {
     alias j='jobs'
     alias h='history'
@@ -34,4 +34,4 @@ function init_rc_aliases
     alias -s jar='java -jar'
 }
 
-init_rc_aliases "$@"
+init-rc-aliases "$@"

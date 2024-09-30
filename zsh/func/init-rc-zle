@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init-rc-zle
+{
+    case "${ERYN_ZLE_MODE:-emacs}" in
+        vim)
+            bindkey -v
+            zle -A .backward-delete-char vi-backward-delete-char
+            ;;
+        emacs)
+            bindkey -e
+            ;;
+    esac
+}
+
+init-rc-zle "$@"

@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 # Eryn Wells <eryn@erynwells.me>
 
-function init_rc_linux
+function init-rc-linux
 {
     alias iptls='sudo iptables --line-numbers -nv -L'
     alias ip6tls='sudo ip6tables --line-numbers -nv -L'
     alias rlx="xrdb $HOME/.Xdefaults"
 }
 
-init_rc_linux "$@"
+init-rc-linux "$@"

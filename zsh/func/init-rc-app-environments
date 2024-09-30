@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+autoload binary_exists
+
+function init-rc-app-environments
+{
+    # Default ledger file
+    local -r ledger_file="$HOME/Documents/Ledger/personal.ledger"
+    [[ -f "$ledger_file" ]] && export LEDGER_FILE="$ledger_file"
+}
+
+init-rc-app-environments "$@"

@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+# Eryn Wells <eryn@erynwells.me>
+
+function init-rc-ls
+{
+    local ls_options='--color=auto'
+    alias ls="ls $ls_options"
+    alias la="ls -A $ls_options"
+    alias ll="ls -l $ls_options"
+    alias l.="ls -d $ls_options .*"
+
+    local dircolors_bin=$(whence -p dircolors || whence -p gdircolors)
+    if [[ -n "$dircolors_bin" ]]; then
+        local dircolors_config
+        if [[ -f "$HOME/.dircolors/$SYS.cfg" ]]; then
+            dircolors_file="$HOME/.dircolors/$SYS.cfg"
+        else
+            dircolors_file="$HOME/.dircolors/default.cfg"
+        fi
+
+        if [[ -f "$dircolors_config" ]]; then
+            eval $($dircolors_bin $dircolors_config)
+        fi
+    fi
+}
+
+init-rc-ls "$@"
