@@ -1,6 +1,7 @@
 # Eryn Wells <eryn@erynwells.me>
 
 autoload -Uz prepend_to_path
+autoload -Uz update-path
 
 function init-env-python
 {
@@ -10,6 +11,9 @@ function init-env-python
             prepend_to_path "$f/bin"
         done
     fi
+
+    export PYTHON_VIRTUAL_ENVS="$HOME/.local/share/python-virtual-environments"
+    update-path --prepend "$PYTHON_VIRTUAL_ENVS/eryn/bin"
 }
 
 init-env-python "$@"
