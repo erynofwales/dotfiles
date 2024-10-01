@@ -121,7 +121,10 @@ while getopts "v" arg $@; do
     esac
 done
 
-python3 -m pip install --user "$dotfiles_dir/Python/eryntools"
+print "Creating Python virtual environment"
+local venv_path=~/.local/share/python-virtual-environments/eryn
+python3 -m venv --system-site-packages "$venv_path"
+"$venv_path/bin/pip" install "$dotfiles_dir/Python/eryntools"
 
 if (( $configure_vim )); then
     print -P "%BConfiguring Vim%b"
