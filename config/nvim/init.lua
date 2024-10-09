@@ -14,6 +14,8 @@ function gitTopLevelDirectory()
     return gitRepoTopLevelDirectoryPath
 end
 
+-- Enable per-project (per-git repository) customization of (neo)vim by looking
+-- for .vim and .nvim directories in the root of the git repository.
 function addGitTopLevelDirectoryToRuntimePath()
     local gitTopLevelPath = gitTopLevelDirectory()
     if gitTopLevelPath == nil or string.len(gitTopLevelPath) == 0 then
@@ -39,12 +41,12 @@ function addGitTopLevelDirectoryToRuntimePath()
     end
 end
 
-addGitTopLevelDirectoryToRuntimePath()
-
 vim.cmd [[
     source ~/.vimrc.common
     source ~/.vim/plugins.vim
 ]]
+
+addGitTopLevelDirectoryToRuntimePath()
 
 require 'autocommands'
 require 'colors'
