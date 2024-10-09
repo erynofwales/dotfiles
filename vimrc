@@ -6,7 +6,7 @@ source ~/.vimrc.common
 if !has('nvim')
     set nocompatible        " use enhanced vim features
 
-    let s:localdir=expand("~/.local/vim")
+    let s:localdir=expand("~/.local/state/vim")
     if !isdirectory(s:localdir)
         call mkdir(s:localdir, "p")
     endif
