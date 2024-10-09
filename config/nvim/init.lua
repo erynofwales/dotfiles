@@ -14,20 +14,6 @@ function gitTopLevelDirectory()
     return gitRepoTopLevelDirectoryPath
 end
 
-local function _addPathToRuntimePath(path, options)
-    if string.len(path) == 0 then
-        return
-    end
-
-    if vim.fn.isdirectory(path) == 1 then
-        if options.prepend then
-            vim.opt.runtimepath:prepend(path)
-        else
-            vim.opt.runtimepath:append(path)
-        end
-    end
-end
-
 function addGitTopLevelDirectoryToRuntimePath()
     local gitTopLevelPath = gitTopLevelDirectory()
     if gitTopLevelPath == nil or string.len(gitTopLevelPath) == 0 then
