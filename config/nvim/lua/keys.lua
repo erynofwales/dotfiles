@@ -62,9 +62,18 @@ local function local_lsp_mappings(buffer_number)
     end, options)
 end
 
+local function telescope_mappings()
+    local builtin = require('telescope.builtin')
+    map('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+    map('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+    map('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+    map('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+end
+
 return {
     init_key_opts = init_key_opts,
     init_window_key_mappings = window_key_mappings,
     init_diagnostic_key_mappings = diagnostic_mappings,
     init_lsp_key_mappings = local_lsp_mappings,
+    init_telescope_mappings = telescope_mappings,
 }

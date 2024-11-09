@@ -36,6 +36,8 @@ Plug 'honza/vim-snippets'
 Plug 'dracula/vim', {'as': 'dracula'}
 
 if has('nvim')
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-nvim-lsp'
