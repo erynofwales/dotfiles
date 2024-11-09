@@ -1,11 +1,12 @@
 -- Eryn Wells <eryn@erynwells.me>
 
+local map = vim.keymap.set
+
 local function init_key_opts()
     vim.g.mapleader = ","
 end
 
 local function window_key_mappings()
-    local map = vim.keymap.set
     local options = { silent = true }
 
     -- Allow starting commands with ; instead of typing Shift-;. Save lots of keypresses!
@@ -29,7 +30,6 @@ end
 --
 
 local function diagnostic_mappings()
-    local map = vim.keymap.set
     local options = { noremap=true, silent=true }
 
     -- Basic diagnostic mappings, these will navigate to or display diagnostics
@@ -39,8 +39,7 @@ local function diagnostic_mappings()
     map('n', '<leader>q', vim.diagnostic.setloclist, options)
 end
 
-local function set_up_local_lsp_mappings(buffer_number)
-    local map = vim.keymap.set
+local function local_lsp_mappings(buffer_number)
     local options = { noremap=true, silent=true, buffer=buffer_number }
 
     map('n', 'ga', vim.lsp.buf.code_action, options)
@@ -67,5 +66,5 @@ return {
     init_key_opts = init_key_opts,
     init_window_key_mappings = window_key_mappings,
     init_diagnostic_key_mappings = diagnostic_mappings,
-    init_lsp_key_mappings = set_up_local_lsp_mappings,
+    init_lsp_key_mappings = local_lsp_mappings,
 }
