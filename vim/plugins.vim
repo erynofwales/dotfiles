@@ -25,19 +25,16 @@ Plug 'PeterRincker/vim-argumentative'
 " Environment niceties
 Plug 'scrooloose/nerdtree'
 
-if has('nvim')
-    Plug 'Mofiqul/dracula.nvim'
-endif
-
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
-Plug 'dracula/vim', {'as': 'dracula'}
-
 if has('nvim')
+    " Telescope
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+
+    " Language servers
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-nvim-lsp'
