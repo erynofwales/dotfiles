@@ -3,23 +3,23 @@
 
 function init-rc-ls
 {
-    local ls_options='--color=auto'
-    alias ls="ls $ls_options"
     alias la="ls -A $ls_options"
     alias ll="ls -l $ls_options"
     alias l.="ls -d $ls_options .*"
 
-    local dircolors_bin=$(whence -p dircolors || whence -p gdircolors)
-    if [[ -n "$dircolors_bin" ]]; then
-        local dircolors_config
-        if [[ -f "$HOME/.dircolors/$SYS.cfg" ]]; then
-            dircolors_file="$HOME/.dircolors/$SYS.cfg"
-        else
-            dircolors_file="$HOME/.dircolors/default.cfg"
-        fi
+    # Enable ls colors
+    export CLICOLOR=1 COLORTERM=1
 
-        if [[ -f "$dircolors_config" ]]; then
-            eval $($dircolors_bin $dircolors_config)
+    # Define colors for ls. See the LSCOLORS documentation in ls(1).
+    # The default is "exfxcxdxbxegedabagacadah".
+    export LSCOLORS=Exdxcxfxbxegedabagacadah
+
+    local dircolors_bin=$(whence -p dircolors || whence -p gdircolors)
+    if [[ -x "$dircolors_bin" ]]; then
+        if [[ -f "$HOME/.dircolors/$SYS.cfg" ]]; then
+            eval $dircolors_bin "$HOME/.dircolors/$SYS.cfg"
+        elif [[ -f "$HOME/.dircolors/default.cfg" ]]; then
+            eval $dircolors_bin "$HOME/.dircolors/default.cfg"
         fi
     fi
 }
