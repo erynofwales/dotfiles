@@ -1,6 +1,6 @@
 -- Eryn Wells <eryn@erynwells.me>
 
--- [[ Editor Confguration ]]
+-- [[ Editor Configuration ]]
 local opt = vim.opt
 
 -- Reread files when they change outside of neovim
@@ -38,6 +38,9 @@ opt.linebreak = true
 opt.textwidth = 80
 -- Mark columns 80, 90, and 120
 opt.colorcolumn = {80, 90, 120}
+
+-- Briefly show the matching parenthesis or bracket when typing one of those
+-- characters.
 opt.showmatch = true
 
 opt.formatoptions:append("n")
@@ -61,13 +64,14 @@ opt.incsearch = true
 opt.gdefault = true
 
 -- Prefer spaces to tabs. Indent tab characters 8 spaces, and soft indent 4
--- spaces. Never write tabs if you can help it, and do some nice things when
--- wrapping and joining and copying.
+-- spaces. Never write tabs if you can help it.
 opt.tabstop = 8
 opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.shiftround = true
 opt.expandtab = true
+
+-- Do some nice things when wrapping, joining, and copying.
 opt.joinspaces = false
 opt.autoindent = true
 opt.copyindent = true
