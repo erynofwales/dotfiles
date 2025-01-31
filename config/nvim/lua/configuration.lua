@@ -85,9 +85,10 @@ opt.background = "dark"
 opt.backup = true
 opt.undofile = true
 
-opt.backupdir = {vim.fn.stdpath("state") .. "/backup//"}
-opt.directory = {vim.fn.stdpath("state") .. "/swap//", "."}
-opt.undodir = {vim.fn.stdpath("state") .. "/undo//"}
+local statedir = vim.fn.stdpath("state")
+opt.backupdir = {statedir .. "/backup//"}
+opt.directory = {statedir .. "/swap//", "."}
+opt.undodir = {statedir .. "/undo//"}
 
 -- Fields to save in the Shada file. Parameters as follows: (see :help shada)
 --   %   number of buffers to save and restore when no file argument is given
@@ -98,7 +99,7 @@ opt.undodir = {vim.fn.stdpath("state") .. "/undo//"}
 --   :   maximum number of lines of command history to save
 --   s   shada entries over 100 KiB are skipped
 opt.shada = {"%100", "'1000", "h", "<1000", ":1000", "s100"}
-opt.shadafile = vim.fn.stdpath("state") .. "/shada/default.shada"
+opt.shadafile = statedir .. "/shada/default.shada"
 
 -- Scroll ahead of the point a bit in each direction
 opt.scrolloff = 3
