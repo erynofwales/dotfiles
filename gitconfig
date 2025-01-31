@@ -61,6 +61,8 @@
     f = fetch
     sup = submodule update --recursive
     really-clean = clean -fd
+	rs = restore --stage
+	sc = switch --create
 [ui]
     color = true
 [diff]
