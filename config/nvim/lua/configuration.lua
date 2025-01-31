@@ -34,7 +34,9 @@ opt.errorbells = false
 -- Wrap text rather than letting it run offscreen
 opt.wrap = true
 opt.linebreak = true
-opt.textwidth = 120
+-- Wrap to 80 characters by default
+opt.textwidth = 80
+-- Mark columns 80, 90, and 120
 opt.colorcolumn = {80, 90, 120}
 opt.showmatch = true
 
