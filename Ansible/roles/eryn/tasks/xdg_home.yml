@@ -1,0 +1,12 @@
+---
+- name: Create XDG directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    mode: 0750
+  loop:
+    - "{{ ansible_local.xdg.config_home }}"
+    - "{{ ansible_local.xdg.data_home }}"
+    - "{{ ansible_local.xdg.state_home }}"
+
