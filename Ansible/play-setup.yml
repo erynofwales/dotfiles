@@ -1,0 +1,11 @@
+---
+- name: Set up dotfiles
+  hosts: localhost
+  connection: local
+  module_defaults:
+    ansible.builtin.setup:
+      fact_path: "./facts"
+  tasks:
+    - name: Include eryn role
+      ansible.builtin.include_role:
+        name: eryn

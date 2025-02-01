@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+dotfiles_root=$(git rev-parse --show-toplevel)
+echo "{ \"path\": \"${dotfiles_root}\" }"

@@ -1,0 +1,3 @@
+---
+- name: Configure ZSH
+  import_tasks: zsh.yml
