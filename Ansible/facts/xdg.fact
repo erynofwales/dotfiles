@@ -1,0 +1,5 @@
+{
+    "config_home": "~/.config",
+    "data_home": "~/.local/share",
+    "state_home": "~/.local/state"
+}
