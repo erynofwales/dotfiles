@@ -4,6 +4,6 @@
     src: "{{ ansible_local.dotfiles.path }}/{{ dotfile_src }}"
     dest: "{{ dotfile_dest | default('~/.' + dotfile_src) }}"
     owner: "{{ ansible_user_id }}"
-    mode: 0640
+    mode: 0750
     state: link
   ignore_errors: "{{ eryn_dotfiles_ignore_symlink_errors | default(false) }}"
