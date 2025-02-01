@@ -19,16 +19,14 @@
   block:
     - name: "zsh : Create zsh directory"
       ansible.builtin.file:
-        path: "{{ _zsh_dir }}"
+        path: ~/.zsh
         owner: "{{ ansible_user_id }}"
         mode: 0755
         state: directory
 
-    - name: "zsh : Symlink functions directory"
-      ansible.builtin.include_tasks: symlink_dotfile.yml
+    - name: "zsh : Symlink functions directories"
+      ansible.builtin.include_tasks: symlink_dotfile_directory.yml
       vars:
         dotfile_src: "{{ item }}"
       loop:
         - zsh/func
-  vars:
-    _zsh_dir: "~/.zsh"
