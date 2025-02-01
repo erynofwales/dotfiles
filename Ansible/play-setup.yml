@@ -5,6 +5,8 @@
   module_defaults:
     ansible.builtin.setup:
       fact_path: "./facts"
+  vars:
+    eryn_dotfiles_ignore_symlink_errors: "{{ ansible_check_mode }}"
   tasks:
     - name: Include eryn role
       ansible.builtin.include_role:
