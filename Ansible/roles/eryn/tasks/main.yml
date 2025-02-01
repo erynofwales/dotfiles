@@ -1,3 +1,8 @@
 ---
 - name: Configure ZSH
   import_tasks: zsh.yml
+
+- name: Configure vim
+  import_tasks: vim.yml
+- name: Configure neovim
+  import_tasks: neovim.yml

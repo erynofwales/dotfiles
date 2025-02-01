@@ -1,0 +1,10 @@
+---
+- name: "neovim : Install neovim"
+  ansible.builtin.package:
+    name: neovim
+    state: present
+
+- name: "neovim : Symlink config"
+  ansible.builtin.include_tasks: symlink_dotfile_directory.yml
+  vars:
+    dotfile_src: config/nvim

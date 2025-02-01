@@ -1,0 +1,23 @@
+---
+- name: "vim : Symlink config files"
+  ansible.builtin.include_tasks: symlink_dotfile.yml
+  vars:
+    dotfile_src: "{{ item }}"
+  loop:
+    - vimrc
+    - vimrc.common
+
+# The viminfo file goes here, but vim won't write it if the directory doesn't exist.
+- name: "vim : Create vim state directory"
+  ansible.builtin.file:
+    path: "{{ ansible_local.xdg.state_home }}/vim"
+    owner: "{{ ansible_user_id }}"
+    mode: 0750
+    state: directory
+
+- name: "vim : Symlink runtime directory"
+  ansible.builtin.include_tasks: symlink_dotfile_directory.yml
+  vars:
+    dotfile_src: "{{ item }}"
+  loop:
+    - vim
