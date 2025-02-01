@@ -1,0 +1,5 @@
+---
+- name: "nethack : Symlink config"
+  ansible.builtin.include_tasks: symlink_dotfile.yml
+  vars:
+    dotfile_src: nethackrc

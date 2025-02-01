@@ -1,11 +1,17 @@
 ---
-- name: Configure ZSH
-  import_tasks: zsh.yml
-
 - name: Configure XDG environment
   import_tasks: xdg_home.yml
+
+- name: Configure zsh
+  import_tasks: zsh.yml
 
 - name: Configure vim
   import_tasks: vim.yml
 - name: Configure neovim
   import_tasks: neovim.yml
+
+- name: Configure git
+  import_tasks: git.yml
+
+- name: Configure tmux
+  import_tasks: tmux.yml

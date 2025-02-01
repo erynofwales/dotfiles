@@ -1,0 +1,8 @@
+---
+- name: "git : Symlink configs"
+  ansible.builtin.include_tasks: symlink_dotfile.yml
+  vars:
+    dotfile_src: "{{ item }}"
+  loop:
+    - gitconfig
+    - gitignore
