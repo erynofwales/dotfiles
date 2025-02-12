@@ -1,17 +1,21 @@
 ---
+- name: Configure macOS
+  ansible.builtin.import_tasks: macos/main.yml
+  when: ansible_os_family == "macOS"
+
 - name: Configure XDG environment
-  import_tasks: xdg_home.yml
+  ansible.builtin.import_tasks: xdg_home.yml
 
 - name: Configure zsh
-  import_tasks: zsh.yml
+  ansible.builtin.import_tasks: zsh.yml
 
 - name: Configure vim
-  import_tasks: vim.yml
+  ansible.builtin.import_tasks: vim.yml
 - name: Configure neovim
-  import_tasks: neovim.yml
+  ansible.builtin.import_tasks: neovim.yml
 
 - name: Configure git
-  import_tasks: git.yml
+  ansible.builtin.import_tasks: git.yml
 
 - name: Configure tmux
-  import_tasks: tmux.yml
+  ansible.builtin.import_tasks: tmux.yml
