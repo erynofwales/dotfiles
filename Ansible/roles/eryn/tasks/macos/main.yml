@@ -1,0 +1,6 @@
+---
+- name: "macOS : Configure log utility"
+  ansible.builtin.import_tasks: macos/system-log.yml
+
+- name: "macOS : Configure homebrew"
+  ansible.builtin.import_tasks: macos/homebrew.yml

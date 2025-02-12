@@ -1,0 +1,37 @@
+---
+- name: "macOS : homebrew : Does the brew command exist?"
+  ansible.builtin.stat:
+    path: /opt/homebrew/bin/brew
+  register: _eryn_homebrew_brew
+
+- name: "macOS : homebrew : Install Homebrew"
+  when: not _eryn_homebrew_brew.stat.exists
+  block:
+    - name: "macOS : homebrew : Create temporary file for install script"
+      ansible.builtin.tempfile:
+        state: file
+        prefix: homebrew-install
+      register: _eryn_homebrew_install_script
+
+    - name: "macOS : homebrew : Set up homebrew"
+      block:
+        - name: "macOS : homebrew : Fetch install script"
+          ansible.builtin.get_url:
+            url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+            dest: "{{ _eryn_homebrew_install_script.path }}"
+            mode: "0644"
+
+        - name: "macOS : homebrew : Run install script"
+          ansible.builtin.command:
+            cmd: bash {{ _eryn_homebrew_install_script.path }}
+          environment:
+            NONINTERACTIVE: 1
+
+        - name: "macOS : homebrew : Gather package manager facts"
+          ansible.builtin.setup:
+            gather_subset: pkg_mgr
+      always:
+        - name: "macOS : homebrew : Remove temporary install script"
+          ansible.builtin.file:
+            path: "{{ _eryn_homebrew_install_script.path }}"
+            state: absent
