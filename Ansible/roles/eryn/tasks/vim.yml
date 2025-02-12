@@ -1,4 +1,11 @@
 ---
+- name: "vim : Install vim"
+  ansible.builtin.package:
+    name:
+      - vim
+      - neovide
+    state: present
+
 - name: "vim : Symlink config files"
   ansible.builtin.include_tasks: symlink_dotfile.yml
   vars:
