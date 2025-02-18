@@ -4,6 +4,12 @@
     name: neovim
     state: present
 
+- name: "neovim : Download vim-plug from GitHub"
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/junegunn/vim-plug/{{ eryn_vim_plug_tag }}/plug.vim"
+    dest: "{{ ansible_local.xdg.data_home }}/nvim/site/autoload/plug.vim"
+    mode: "0644"
+
 - name: "neovim : Symlink config"
   ansible.builtin.include_tasks: symlink_dotfile_directory.yml
   vars:
