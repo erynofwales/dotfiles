@@ -5,9 +5,6 @@ sys=`uname -s | tr A-Z a-z`
 
 skipitems=(setup.sh README.md py bin Alfred Colors Dotfiles LaunchAgents Python '.*\.orig' '.*~')
 
-typeset -A vimbundles
-vimbundles=(Vundle.vim "https://github.com/gmarik/Vundle.vim.git")
-
 function link {
     local action
     local dest
