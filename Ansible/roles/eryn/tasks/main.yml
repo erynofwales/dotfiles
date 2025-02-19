@@ -19,3 +19,7 @@
 
 - name: Configure tmux
   ansible.builtin.import_tasks: tmux.yml
+
+- name: Configure X.org
+  ansible.builtin.import_tasks: xorg.yml
+  when: ansible_os_family == "Linux"

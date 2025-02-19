@@ -1,0 +1,23 @@
+---
+# TODO: This likely will require a lot more packages to install. IIRC, X.org
+# also requires input and video packages to run in a basic state. Not to
+# mention, graphics acceleration, window management, etc.
+
+- name: "Xorg : Install X.org"
+  ansible.builtin.package:
+    name: xorg
+    state: present
+  notify: Rebuild local facts
+
+# Make sure local facts are rebuilt so the steps below can correctly detect
+# if X.org is present.
+- name: "Xorg : Flush handlers"
+  meta: flush_handlers
+
+- name: "Xorg : Configure"
+  when: ansible_local.xorg.exists
+  block:
+    - name: "Xorg : Symlink Xdefaults"
+      ansible.builtin.include_tasks: symlink_dotfile_directory.yml
+      vars:
+        dotfile_src: Xdefaults

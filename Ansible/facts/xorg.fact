@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+if which xorg 1>/dev/null 2>&1; then
+    xorg_exists="true"
+else
+    xorg_exists="false"
+fi
+
+echo "{ \"exists\": ${xorg_exists} }"
