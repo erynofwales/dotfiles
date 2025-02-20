@@ -1,4 +1,7 @@
 ---
+- name: "macOS : Configure defaults"
+  ansible.builtin.import_tasks: macos/defaults.yml
+
 - name: "macOS : Configure log utility"
   ansible.builtin.import_tasks: macos/system-log.yml
 

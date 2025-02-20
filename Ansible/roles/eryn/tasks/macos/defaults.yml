@@ -1,0 +1,48 @@
+---
+- name: "macOS : General : Set localization defaults"
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: "{{ item.key }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { name: AppleICUForce24HourTime, value: true, type: bool }
+    - { name: AppleLanguages, value: [ en-US, es-US, ja-US ], type: array }
+    - { name: AppleShowScrollBars, value: WhenScrolling }
+    - { name: InitialKeyRepeat, value: 15, type: int }
+    - { name: KeyRepeat, value: 2, type: int }
+    - { name: NSAutomaticCapitalizationEnabled, value: false, type: bool }
+    - { name: NSAutomaticDashSubstitutionEnabled, value: false, type: bool }
+    - { name: NSAutomaticPeriodSubstitutionEnabled, value: false, type: bool }
+    - { name: NSAutomaticQuoteSubstitutionEnabled, value: false, type: bool }
+    - { name: NSAutomaticSpellingCorrectionEnabled, value: false, type: bool }
+    - { name: NSAutomaticTextCompletionCollapsed, value: true, type: bool }
+    - { name: NSAutomaticTextCompletionEnabled, value: true, type: bool }
+
+- name: "macOS : Dock : Set defaults"
+  community.general.osx_defaults:
+    domain: com.apple.Dock
+    key: "{{ item.key }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { name: autohide, value: true, type: bool }
+    - { name: showhidden, value: true, type: bool }
+    - { name: tilesize, value: 72, type: int }
+  notify: Reload Dock
+
+- name: "macOS : TextEdit : Set defaults"
+  community.general.osx_defaults:
+    domain: com.apple.TextEdit
+    key: "{{ item.key }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { key: IgnoreHTML, value: true, type: bool }
+    - { key: RichText, value: false, type: bool }
+    - { key: author, value: "Eryn Wells" }
+    - { key: NSFixedPitchFontSize, value: 14, type: int }
+    - { key: NSFixedPitchFontSize, value: 14, type: int }

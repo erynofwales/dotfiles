@@ -1,3 +1,6 @@
 - name: "Rebuild local facts"
   ansible.builtin.setup:
     gather_subset: [ local ]
+
+- name: "Reload Dock"
+  ansible.builtin.command: killall Dock
