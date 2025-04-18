@@ -11,7 +11,7 @@ local function _init_neovide()
 
     vim.o.guifont = "InputMonoCondensed:h16"
 
-    vim.cmd [[ colorscheme dracula ]]
+    vim.cmd [[ colorscheme lunaperche ]]
 end
 
 function init_gui()
