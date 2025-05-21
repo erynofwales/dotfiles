@@ -78,8 +78,6 @@ set copyindent          " copy previous indentation on autoindent
 set scrolloff=3         " scroll 3 lines ahead of point
 set sidescrolloff=5     " scroll 5 columns ahead of point
 
-set pastetoggle=<F1>    " toggle paste mode with this
-
 " completion menu
 set wildmenu
 set wildmode=longest,list
