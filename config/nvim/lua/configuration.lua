@@ -16,7 +16,7 @@ opt.splitbelow = true
 
 -- Show line numbers
 opt.number = true
-opt.relativenumber = true
+opt.relativenumber = false
 
 -- Start with ~all folds open.
 opt.foldlevel = 99
