@@ -56,10 +56,7 @@ require 'treesitter'
 require 'lsp'
 
 local keys = require 'keys'
-keys.init_key_opts()
-keys.init_window_key_mappings()
-keys.init_diagnostic_key_mappings()
-keys.init_telescope_mappings()
+keys.init()
 
 local gui = require 'gui'
 gui.init()

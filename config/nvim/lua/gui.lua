@@ -5,9 +5,12 @@ local function _init_neovide()
         return
     end
 
+    -- No use for these animations.
     vim.g.neovide_cursor_animation_length = 0
     vim.g.neovide_position_animation_length = 0
     vim.g.neovide_scroll_animation_length = 0
+
+    vim.g.neovide_input_macos_option_key_is_meta = "both"
 
     vim.cmd [[ colorscheme lunaperche ]]
 end

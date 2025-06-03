@@ -2,8 +2,31 @@
 
 local map = vim.keymap.set
 
-local function init_key_opts()
+local function init_key_options()
     vim.g.mapleader = ","
+end
+
+local function navigation_mappings()
+    local options = { noremap = true }
+
+    -- Navigate by soft-wrapped lines using Alt/Option/Meta + jk
+    map({'n', 'v'}, '<M-k>', 'gk', options)
+    map({'n', 'v'}, '<M-j>', 'gj', options)
+end
+
+local function clipboard_mappings()
+    if not vim.fn.has('gui_running') then
+        return
+    end
+
+    local options = { noremap = true }
+
+    -- Copy to the system clipboard
+    map('v', '<D-c>', '"+y', options)
+    -- Cut to the system clipboard
+    map('v', '<D-x>', '"+x', options)
+    -- Paste from the system clipboard
+    map({'i', 'v'}, '<D-v>', '"+p', options)
 end
 
 local function window_key_mappings()
@@ -70,10 +93,16 @@ local function telescope_mappings()
     map('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 end
 
+local function init_all_global_keybindings()
+    init_key_options()
+    clipboard_mappings()
+    window_key_mappings()
+    navigation_mappings()
+    diagnostic_mappings()
+    telescope_mappings()
+end
+
 return {
-    init_key_opts = init_key_opts,
-    init_window_key_mappings = window_key_mappings,
-    init_diagnostic_key_mappings = diagnostic_mappings,
+    init = init_all_global_keybindings,
     init_lsp_key_mappings = local_lsp_mappings,
-    init_telescope_mappings = telescope_mappings,
 }
