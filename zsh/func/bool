@@ -1,0 +1,31 @@
+# Eryn Wells <eryn@erynwells.me>
+# vim: set ft=zsh:
+
+function bool {
+    if [[ $1 -eq 0 ]]; then
+        echo "no"
+        return false
+    fi
+
+    local lowercase_value=${(L)1}
+
+    if [[ "$lowercase_value" == "yes" ]]; then
+        echo "yes"
+        return true
+    fi
+
+    if [[ "$lowercase_value" == "no" ]]; then
+        echo "no"
+        return false
+    fi
+
+    if [[ "$lowercase_value" =~ '^[0-9]+$' ]]; then
+        echo "yes"
+        return true
+    fi
+
+    echo "no"
+    return false
+}
+
+bool "$@"
