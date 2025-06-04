@@ -48,4 +48,15 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     group = colorscheme_group,
 })
 
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "zaibatsu",
+    callback = function()
+        vim.cmd [[
+            hi! Pmenu ctermbg=8
+            hi! VertSplit ctermbg=8
+        ]]
+    end,
+    group = colorscheme_group,
+})
+
 vim.cmd [[ color zaibatsu ]]
