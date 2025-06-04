@@ -1,7 +1,7 @@
 local treesitter_configs = require 'nvim-treesitter.configs'
 
 treesitter_configs.setup {
-    ensure_installed = { "lua", "vim", "javascript", "swift" },
+    ensure_installed = { "lua", "vim" },
     sync_install = true,
     auto_install = true,
     hightlight = {
