@@ -21,6 +21,7 @@ fi
 
 do_init_functions zsh_init_rc_functions
 
+autoload -Uz bool
 autoload -Uz g
 autoload -Uz nethack
 autoload -Uz pw

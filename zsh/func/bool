@@ -2,30 +2,30 @@
 # vim: set ft=zsh:
 
 function bool {
-    if [[ $1 -eq 0 ]]; then
-        echo "no"
-        return false
+    if [[ "$1" =~ '^-?[0-9]+$' ]]; then
+        if (( $1 == 0 )); then
+            echo "no"
+            return 1
+        else
+            echo "yes"
+            return 0
+        fi
     fi
 
     local lowercase_value=${(L)1}
 
-    if [[ "$lowercase_value" == "yes" ]]; then
+    if [[ "$lowercase_value" == "yes" || "$lowercase_value" == "true" ]]; then
         echo "yes"
-        return true
+        return 0
     fi
 
-    if [[ "$lowercase_value" == "no" ]]; then
+    if [[ "$lowercase_value" == "no" || "$lowercase_value" == "false" ]]; then
         echo "no"
-        return false
-    fi
-
-    if [[ "$lowercase_value" =~ '^[0-9]+$' ]]; then
-        echo "yes"
-        return true
+        return 1
     fi
 
     echo "no"
-    return false
+    return 1
 }
 
 bool "$@"
