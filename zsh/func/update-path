@@ -20,7 +20,8 @@ Arguments
 ---------
 
 %B-e%b | %B--export%b | %B--no-export%b
-    Export the variable after modification.
+    Export the variable after modification. The default is to export if the
+    variable is modified.
 
 %B-f%b | %B--force%b
     Unconditionally add the path, even if it doesn't exist.
